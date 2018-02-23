@@ -18,7 +18,7 @@
 
 
                 -->
-            <div class="form-group">
+            <div class="form-group test">
                 <form method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" id="cin" placeholder="CIN" name="cin">
