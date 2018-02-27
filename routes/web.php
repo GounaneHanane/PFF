@@ -13,9 +13,9 @@
 
 
 
-
-
-
+Route::get('test', function () {
+    return 'User ';
+});
 /*
 Route::get('/foo', function () {
     return view('test');
@@ -32,22 +32,11 @@ Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
 
 
-Route::view('/contrat', 'contrat');
-Route::view('/layout', 'layout');
+//Route::view('/contrat', 'contrat');
+//Route::view('/layout', 'layout');
+
 Route::view('/addClient', 'add_client');
-Route::post('/addclient',['as'=>'/addClient','uses'=>'ClientsController@saveCustomer']);
-//Route::get('client/{id}', 'ClientsController@idC');
+/*Route::post('/addclient',['as'=>'/addClient','uses'=>'ClientsController@saveCustomer']);
 Route::get('customer/','ClientsController@AllC');
 
-
-/*
-Route::get('user/{id}', function ($id) {
-    return 'User '.$id;
-});
-Route::get('/home', function () {
-    return view('test', ['name' => 'James']);
-});
-
-Route::get('/client', function () {
-    return view('home');
-});
+*/
