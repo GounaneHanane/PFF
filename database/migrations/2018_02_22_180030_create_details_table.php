@@ -13,16 +13,16 @@ class CreateDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Details', function (Blueprint $table) {
-            $table->increments('idDetails');
+        Schema::create('DETAILS', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('id_contract')->unsigned();
-            $table->foreign('id_contract')->references('idContract')->on('contract');
+            $table->foreign('id_contract')->references('id')->on('contracts');
             $table->integer('id_vehicle')->unsigned();
-            $table->foreign('id_vehicle')->references('idVehicles')->on('Vehicles');
-            $table->integer('id_type_clients_subscribe')->unsigned();
-            $table->foreign('id_type_clients_subscribe')->references('idTypesClientsSubscribe')->on('Types_Clients_Subscribe');
+            $table->foreign('id_vehicle')->references('id')->on('vehicles');
+            $table->integer('id_type_customer_subscribe')->unsigned();
+            $table->foreign('id_type_customer_subscribe')->references('id')->on('types_customers_subscribes');
             $table->integer('id_boxe')->unsigned();
-            $table->foreign('id_boxe')->references('idBoxes')->on('Boxes');
+            $table->foreign('id_boxe')->references('id')->on('Boxes');
             $table->unique('id_vehicle');
             $table->float('price');
             $table->boolean('offer');

@@ -10,29 +10,25 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Box
+ * Class TypesSubscribe
  * 
  * @property int $id
- * @property string $reference
- * @property string $type_box
- * @property string $numero_operetor
+ * @property string $type
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * 
- * @property \Illuminate\Database\Eloquent\Collection $details
+ * @property \Illuminate\Database\Eloquent\Collection $types_customers_subscribes
  *
  * @package App\Models
  */
-class Box extends Eloquent
+class TypesSubscribe extends Eloquent
 {
 	protected $fillable = [
-		'reference',
-		'type_box',
-		'numero_operetor'
+		'type'
 	];
 
-	public function details()
+	public function types_customers_subscribes()
 	{
-		return $this->hasMany(\App\Models\Detail::class, 'id_boxe');
+		return $this->hasMany(\App\Models\TypesCustomersSubscribe::class, 'id_subscribe');
 	}
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTypesClientsTable extends Migration
+class CreateTypesCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateTypesClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('TYPES_CLIENTS', function (Blueprint $table) {
-            $table->increments('id_types_clients');
-            $table->string('types_clients',45);
+        Schema::create('TYPES_CUSTOMERS', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
             $table->timestamps();
         });
-
     }
 
     /**

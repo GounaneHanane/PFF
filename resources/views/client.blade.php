@@ -2,65 +2,85 @@
 
 @section('title', 'Client')
 
+@section('import')
+    @parent
+    <link rel="stylesheet" href="http://localhost/css/form.css" />
+    <script  src="http://localhost/js/recherche.js"></script>
+    <script  src="http://localhost/js/supprimer.js"></script>
+
+    @endsection
+
+
 @section('sidebar')
     @parent
 
 @endsection
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid body">
         <div class="form">
-            <h4>Ajouter un client</h4>
-
-            <!--
-             <form method="post">
-
-
-
-                -->
-            <div class="form-group test">
-                <form method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="cin" placeholder="CIN" name="cin">
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" class="form-control" id="Nom" placeholder="Nom"  name="nom">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="prenom" placeholder="Prénom" name="prn">
-                    </div>
-
-                    <div class="form-group">
-                        <select class="form-control" id="ville">
-                            <option value="" disabled selected>Ville</option>
-                            <option value="casablanca">Casablanca</option>
-                            <option value="rabat">Rabat</option>
-                            <option value="tanger">Tanger</option>
-                            <option value="fes">Fes</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="adresse" placeholder="Adresse" name="adr">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="code_postal" placeholder="Code postal" name="code_postal">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="number" placeholder="Numéro de téléphone" name="number">
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" id="ville">
-                            <option value="" disabled selected></option>
-                            <option value="location">Location</option>
-                            <option value="personnel">Personnel</option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" id="user" placeholder="Utilisateur" name="user">
-                </form>
+            <h3><strong>La liste des clients</strong></h3>
+            <div class="edit">
+                <a ><span class="glyphicon glyphicon-plus" style=""></span></a>
+                <span class="glyphicon glyphicon-trash trash" style=""></span>
+                <span class="glyphicon glyphicon-refresh" id="refresh"></span>
             </div>
-            <center><button class="btn btn-info" onclick="window.open('addcontrat.html','_self')">Ajouter</button></center>
 
-            </form>
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <table>
+                            <form class="form" method="post" onclick="e.preventDefault()">
+                                <select class="form-control col-sm-3" style=" width: 35%; margin-left: 4%;">
+                                    <option value="matricule" disabled selected>Rechercher par --</option>
+                                    <option value="nom">Nom</option>
+                                    <option value="type_de_client">Type de client</option>
+                                </select>
+                                <input type="text" name="search" id="search_input" class="form-control col-sm-3" style=" width: 35%;     margin-left: 4%;" >
+                                <button class="btn btn-info col-sm-3" type="button" id="search" style="width: 11%;     margin-left: 6%;">Rechercher</button>
+                            </form>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+            <table class="table" id="CustomerTable">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Ville</th>
+                    <th>Télèphone</th>
+                    <th>Mail</th>
+                    <th>Type de client</th>
+                    <th>Contact</th>
+                    <th>Tél Contact</th>
+                    <th>Adresse</th>
+                    <th>Nombre de vehicule</th>
+                    <th>N°Contrat</th>
+                    <th></th>
+                </tr>
+                </thead>
+               <tbody>
+                @foreach ($client as $c)
+                  <tr id="{{ $c->id }}" style="cursor: pointer;" onclick="window.open('http://127.0.0.1:8000/clients/{{$c->name}}/info/','_self');" >
+
+                    <td>{{ $c->name }}</td>
+                    <td>{{ $c->city }}</td>
+                    <td>{{ $c->phone }}</td>
+                    <td>{{ $c->email }}</td>
+                    <td>{{ $c->type }}</td>
+                    <td>{{ $c->contact }}</td>
+                    <td>{{$c->contact_phone }}</td>
+                     <td> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
+                     <td>X</td>
+                      <td>{{ $c->id_contract }}</td>
+                      <td><input type="checkbox" id="checkCust"></td>
+                  </tr>
+                @endforeach
+               </tbody>
+            </table>
         </div>
+    </div>
 @endsection

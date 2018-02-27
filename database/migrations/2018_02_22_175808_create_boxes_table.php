@@ -13,8 +13,8 @@ class CreateBoxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Boxes', function (Blueprint $table) {
-            $table->increments('idBoxes');
+        Schema::create('BOXES', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('reference',45);
             $table->string('type_box',45);
             $table->string('numero_operetor',14);

@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 23 Feb 2018 09:24:59 +0000.
+ * Date: Tue, 27 Feb 2018 10:31:31 +0000.
  */
 
 namespace App\Models;
@@ -12,7 +12,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 /**
  * Class Vehicle
  * 
- * @property int $idVehicles
+ * @property int $id
  * @property string $car_number
  * @property string $mark
  * @property string $color
@@ -26,8 +26,6 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  */
 class Vehicle extends Eloquent
 {
-	protected $primaryKey = 'idVehicles';
-
 	protected $dates = [
 		'add_date'
 	];

@@ -21,9 +21,7 @@
 
 <div class="container" id="layout">
 
-              <div class="row">
 
-                        <div class="col-md-3" style="padding:0px;">
                             <nav class="navbar navbar-default sidebar" role="navigation">
                                 <div class="container-fluid">
                                     <div class="navbar-header">
@@ -40,7 +38,7 @@
                                                 <a><img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></a>
                                             </li>
                                             <li >
-                                                <a href="http://127.0.0.1:8000/clients/all">CLIENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+                                                <a href="http://127.0.0.1:8000/clients/">CLIENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
                                             </li>
                                             <li >
                                                 <a href="#">DASHBOARD<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-signal"></span></a>
@@ -48,12 +46,7 @@
                                             <li >
                                                 <a href="#">ALERTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-bullhorn"></span></a>
                                             </li>
-                                            <li class=" fa fa-automobile" >
-                                                <a href="#">VEHICULES<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-bed" ></span></a>
-                                            </li>
-                                            <li >
-                                                <a href="#">BOITIERS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-folder-close"></span></a>
-                                            </li>
+
                                             <li >
                                                 <a href="#">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
                                             </li>
@@ -64,13 +57,10 @@
                         </div>
 
 
-                       <div class="col-md-7" style="padding-top:100px;">
 
                            @yield('content')
 
-                       </div>
 
-              </div>
-</div>
+
 </body>
 </html>

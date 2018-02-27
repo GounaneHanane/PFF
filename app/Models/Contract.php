@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 23 Feb 2018 09:24:59 +0000.
+ * Date: Tue, 27 Feb 2018 10:31:31 +0000.
  */
 
 namespace App\Models;
@@ -12,25 +12,23 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 /**
  * Class Contract
  * 
- * @property int $idContract
- * @property int $id_client
+ * @property int $id
+ * @property int $id_customer
  * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $end_date
+ * @property string $urlContract
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  * 
- * @property \App\Models\Client $client
+ * @property \App\Models\Customer $customer
  * @property \Illuminate\Database\Eloquent\Collection $details
  *
  * @package App\Models
  */
 class Contract extends Eloquent
 {
-	protected $table = 'contract';
-	protected $primaryKey = 'idContract';
-
 	protected $casts = [
-		'id_client' => 'int'
+		'id_customer' => 'int'
 	];
 
 	protected $dates = [
@@ -39,14 +37,15 @@ class Contract extends Eloquent
 	];
 
 	protected $fillable = [
-		'id_client',
+		'id_customer',
 		'start_date',
-		'end_date'
+		'end_date',
+		'urlContract'
 	];
 
-	public function client()
+	public function customer()
 	{
-		return $this->belongsTo(\App\Models\Client::class, 'id_client');
+		return $this->belongsTo(\App\Models\Customer::class, 'id_customer');
 	}
 
 	public function details()

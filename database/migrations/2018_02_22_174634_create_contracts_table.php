@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContractTable extends Migration
+class CreateContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateContractTable extends Migration
      */
     public function up()
     {
-        Schema::create('Contract', function (Blueprint $table) {
-            $table->increments('idContract');
-            $table->integer('id_client')->unsigned();
-            $table->foreign('id_client')->references('idClients')->on('clients');
+        Schema::create('CONTRACTS', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('id_customer')->unsigned();
+            $table->foreign('id_customer')->references('id')->on('customers');
             $table->date('start_date');
             $table->date('end_date');
+            $table->string('urlContract',100);
 
             $table->timestamps();
         });

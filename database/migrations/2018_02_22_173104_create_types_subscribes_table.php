@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSubscribeTable extends Migration
+class CreateTypesSubscribesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSubscribeTable extends Migration
      */
     public function up()
     {
-        Schema::create('Subscribe', function (Blueprint $table) {
-            $table->increments('idSubscribe');
-            $table->string('type_subscribe',45);
+        Schema::create('TYPES_SUBSCRIBES', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type',45);
             $table->timestamps();
         });
     }
