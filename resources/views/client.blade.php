@@ -4,7 +4,7 @@
 
 @section('import')
     @parent
-    <link rel="stylesheet" href="http://localhost/css/form.css" />
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
     <script  src="http://localhost/js/recherche.js"></script>
     <script  src="http://localhost/js/supprimer.js"></script>
 
@@ -76,7 +76,7 @@
                      <td> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
                      <td>X</td>
                       <td>{{ $c->id_contract }}</td>
-                      <td><input type="checkbox" id="checkCust"></td>
+                      <td><input type="checkbox" id="checkCust"/></td>
                   </tr>
                 @endforeach
                </tbody>

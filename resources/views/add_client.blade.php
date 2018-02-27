@@ -4,7 +4,7 @@
 
 @section('import')
     @parent
-    <link rel="stylesheet" href="http://localhost/css/form.css" />
+<link type="stylesheet/text" href="/css/form.css" />
     <script  src="http://localhost/js/recherche.js"></script>
     <script  src="http://localhost/js/supprimer.js"></script>
 
@@ -21,11 +21,7 @@
         <div class="form">
             <h4>Ajouter un client</h4>
 
-            <!--
-             <form method="post">
 
-
-                -->
             <div class="form-group">
                 <form action="/addclient" method="post">
                     <div class="form-group">
