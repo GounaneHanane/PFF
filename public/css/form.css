@@ -60,7 +60,6 @@
 	width: 4%;
 }
 .panel-default{
-	height:50px;
 }
 .panel-default>.panel-heading {
 	color: #333;
@@ -70,13 +69,15 @@
 }
 .body
 {
-	margin-left: 22%;
-	margin-right: 22%;
+	margin-left: 22% !important;
+	margin-right: 22% !important;
 
 }
 .panel-default {
 	margin-top: 2%;
+	height:70px;
 }
+
 .add_dialog
 {
 	padding-left: 9%;

@@ -37,7 +37,7 @@
                     <a><img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></a>
                 </li>
                 <li >
-                    <a href="client.html">CLIENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
+                    <a href="/clients">CLIENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
                 </li>
                 <li >
                     <a href="DASHBOARD.html">DASHBOARD<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-signal"></span></a>

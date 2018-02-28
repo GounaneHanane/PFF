@@ -5,8 +5,8 @@
 @section('import')
     @parent
     <link rel="stylesheet" type="text/css" href="/css/form.css">
-    <script  src="http://localhost/js/recherche.js"></script>
-    <script  src="http://localhost/js/supprimer.js"></script>
+    <script  src="/js/recherche.js"></script>
+    <script  src="/js/supprimer.js"></script>
 
     @endsection
 
@@ -21,7 +21,7 @@
         <div class="form">
             <h3><strong>La liste des clients</strong></h3>
             <div class="edit">
-                <a ><span class="glyphicon glyphicon-plus" style=""></span></a>
+                <a href="/addClient" ><span class="glyphicon glyphicon-plus" style=""></span></a>
                 <span class="glyphicon glyphicon-trash trash" style=""></span>
                 <span class="glyphicon glyphicon-refresh" id="refresh"></span>
             </div>

@@ -35,7 +35,18 @@ Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
 Route::view('/contrat', 'contrat');
 Route::view('/layout', 'layout');
 Route::view('/addClient', 'add_client');
-Route::post('/addclient',['as'=>'/addClient','uses'=>'ClientsController@saveCustomer']);
+Route::view('/add_contract','add_contract');
+
+
+
+Route::post('/add','ClientsController@saveCustomer');
+
+
+
+
+//Route::post('/addclient', array('uses' => 'ClientsController@saveCustomer'));
+
+
 //Route::get('client/{id}', 'ClientsController@idC');
 Route::get('customer/','ClientsController@AllC');
 

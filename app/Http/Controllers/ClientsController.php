@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Clients;
+use App\Customers;
 use Illuminate\Http\Request;
-
 use Response;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 class ClientsController extends Controller
 {
@@ -89,7 +89,7 @@ class ClientsController extends Controller
     {
         $c = DB::table('customers')
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
-            ->join('contracts','customers.id','=','contracts.id')
+            ->join('contracts','customers.id','=','contracts.id_customer')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
@@ -106,7 +106,7 @@ class ClientsController extends Controller
     {
         $c = DB::table('customers')
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
-            ->join('contracts','customers.id','=','contracts.id')
+            ->join('contracts','customers.id','=','contracts.id_customer')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
@@ -121,10 +121,10 @@ class ClientsController extends Controller
     public function CustomerName($name)
     {
         //$name = $request->input('name');
-        $c = DB::table('customers')->where('name', 'like', "%".$name."%")
+        $c = DB::table('customers')->where('name', '=', $name)
 
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
-            ->join('contracts','customers.id','=','contracts.id')
+            ->join('contracts','customers.id','=','contracts.id_customer')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
@@ -159,7 +159,28 @@ class ClientsController extends Controller
 
     public function saveCustomer(Request $request)
     {
-        return response("hola",200) ->header('Content-Type', 'text/plain');
+        $customer = new Customers();
+        $customer->name = $request->input('nom');
+        $customer->cin = "1575751".rand(1000,5000);
+        $customer->contact = $request->input('contact');
+        $customer->contact_phone = $request->input('NContact');
+        $customer->email = $request->input('mail');
+        $customer->city = $request->input('city');
+        $customer->phone = $request->input('phone');
+        $customer->id_type_customer = 1;
+
+        $customer->save();
+
+
+        return Redirect::to('add_contract');
+
+
+        /*
+                return response('Good'
+                ,200) ->header('Content-Type', 'text/plain');
+                //return response()->json($request['nom']);
+                //echo var_dump($_POST);
+        */
     }
 
 }
