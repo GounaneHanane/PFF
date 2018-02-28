@@ -60,10 +60,20 @@
                 <h4>Ajouter une abonnement</h4>
                 <form >
                     <div class="form-group">
-                        <input type="text" class="form-control" id="type_abonnement" placeholder="Type d'abonnement" name="cin">
+                        <select id="type_client" class="form-control">
+                            <option disabled selected>Type d'abonnement</option>
+                            @foreach ($abonnementTypes as $AbonnementType)
+                                <option id="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="type_client" placeholder="Type de client"  name="nom">
+                        <select id="type_abonnement" class="form-control">
+                            <option disabled selected>Type de client</option>
+                            @foreach ($clientTypes as $ClientType)
+                                <option id="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="prix" placeholder="Prix" name="prn">
@@ -83,17 +93,17 @@
                 <form >
                     <div class="form-group">
                        <select id="type_abonnement" class="form-control">
-                           <option disabled selected>Type d'abonnement</option>
+                           <option disabled selected>Type de client</option>
                            @foreach ($clientTypes as $ClientType)
-                               <option>{{ $ClientType->ClientType}}</option>
+                               <option id="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
                            @endforeach
                        </select>
                     </div>
                     <div class="form-group">
                         <select id="type_client" class="form-control">
-                            <option disabled selected>Type de client</option>
+                            <option disabled selected>Type d'abonnement</option>
                             @foreach ($abonnementTypes as $AbonnementType)
-                                <option>{{ $AbonnementType->AbonnementType}}</option>
+                                <option id="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
                             @endforeach
                         </select>
                     </div>
