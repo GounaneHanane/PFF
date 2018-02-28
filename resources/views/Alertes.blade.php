@@ -5,8 +5,8 @@
 @section('import')
     @parent
     <link rel="stylesheet" href="/css/form.css" />
-    <script  src="http://localhost/js/recherche.js"></script>
-    <script  src="http://localhost/js/supprimer.js"></script>
+    <script  src="/js/search.js"></script>
+    <script  src="/js/delete.js"></script>
 
 @endsection
 
