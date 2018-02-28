@@ -88,7 +88,7 @@ class ClientsController extends Controller
     {
         $c = DB::table('customers')
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
-            ->join('contracts','customers.id','=','contracts.id')
+            ->join('contracts','customers.id','=','contracts.id_customers')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
@@ -100,16 +100,19 @@ class ClientsController extends Controller
 
         return view('client',['client'=>$c]);
     }
-
+    public function Contrat()
+    {
+        return view('ClientsLines');
+    }
     public function AllC()
     {
         $c = DB::table('customers')
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
-            ->join('contracts','customers.id','=','contracts.id')
+            ->join('contracts','customers.id','=','contracts.id_customers')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
-        return view('lines',['client'=>$c]);
+        return view('ClientsLines',['client'=>$c]);
 
 
 
@@ -127,7 +130,7 @@ class ClientsController extends Controller
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
-        return view('lines',['client'=>$c]);
+        return view('ClientsLines',['client'=>$c]);
     }
     public function CustomerType($type)
     {
@@ -136,7 +139,7 @@ class ClientsController extends Controller
             ->join('customers', 'types_customers.id', '=', 'customers.id_type_customer')
             ->join('contracts','customers.id','=','contracts.id_customer')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
-        return view('lines',['client'=>$c]);
+        return view('ClientsLines',['client'=>$c]);
     }
 
     public function DeleteCustomer($id)

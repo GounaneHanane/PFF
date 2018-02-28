@@ -48,7 +48,7 @@
                                             </li>
 
                                             <li >
-                                                <a href="#">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
+                                                <a href="http://127.0.0.1:8000/abonnement">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
                                             </li>
                                         </ul>
                                     </div>

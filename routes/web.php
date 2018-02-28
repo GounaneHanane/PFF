@@ -30,8 +30,14 @@ Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
 Route::get('/clients/delete/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
-
-
+Route::get('/abonnement', 'AbonnementsController@idAbonnement');
+Route::view('/addcontrat', 'add_contrat');
+Route::view('/clientinfo', 'ClientInfo');
+Route::view('/editclient', 'EditClient');
+Route::view('/savecontrat', 'SaveContrat');
+Route::view('/login', 'Login');
+Route::view('/alertes', 'Alertes');
+Route::view('/dashboard', 'Dashboard');
 //Route::view('/contrat', 'contrat');
 //Route::view('/layout', 'layout');
 

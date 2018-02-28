@@ -8,6 +8,10 @@
 {
 	width: 43%;
 }
+tbody tr:hover
+{
+	background-color: lightgrey;
+}
 .btn-info
 {
 	width: 62%;
@@ -80,6 +84,13 @@ margin-left: -132%;
 	     padding-right: 9%;
 	         border: none;
 	          box-shadow:20px 20px 50px 15px grey
+}
+.edit_dialog
+{
+	padding-left: 9%;
+	padding-right: 9%;
+	border: none;
+	box-shadow:20px 20px 50px 15px grey
 }
 .car_dialog .form
 {
