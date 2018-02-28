@@ -42,13 +42,13 @@
                     <a href="/clients">CLIENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-user"></span></a>
                 </li>
                 <li >
-                    <a href="DASHBOARD.html">DASHBOARD<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-signal"></span></a>
+                    <a href="/dashboard">DASHBOARD<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-signal"></span></a>
                 </li>
                 <li >
-                    <a href="ALERTeS.html">ALERTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-bullhorn"></span></a>
+                    <a href="/alertes">ALERTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-bullhorn"></span></a>
                 </li>
                 <li >
-                    <a href="abonnements.html">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
+                    <a href="/abonnement">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
                 </li>
             </ul>
         </div>

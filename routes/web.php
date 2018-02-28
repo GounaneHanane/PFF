@@ -43,7 +43,7 @@ Route::view('/dashboard', 'Dashboard');
 
 Route::view('/addClient', 'add_client');
 
-Route::view('/add_contract','add_contract');
+
 
 
 
