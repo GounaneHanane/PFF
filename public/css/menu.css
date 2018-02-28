@@ -7,6 +7,7 @@ body,html{
       -moz-transition: margin 200ms ease-out;
       -o-transition: margin 200ms ease-out;
       transition: margin 200ms ease-out;
+<<<<<<< HEAD
       position: fixed;
 
   }
@@ -18,6 +19,11 @@ body,html{
     content: "\2122";
     color: transparent !important;
 }
+=======
+  }
+
+
+>>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
   .main{
     padding: 10px 10px 0 10px;
   }
@@ -130,6 +136,10 @@ body,html{
   }
   section{
     padding-left: 15px;
+<<<<<<< HEAD
   }
   
  
+=======
+  }
+>>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151

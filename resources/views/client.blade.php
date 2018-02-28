@@ -4,9 +4,15 @@
 
 @section('import')
     @parent
+<<<<<<< HEAD
     <link rel="stylesheet" href="/css/form.css"/>
     <script  src="/js/search.js"></script>
     <script  src="/js/delete.js"></script>
+=======
+    <link rel="stylesheet" type="text/css" href="/css/form.css">
+    <script  src="http://localhost/js/recherche.js"></script>
+    <script  src="http://localhost/js/supprimer.js"></script>
+>>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 
     @endsection
 
@@ -76,7 +82,7 @@
                      <td> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
                      <td>X</td>
                       <td>{{ $c->id_contract }}</td>
-                      <td><input type="checkbox" id="checkCust"></td>
+                      <td><input type="checkbox" id="checkCust"/></td>
                   </tr>
                 @endforeach
                </tbody>
