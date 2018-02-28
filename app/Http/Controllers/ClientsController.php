@@ -177,7 +177,7 @@ class ClientsController extends Controller
     {
         $customer = new Customers();
         $customer->name = $request->input('nom');
-        $customer->cin = "1575751".rand(1000,5000);
+
         $customer->contact = $request->input('contact');
         $customer->contact_phone = $request->input('NContact');
         $customer->email = $request->input('mail');

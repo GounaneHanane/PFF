@@ -4,10 +4,16 @@
 
 @section('import')
     @parent
-    <script type="text/javascript" src="/js/add_contract.js"></script>
-    <link type="stylesheet/text" href="/css/form.css"/>
+
+
+    <link rel="stylesheet" href="/css/form.css" />
+
+
+    <script  src="/js/addcontrat"></script>
+
 
 @endsection
+
 @section('sidebar')
     @parent
 
