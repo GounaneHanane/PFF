@@ -188,7 +188,7 @@ class ClientsController extends Controller
         $customer->save();
 
 
-        return Redirect::to('add_contract');
+        return Redirect::to('addcontrat');
 
 
         /*
