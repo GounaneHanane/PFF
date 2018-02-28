@@ -1,41 +1,17 @@
-<<<<<<< HEAD
-.form 
-{
-	
-    margin-top: 8%;
-=======
 .form
 {
 
 	margin-top: 8%;
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 }
 
 .addBtn
 {
 	width: 43%;
 }
-<<<<<<< HEAD
-tbody tr:hover
-{
-	background-color: lightgrey;
-}
-=======
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 .btn-info
 {
 	width: 62%;
 
-<<<<<<< HEAD
-	    margin-bottom: 2%;
-}
-.glyphicon
-{
-	 padding-left:6%;
-	 float: right;
-	 padding-bottom: 2%;
-	 cursor: pointer;
-=======
 	margin-bottom: 2%;
 }
 .glyphicon
@@ -44,7 +20,6 @@ tbody tr:hover
 	float: right;
 	padding-bottom: 2%;
 	cursor: pointer;
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 }
 .plus
 {
@@ -54,19 +29,6 @@ tbody tr:hover
 .addcar
 {
 	cursor: pointer;
-<<<<<<< HEAD
-margin-right: 81%;
-}
-.edit
-{
-	  margin-bottom: 4%;
-    margin-top: 1%;
-}
-.abonnement_dialog .form
-{
-margin-left: -132%;
-    margin-right: -116%;
-=======
 	margin-right: 81%;
 }
 .edit
@@ -78,22 +40,11 @@ margin-left: -132%;
 {
 	margin-left: -132%;
 	margin-right: -116%;
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 
 }
 #client_info
 {
 	width: 50%;
-<<<<<<< HEAD
-	    margin-left: 22%;
-    margin-top: -11%;
-}
-.buttons
-{
-	    float: right;
-   	 margin-top: -35%;
-        margin-left: 74%;
-=======
 	margin-left: 22%;
 	margin-top: -11%;
 }
@@ -102,29 +53,11 @@ margin-left: -132%;
 	float: right;
 	margin-top: -35%;
 	margin-left: 74%;
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 }
 #client_info td
 {
 	padding: 2%;
-<<<<<<< HEAD
-	    width: 4%;
-}
-.panel-default>.panel-heading {
-    color: #333;
-    background-color: lightgrey;
-    border-color: #ddd;
-    font-family: cursive;
-}
-.body
-{
-	    margin-left: 22%;
-    margin-right: 22%;
-=======
 	width: 4%;
-}
-.panel-default{
-	height:50px;
 }
 .panel-default>.panel-heading {
 	color: #333;
@@ -136,7 +69,6 @@ margin-left: -132%;
 {
 	margin-left: 22%;
 	margin-right: 22%;
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 
 }
 .panel-default {
@@ -144,16 +76,6 @@ margin-left: -132%;
 }
 .add_dialog
 {
-<<<<<<< HEAD
-	    padding-left: 9%;
-	     padding-right: 9%;
-	         border: none;
-	          box-shadow:20px 20px 50px 15px grey
-}
-.edit_dialog
-{
-=======
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
 	padding-left: 9%;
 	padding-right: 9%;
 	border: none;
@@ -161,12 +83,6 @@ margin-left: -132%;
 }
 .car_dialog .form
 {
-<<<<<<< HEAD
-    margin-left: -43%;
-    margin-right: -38%;
-}
-=======
 	margin-left: -43%;
 	margin-right: -38%;
 }
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151

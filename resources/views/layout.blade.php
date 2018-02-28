@@ -5,13 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<<<<<<< HEAD
+
         <link rel="stylesheet" href="/css/menu.css" />
-=======
-        <link rel="stylesheet" type="text/css" href="/css/menu.css">
 
-
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
@@ -24,17 +20,8 @@
 @show
 
 
-<<<<<<< HEAD
-                                            <li >
-                                                <a href="http://127.0.0.1:8000/abonnement">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </nav>
-                        </div>
-=======
->>>>>>> e23e9c68edddd69307e71e533ac972d9006e7151
+
+
 
 <nav class="navbar navbar-default sidebar nav-side-menu" role="navigation" >
     <div class="container-fluid">
