@@ -7,10 +7,22 @@ body,html{
       -moz-transition: margin 200ms ease-out;
       -o-transition: margin 200ms ease-out;
       transition: margin 200ms ease-out;
+
       position: fixed;
 
   }
 
+
+
+
+  nav
+  {
+     
+  }
+.glyphicon-none:before {
+    content: "\2122";
+    color: transparent !important;
+}
 
   .main{
     padding: 10px 10px 0 10px;
@@ -124,4 +136,5 @@ body,html{
   }
   section{
     padding-left: 15px;
+
   }

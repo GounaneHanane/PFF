@@ -5,6 +5,10 @@
 @section('import')
     @parent
 
+
+    <link rel="stylesheet" href="/css/form.css" />
+
+
     <script  src="http://localhost/js/recherche.js"></script>
     <script  src="http://localhost/js/supprimer.js"></script>
 
@@ -15,7 +19,7 @@
     @parent
 
 @endsection
-<link rel="stylesheet" type="text/css" href="/css/form.css">
+
 @section('content')
     <div class="container-fluid body" style="
     margin-left: 22%;

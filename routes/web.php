@@ -13,9 +13,9 @@
 
 
 
-
-
-
+Route::get('test', function () {
+    return 'User ';
+});
 /*
 Route::get('/foo', function () {
     return view('test');
@@ -30,11 +30,19 @@ Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
 Route::get('/clients/delete/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
+Route::get('/abonnement', 'AbonnementsController@idAbonnement');
+Route::view('/addcontrat', 'add_contrat');
+Route::view('/clientinfo', 'ClientInfo');
+Route::view('/editclient', 'EditClient');
+Route::view('/savecontrat', 'SaveContrat');
+Route::view('/login', 'Login');
+Route::view('/alertes', 'Alertes');
+Route::view('/dashboard', 'Dashboard');
+//Route::view('/contrat', 'contrat');
+//Route::view('/layout', 'layout');
 
-
-Route::view('/contrat', 'contrat');
-Route::view('/layout', 'layout');
 Route::view('/addClient', 'add_client');
+
 Route::view('/add_contract','add_contract');
 
 
@@ -43,22 +51,14 @@ Route::post('/add','ClientsController@saveCustomer');
 
 
 
-
+/*
 //Route::post('/addclient', array('uses' => 'ClientsController@saveCustomer'));
 
 
 //Route::get('client/{id}', 'ClientsController@idC');
+=======
+/*Route::post('/addclient',['as'=>'/addClient','uses'=>'ClientsController@saveCustomer']);
+>>>>>>> d8e848ec32e30952161019fd74f2ab7bdcec9dcb
 Route::get('customer/','ClientsController@AllC');
 
-
-/*
-Route::get('user/{id}', function ($id) {
-    return 'User '.$id;
-});
-Route::get('/home', function () {
-    return view('test', ['name' => 'James']);
-});
-
-Route::get('/client', function () {
-    return view('home');
-});
+*/

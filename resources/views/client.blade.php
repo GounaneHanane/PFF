@@ -4,9 +4,16 @@
 
 @section('import')
     @parent
+
+    <link rel="stylesheet" href="/css/form.css"/>
+    <script  src="/js/search.js"></script>
+    <script  src="/js/delete.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/css/form.css">
-    <script  src="/js/recherche.js"></script>
-    <script  src="/js/supprimer.js"></script>
+
+
+
+
 
     @endsection
 
