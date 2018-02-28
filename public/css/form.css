@@ -75,6 +75,13 @@
 	margin-top: 2%;
 }
 .add_dialog
+ {
+	 padding-left: 9%;
+	 padding-right: 9%;
+	 border: none;
+	 box-shadow:20px 20px 50px 15px grey
+ }
+.edit_dialog
 {
 	padding-left: 9%;
 	padding-right: 9%;
