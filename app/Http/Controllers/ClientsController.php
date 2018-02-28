@@ -112,7 +112,7 @@ class ClientsController extends Controller
     public function AllC()
     {
         $c = DB::table('customers')
-            
+
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
 
 
