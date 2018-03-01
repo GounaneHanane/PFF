@@ -4,6 +4,8 @@
 
 @section('import')
     @parent
+    <meta name="_token" content="{{ csrf_token() }}" />
+
     <link rel="stylesheet" href="/css/form.css" />
     <script  src="/js/search.js"></script>
     <script  src="/js/delete.js"></script>
@@ -21,11 +23,12 @@
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
-    <script type="text/javascript" src="/js/addContrats.js"></script>
     <div class="container-fluid body">
         <div class="form" >
             <h4>Ajouter le contrat</h4>
             <form onsubmit="event.preventDefault();" method="post" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                 <div class="form-group">
                     <input type="text" class="form-control" id="contrat_save" placeholder="N°Contrat" name="cin">
                 </div>
@@ -86,7 +89,7 @@
                     <tbody>
                     </tbody>
                 </table>
-                <center><button class="btn btn-info" onclick="window.open('savecontrat.html','_self');">Ajouter</button></center>
+                <center><button class="btn btn-info" id="Add" onclick="">Ajouter</button></center>
             </form>
         </div>
     </div>
