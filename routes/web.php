@@ -38,7 +38,11 @@ Route::view('/savecontrat', 'SaveContrat');
 Route::view('/login', 'Login');
 Route::view('/alertes', 'Alertes');
 Route::view('/dashboard', 'Dashboard');
+
 Route::view('/contrat', 'Contrat');
+=======
+Route::post('/contract','ClientsController@json');
+
 //Route::view('/contrat', 'contrat');
 //Route::view('/layout', 'layout');
 
@@ -50,6 +54,9 @@ Route::view('/addClient', 'add_client');
 
 Route::post('/add','ClientsController@saveCustomer');
 Route::post("/add_type",'AbonnementsController@saveAbonnement');
+
+
+
 
 
 

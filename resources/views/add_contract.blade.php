@@ -25,6 +25,8 @@
         <div class="form" >
             <h4>Ajouter le contrat</h4>
             <form onsubmit="event.preventDefault();" method="post" >
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                 <div class="form-group">
                     <input type="text" class="form-control" id="contrat_save" placeholder="N°Contrat" name="cin">
                 </div>

@@ -199,5 +199,10 @@ class ClientsController extends Controller
         */
     }
 
+    public function json(Request $request)
+    {
+       return $request->input('v');
+    }
+
 }
 
