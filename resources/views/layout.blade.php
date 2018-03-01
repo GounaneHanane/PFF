@@ -48,7 +48,10 @@
                     <a href="/alertes">ALERTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-bullhorn"></span></a>
                 </li>
                 <li >
-                    <a href="/abonnement">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
+                    <a href="/abonnement">ABONNEMENTS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th"></span></a>
+                </li>
+                <li >
+                    <a href="/contrat">CONTRATS<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a>
                 </li>
             </ul>
         </div>

@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $(".trash").click(function(){
         $('.table').find('input[type="checkbox"]:checked').each(function () {
-            var id =  $( this ).parent().parent().attr('alt');
+            var id =  $( this ).parent().parent().attr('id');
             alert(id);
 
             $( this ).parent().parent().remove();

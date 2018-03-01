@@ -20,10 +20,14 @@
         <div class="form"  style="    margin-top: 23%;">
             <h3><strong>Les abonnements</strong></h3>
             <div>
+                <div class="panel">
+
                 <span class="glyphicon glyphicon-pencil edit edit_pencil" id="edit_abonnement"></span>
                 <span class="glyphicon glyphicon-trash edit trash "></span>
                 <span class="glyphicon glyphicon-plus edit  " id="add_abonnement"></span>
-            </div>
+
+                </div>
+                <div class="panel-body">
             <table class="table" id="vehicles_table">
                 <thead>
                 <tr>
@@ -51,6 +55,9 @@
                 @endforeach
                 </tbody>
             </table>
+                </div>
+            </div>
+
         </div>
     </div>
     <dialog id="add_dialog"  class="abonnement_dialog add_dialog">
@@ -58,25 +65,26 @@
         <div class="container-fluid body">
             <div class="form" >
                 <h4>Ajouter une abonnement</h4>
-                <form >
+                <form method="POST" action="/add_type" >
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
-                        <select id="type_client" class="form-control">
+                        <select name="type_abonnement" class="form-control">
                             <option disabled selected>Type d'abonnement</option>
                             @foreach ($abonnementTypes as $AbonnementType)
-                                <option id="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
+                                <option value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <select id="type_abonnement" class="form-control">
+                        <select name="type_client" class="form-control">
                             <option disabled selected>Type de client</option>
                             @foreach ($clientTypes as $ClientType)
-                                <option id="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
+                                <option value="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="prix" placeholder="Prix" name="prn">
+                        <input type="text" class="form-control" id="price" placeholder="Prix" name="price">
                     </div>
                     <center><button class="btn btn-info" onclick="window.open('abonnements.html','_self');">Ajouter</button>
                         <button class="btn btn-info" id="add_cancel" >Cancel</button>
@@ -95,7 +103,7 @@
                        <select id="type_abonnement" class="form-control">
                            <option disabled selected>Type de client</option>
                            @foreach ($clientTypes as $ClientType)
-                               <option id="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
+                               <option value="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
                            @endforeach
                        </select>
                     </div>
@@ -103,14 +111,14 @@
                         <select id="type_client" class="form-control">
                             <option disabled selected>Type d'abonnement</option>
                             @foreach ($abonnementTypes as $AbonnementType)
-                                <option id="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
+                                <option value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="prix" placeholder="Prix" name="prn">
                     </div>
-                    <center><button class="btn btn-info" onclick="window.open('abonnements.html','_self');">Modifier</button>
+                    <center><button class="btn btn-info">Modifier</button>
                         <button class="btn btn-info" id="edit_cancel" >Cancel</button>
                     </center>
                 </form>

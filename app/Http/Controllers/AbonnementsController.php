@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\TypesCustomersSubscribe;
+use App\Models\TypesCustomersSubscribe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 use Response;
 use Illuminate\Support\Facades\DB;
@@ -23,22 +24,16 @@ class AbonnementsController extends Controller
             ->select('types_subscribes.type as AbonnementType','types_subscribes.id as AbonnementTypeId')->get();
         return view('abonnement',['abonnement'=>$A,'clientTypes'=>$ClientType,'abonnementTypes'=>$AbonnementType]);
     }
-   /* public function saveCustomer(Request $request)
+    public function saveAbonnement(Request $request)
     {
-        $customer = new Customers();
-        $customer->name = $request->input('nom');
-
-        $customer->contact = $request->input('contact');
-        $customer->contact_phone = $request->input('NContact');
-        $customer->email = $request->input('mail');
-        $customer->city = $request->input('city');
-        $customer->phone = $request->input('phone');
-        $customer->id_type_customer = 1;
-
-        $customer->save();
+        $Abonnement = new TypesCustomersSubscribe();
+        $Abonnement->price = $request->input('price');
+        $Abonnement->id_type_customer = $request->input('type_client');
+        $Abonnement->id_subscribe = $request->input('type_abonnement');
+        $Abonnement->save();
 
 
-        return Redirect::to('add_contract');
+        return Redirect::to('abonnement');
 
 
         /*
@@ -47,5 +42,5 @@ class AbonnementsController extends Controller
                 //return response()->json($request['nom']);
                 //echo var_dump($_POST);
         */
-    //}
+    }
 }
