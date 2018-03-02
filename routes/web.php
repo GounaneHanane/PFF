@@ -40,7 +40,6 @@ Route::view('/alertes', 'Alertes');
 Route::view('/dashboard', 'Dashboard');
 
 Route::view('/contrat', 'Contrat');
-=======
 Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');
