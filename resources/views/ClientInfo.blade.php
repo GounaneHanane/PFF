@@ -26,46 +26,46 @@
                     <tr>
                         <div class="form-group">
                             <td><label>Nom : </label></td>
-                            <td><label id="nom"></label></td><br>
+                            <td><label id="nom">{{ $c->name }}</label></td><br>
                         </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Télèphone : </label></td>
-                            <td><label id="ville"></label></td><br>
+                            <td><label id="ville">{{ $c->phone }}</label></td><br>
                         </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Type de client : </label></td>
-                            <td><label id="type"></label></td><br>
+                            <td><label id="type"></label>{{ $c->type }}</td><br>
                         </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Mail : </label></td>
-                            <td><label id="mail"></label></td>
+                            <td><label id="mail">{{ $c->email }}</label></td>
                         </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Ville : </label></td>
-                            <td><label id="ville"></label></td>
+                            <td><label id="ville">{{ $c->city }}</label></td>
                         </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Contact : </label></td>
-                            <td><label id="contact"></label>	</td>
+                            <td><label id="contact">{{ $c->contact }}</label>	</td>
                         </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Tèl contact: </label></td>
-                            <td><label id="Tel_contact"></label></td>
+                            <td><label id="Tel_contact">{{$c->contact_phone }}</label></td>
                         </div></tr>
                     <div class="form-group">
                         <td><label>Adresse : </label></td>
-                        <td><label id="adresse"></label>	</td>
+                        <td><label id="adresse">Bounazels</label>	</td>
                     </div></tr>
                     <tr>
                         <div class="form-group">
                             <td><label>Nombre de vehicule : </label></td>
-                            <td><label id="taille_de"></label>	</td>
+                            <td><label id="taille_de">{{ $c->vehicles }}</label>	</td>
                         </div></tr>
                     <tr>
                         <div class="form-group">
@@ -120,6 +120,19 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($details as $detail)
+                            <tr>
+                                <td>{{$detail->car_number}}</td>
+                                <td>{{$detail->mark}}</td>
+                                <td>X</td>
+                                <td>X</td>
+                                <td>{{$detail->reference}}</td>
+                                <td>{{$detail->type_box}}</td>
+                                <td>{{$detail->type}}</td>
+                                <td>{{ $detail->price }}</td>
+                                <td>{{ $detail->add_date }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

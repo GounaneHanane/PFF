@@ -92,10 +92,12 @@ class ClientsController extends Controller
 
 
             ->join('contracts','customers.id','=','contracts.id_customer')
+           // CV is view couting details per contract
+            ->join('cv','cv.id_contract','contracts.id')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
 
+            ->get();
 
-
-            ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
 
 
 
@@ -105,7 +107,9 @@ class ClientsController extends Controller
        // return Illuminate\Routing\ResponseFactory::json($c);
        // json_encode($c);
         //return response('correct', 200)::json($c);
-        //return response()->json($c);
+
+
+
 
         $type_client =  DB::table('types_customers')->get();
 
@@ -123,13 +127,12 @@ class ClientsController extends Controller
 
 
             ->join('contracts','customers.id','=','contracts.id_customer')
-
-            ->join('details','details.id_contract','contrats.id')
-
-
-            ->select('customers.*','types_customers.*','contracts.id as id_contract','count(details) as NumVehicule')
+            ->join('cv','cv.id_contract','contracts.id')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
 
             ->get();
+
+
 
 
         return view('ClientsLines',['client'=>$c]);
@@ -147,7 +150,9 @@ class ClientsController extends Controller
 
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
             ->join('contracts','customers.id','=','contracts.id_customer')
-            ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
+            ->join('cv','cv.id_contract','contracts.id')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')->get();
+
 
 
         return view('ClientsLines',['client'=>$c]);
@@ -158,7 +163,12 @@ class ClientsController extends Controller
 
             ->join('customers', 'types_customers.id', '=', 'customers.id_type_customer')
             ->join('contracts','customers.id','=','contracts.id_customer')
-            ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
+            ->join('cv','cv.id_contract','contracts.id')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
+
+            ->get();
+
+
         return view('ClientsLines',['client'=>$c]);
     }
 
@@ -166,9 +176,13 @@ class ClientsController extends Controller
     {
         $c = DB::table('customers')->where('city', 'like', "%".$city."%")
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
-
             ->join('contracts','customers.id','=','contracts.id_customer')
-            ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
+            ->join('cv','cv.id_contract','contracts.id')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
+
+            ->get();
+
+
         return view('ClientsLines',['client'=>$c]);
     }
 
@@ -228,6 +242,38 @@ class ClientsController extends Controller
                 //return response()->json($request['nom']);
                 //echo var_dump($_POST);
         */
+    }
+
+    public function CustomerInfo($name)
+    {
+        $c = DB::table('customers')->where('name', 'like', $name."%")
+
+            ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
+            ->join('contracts','customers.id','=','contracts.id_customer')
+            ->join('cv','cv.id_contract','contracts.id')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')->first();
+
+        $type_client =  DB::table('types_customers')->get();
+
+        $typesSubscribes = DB::table('types_subscribes')->get();
+
+
+        $customerId = DB::table('customers')->where('name','=',$name)->
+        select('customers.id')->pluck('id')->first();
+
+        $contratId = DB::table('contracts')->where('id_customer','=',$customerId)->pluck('id')->first();
+
+        $details = DB::table('details')->where('id_contract','=',$contratId)->
+        join('vehicles','vehicles.id','=','details.id_vehicle')->
+        join('boxes','boxes.id','=','details.id_boxe')->
+        join('types_customers_subscribes','types_customers_subscribes.id','details.id_type_customer_subscribe')->
+        join('types_subscribes','types_subscribes.id','types_customers_subscribes.id_subscribe')->
+        select('vehicles.*','boxes.*','types_subscribes.*','details.*')->get();
+
+
+
+        return view('ClientInfo',['c'=>$c,'types_client'=>$type_client,'details'=>$details]);
+
     }
 
 

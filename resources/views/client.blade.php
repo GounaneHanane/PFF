@@ -81,12 +81,15 @@
                         <th class="text-center" style="width: 9.09%">ADRESSE</th>
                         <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULES</th>
                         <th class="text-center" style="width: 9.09%">N°CONTRAT</th>
-                        <th class="text-center" style="width: 9.09%">COCHER</th>
+
+
+                        <th class="text-center" style="width: 9.09%">ACTIONS</th>
                     </tr>
                     </thead>
                    <tbody>
+                     <?php $i = 1; ?>
                     @foreach ($client as $c)
-                      <tr id="{{ $c->id }}" style="cursor: pointer;" onclick="window.open('http://127.0.0.1:8000/clients/{{$c->name}}/info/','_self');" >
+                      <tr id="{{ $c->id }}" style="cursor: pointer;"  >
 
 
 
@@ -98,11 +101,16 @@
                         <td class="text-center">{{ $c->contact }}</td>
                         <td class="text-center">{{$c->contact_phone }}</td>
                          <td class="text-center"> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
-                         <td class="text-center">X</td>
+                         <td class="text-center">{{ $c->vehicles }}</td>
                           <td class="text-center">{{ $c->id_contract }}</td>
-                          <td class="text-center"><input type="checkbox" id="checkCust"/></td>
+
+                          <td class="text-center"><a class="btn btn-danger" > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                              <a class=" btn btn-primary" href="/clientinfo/{{$c->name}}" id="edit_abonnement"><span class="glyphicon glyphicon-info-sign edit edit_pencil "></span></a></td>
                       </tr>
+                        <?php $i++; ?>
                     @endforeach
+
+                   <?php ?>
                    </tbody>
                 </table>
             </div>

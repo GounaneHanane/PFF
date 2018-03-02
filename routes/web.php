@@ -34,7 +34,7 @@ Route::get('/clients/city/{city}', 'ClientsController@CustomerCity');
 
 Route::get('/abonnement', 'AbonnementsController@idAbonnement');
 Route::get('/addcontrat/{name}','ContratController@AddingInfo');
-Route::view('/clientinfo', 'ClientInfo');
+Route::get('/clientinfo/{name}', 'ClientsController@CustomerInfo');
 Route::view('/editclient', 'EditClient');
 Route::view('/savecontrat', 'SaveContrat');
 Route::view('/login', 'Login');
