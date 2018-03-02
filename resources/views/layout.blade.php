@@ -22,8 +22,14 @@
 
 
 
-
+<header>
+    <div class="user">
+        <i class="glyphicon glyphicon-user" style="    float: left;
+    padding-right: 8px;   "></i>Bonjour :
+    </div>
+</header>
 <div  class="container-fluid">
+
     <div class="row" style="    margin-left: -15px;">
         <div class="col-sm-3">
             <div class="nav-side-menu">

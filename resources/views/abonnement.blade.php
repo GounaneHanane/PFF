@@ -23,9 +23,12 @@
                 <div class="form" style="margin-top: 0%;" >
                     <h3><strong>Les abonnements</strong></h3>
                 </div>
-                <span class="glyphicon glyphicon-pencil edit edit_pencil" id="edit_abonnement"></span>
-                <span class="glyphicon glyphicon-trash edit trash "></span>
-                <span class="glyphicon glyphicon-plus edit  " id="add_abonnement"></span>
+
+
+
+
+
+                <span class="glyphicon glyphicon-plus edit" id="add_abonnement"></span>
             </div>
 
             <div class="panel-body">
@@ -52,7 +55,8 @@
                                 <td class="text-center">{{ $A->price }}</td>
                                 <td class="text-center"></td>
                                 <td class="text-center"></td>
-                                <td class="text-center"><input type="checkbox"></td>
+                                <td class="text-center"><a class="btn btn-danger" href="{{URL::to('/deleteAbonnement/'.$A->id) }}"> <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                                    <a class=" btn btn-primary"  id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -116,18 +120,18 @@
 
                         <form >
                             <div class="form-group">
-                                <select id="type_abonnement" class="form-control">
-                                    <option disabled selected>Type de client</option>
-                                    @foreach ($clientTypes as $ClientType)
-                                        <option value="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
+                                <select name="type_abonnement" class="form-control">
+                                    <option disabled selected>Type d'abonnement</option>
+                                    @foreach ($abonnementTypes as $AbonnementType)
+                                        <option value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select id="type_client" class="form-control">
-                                    <option disabled selected>Type d'abonnement</option>
-                                    @foreach ($abonnementTypes as $AbonnementType)
-                                        <option value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
+                                <select name="type_client" class="form-control">
+                                    <option disabled selected>Type de client</option>
+                                    @foreach ($clientTypes as $ClientType)
+                                        <option value="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
                                     @endforeach
                                 </select>
                             </div>
