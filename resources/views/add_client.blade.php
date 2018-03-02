@@ -24,10 +24,14 @@
     <div class="container-fluid body" style="
     margin-left: 22%;
     margin-right: 22%;">
-        <div class="form">
+        <div class="panel">
+            <div class="panel-heading">
+
             <h4>Ajouter un client</h4>
 
-
+        </div>
+            <div class="panel-body">
+            <div class="form">
                                             <div class="form-group"  >
                                                 <form action="/add" method="POST">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -60,13 +64,14 @@
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="number" placeholder="Adresse" name="number">
                                             </div>
-                                           <button class="btn btn-info" type="submit">Ajouter</button>
+                                           <center><button class="btn btn-info" type="submit">Ajouter</button></center>
 
                                             </form>
                                         </div>
                                         </div>
 
+            </div>
 
-
+    </div>
     </div>
 @endsection

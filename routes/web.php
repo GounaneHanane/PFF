@@ -43,6 +43,7 @@ Route::view('/dashboard', 'Dashboard');
 
 Route::view('/contrat', 'Contrat');
 
+
 Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');
@@ -67,9 +68,7 @@ Route::post("/add_type",'AbonnementsController@saveAbonnement');
 
 
 //Route::get('client/{id}', 'ClientsController@idC');
-=======
 /*Route::post('/addclient',['as'=>'/addClient','uses'=>'ClientsController@saveCustomer']);
->>>>>>> d8e848ec32e30952161019fd74f2ab7bdcec9dcb
 Route::get('customer/','ClientsController@AllC');
 
 */

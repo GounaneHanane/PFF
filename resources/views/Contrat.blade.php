@@ -17,11 +17,12 @@
 
 @section('content')
     <div class="container-fluid body">
-        <div class="form">
-            <h3 class="pull-left"><strong>La liste des contrats</strong></h3>
-        </div>
+
         <div class="panel">
             <div class="panel-heading">
+                <div class="form">
+                    <h3 class="pull-left"><strong>La liste des contrats</strong></h3>
+                </div>
                 <div class="edit">
                     <a href="/addClient" ><span class="glyphicon glyphicon-plus" style=""></span></a>
                     <span class="glyphicon glyphicon-trash trash" style=""></span>
@@ -51,10 +52,11 @@
 
                 </div>
             </div>
-            <table class="table panel-body" id="CustomerTable">
+            <div class="table-div">
+            <table class="table table-bordered panel-body" id="CustomerTable" >
                 <thead>
                 <tr>
-                    <th class="text-center">N°Contart</th>
+                    <th class="text-center" >N°Contart</th>
                     <th class="text-center">Date de debut</th>
                     <th class="text-center">Date de fin</th>
                     <th class="text-center">Nom</th>
@@ -70,6 +72,7 @@
 
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
     </div>
