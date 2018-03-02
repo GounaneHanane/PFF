@@ -29,14 +29,14 @@
                     <table class="table table-bordered" id="vehicles_table">
                         <thead>
                         <tr>
-                            <th>Nom</th>
-                            <th>Télèphone</th>
-                            <th>Contact</th>
-                            <th>Tél de contact</th>
-                            <th>Adresse</th>
-                            <th>Date de fin</th>
-                            <th>Prix</th>
-                            <th></th>
+                                <th class="text-center" style="width:12.5%">NOM</th>
+                            <th class="text-center" style="width:12.5%">TELEPHONE</th>
+                            <th class="text-center" style="width:12.5%">CONTACT</th>
+                            <th class="text-center" style="width:12.5%">TEL CONTACT</th>
+                            <th class="text-center" style="width:12.5%">ADRESSE</th>
+                            <th class="text-center" style="width:12.5%">DATE DE FIN</th>
+                            <th class="text-center" style="width:12.5%">PRIX</th>
+                            <th class="text-center" style="width:12.5%">COCHER</th>
                         </tr>
                         </thead>
                         <tbody>

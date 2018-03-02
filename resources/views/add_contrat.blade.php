@@ -80,14 +80,14 @@
                             <table class="table table-bordered" id="vehicles_table">
                                 <thead>
                                 <tr>
-                                    <th>Matricule</th>
-                                    <th>Marque</th>
-                                    <th>Couleur</th>
-                                    <th>Type de vehicule</th>
-                                    <th>Reference de boîtier</th>
-                                    <th>Type de boîtier</th>
-                                    <th>Type d'abonnement</th>
-                                    <th></th>
+                                    <th  class="text-center" style="width:12.5%">MATRICULE</th>
+                                    <th class="text-center" style="width:12.5%">MARQUE</th>
+                                    <th class="text-center" style="width:12.5%">MODEL</th>
+                                    <th class="text-center" style="width:12.5%">TYPE DE VEHICULE</th>
+                                    <th class="text-center" style="width:12.5%">IMEI</th>
+                                    <th class="text-center" style="width:12.5%">MODEL DU BOÎTIER</th>
+                                    <th class="text-center" style="width:12.5%">TYPE D'ABONNEMENT</th>
+                                    <th class="text-center" style="width:12.5%">COCHER</th>
                                 </tr>
                                 </thead>
                                 <tbody>

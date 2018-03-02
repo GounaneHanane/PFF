@@ -35,12 +35,21 @@ class AbonnementsController extends Controller
 
         return Redirect::to('abonnement');
 
-
+    }
         /*
                 return response('Good'
                 ,200) ->header('Content-Type', 'text/plain');
                 //return response()->json($request['nom']);
                 //echo var_dump($_POST);
         */
-    }
+
+public function DeleteAbonnement($id)
+{
+
+
+    $deleteQuery = DB::table('types_customers_subscribes')->where('id', $id)->delete();
+
+
+    return Redirect::to('abonnement');
+}
 }

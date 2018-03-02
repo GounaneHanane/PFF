@@ -1,140 +1,83 @@
-body,html{
+.nav-side-menu {
+    overflow: auto;
+    font-family: verdana;
+    font-size: 12px;
+    font-weight: 200;
+    background-color: #2e353d;
+    position: fixed;
+    width: 190px;
     height: 100%;
-  }
+    color: #e1ffff;
+    top:0%;
+}
+.row {
+    margin-left: -30px;
+}
+.nav-side-menu .brand {
+    background-color: #2a4f7d;
+    line-height: 50px;
+    display: block;
+    text-align: center;
+    font-size: 14px;
 
-  nav.sidebar, .main{
-    -webkit-transition: margin 200ms ease-out;
-      -moz-transition: margin 200ms ease-out;
-      -o-transition: margin 200ms ease-out;
-      transition: margin 200ms ease-out;
-
-      position: fixed;
-
-  }
-
-
-
-
-  nav
-  {
-     
-  }
-.glyphicon-none:before {
-    content: "\2122";
-    color: transparent !important;
+    padding-top: 8%;
+}
+.nav-side-menu .toggle-btn {
+    display: none;
+}
+.nav-side-menu ul, .nav-side-menu li {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    line-height: 35px;
+    cursor: pointer;
+}
+.nav-side-menu li {
+    padding-left: 0px;
+    border-left: 3px solid #2e353d;
+    border-bottom: 1px solid #23282e;
+}
+menu li {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    line-height: 35px;
+    cursor: pointer;
+}
+.nav-side-menu li a {
+    text-decoration: none;
+    color: #e1ffff;
+}
+.nav-side-menu li:hover {
+    border-left: 3px solid #d19b3d;
+    background-color: #4f5b69;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
-  .main{
-    padding: 10px 10px 0 10px;
-  }
 
- @media (min-width: 765px) {
-
-    .main{
-      position: absolute;
-      width: calc(100% - 40px); 
-      margin-left: 40px;
-      float: right;
-    }
-
-    nav.sidebar:hover + .main{
-      margin-left: 200px;
-    }
-
-    nav.sidebar.navbar.sidebar>.container .navbar-brand, .navbar>.container-fluid .navbar-brand {
-      margin-left: 0px;
-    }
-
-    nav.sidebar .navbar-brand, nav.sidebar .navbar-header{
-      text-align: center;
-      width: 100%;
-      margin-left: 0px;
-    }
-    
-    nav.sidebar a{
-      padding-right: 13px;
-    }
-
-    nav.sidebar .navbar-nav > li:first-child{
-      border-top: 1px #e5e5e5 solid;
-    }
-
-    nav.sidebar .navbar-nav > li{
-      border-bottom: 1px #e5e5e5 solid;
-    }
-
-    nav.sidebar .navbar-nav .open .dropdown-menu {
-      position: static;
-      float: none;
-      width: auto;
-      margin-top: 0;
-      background-color: transparent;
-      border: 0;
-      -webkit-box-shadow: none;
-      box-shadow: none;
-    }
-
-    nav.sidebar .navbar-collapse, nav.sidebar .container-fluid{
-      padding: 0 0px 0 0px;
-    }
-
-
-
-    nav.sidebar{
-      width: 200px;
-      height: 100%;
-      margin-left: -160px;
-      float: left;
-      margin-bottom: 0px;
-    }
-
-    nav.sidebar li {
-      width: 100%;
-    }
-
-    nav.sidebar:hover{
-      margin-left: 0px;
-    }
-
-    .forAnimate{
-      opacity: 0;
-    }
-  }
-  .navbar-default .navbar-nav>li>a {
-    color: white;
+.nav-side-menu li a {
+    width: 100%;
+    display: inline-block;
 }
-  .navbar-default {
-    background-color: #5a5866;
-    border-color: #5a5866;
-
+.nav-side-menu li a i {
+    padding-left: 10px;
+    width: 20px;
+    padding-right: 20px;
 }
-   
-  @media (min-width: 1330px) {
-
-    .main{
-      width: calc(100% - 200px);
-      margin-left: 200px;
-    }
-
-    nav.sidebar{
-      margin-left: 0px;
-      float: left;
-    }
-
-    nav.sidebar .forAnimate{
-      opacity: 1;
-    }
-  }
-
-  nav.sidebar .navbar-nav .open .dropdown-menu>li>a:hover, nav.sidebar .navbar-nav .open .dropdown-menu>li>a:focus {
-    color: #CCC;
-    background-color: transparent;
-  }
-
-  nav:hover .forAnimate{
-    opacity: 1;
-  }
-  section{
-    padding-left: 15px;
-
-  }
+header
+{
+    background-color: white;
+    margin-left: 9%;
+    margin-right: -1%;
+    margin-bottom: 3%;
+    padding-bottom: 17px;
+}
+.user
+{
+    margin-left: 74%;
+    padding-top: 2%;
+}

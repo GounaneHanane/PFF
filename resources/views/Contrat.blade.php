@@ -56,16 +56,16 @@
             <table class="table table-bordered panel-body" id="CustomerTable" >
                 <thead>
                 <tr>
-                    <th class="text-center" >N°Contart</th>
-                    <th class="text-center">Date de debut</th>
-                    <th class="text-center">Date de fin</th>
-                    <th class="text-center">Nom</th>
-                    <th class="text-center">Type de client</th>
-                    <th class="text-center">Contact</th>
-                    <th class="text-center">Tél Contact</th>
-                    <th class="text-center">Nombre de vehicule</th>
+                    <th class="text-center" style="width: 12.5%" >N°CONTRAT</th>
+                    <th class="text-center" style="width: 12.5%">DATE DE DEBUT</th>
+                    <th class="text-center" style="width: 12.5%">DATE DE FIN</th>
+                    <th class="text-center" style="width: 12.5%">NOM</th>
+                    <th class="text-center" style="width: 12.5%">TYPE DE CLIENT</th>
+                    <th class="text-center" style="width: 12.5%">CONTACT</th>
+                    <th class="text-center" style="width: 12.5%">TEL CONTACT</th>
+                    <th class="text-center" style="width: 12.5%">NOMBRE DE VEHICULE</th>
 
-                    <th></th>
+                    <th class="text-center" style="width: 12.5%">COCHER</th>
                 </tr>
                 </thead>
                 <tbody>

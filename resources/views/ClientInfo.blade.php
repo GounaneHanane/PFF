@@ -75,7 +75,7 @@
                 </table>
                 <div class="form-group buttons">
                     <button class="form-control btn btn-info">Contrat</button>
-                    <button class="form-control btn btn-info" onclick="window.open('editClient.html','_self')">Modifier le client</button>
+                    <a href="http://127.0.0.1:8000/editclient"><button class="form-control btn btn-info" >Modifier le client</button></a>
                     <button class="btn btn-info">Supprimer le client</button>
                     </center>
                 </div>
@@ -108,15 +108,15 @@
                     <table class="table table-bordered" id="vehicles_table">
                         <thead>
                         <tr>
-                            <th>Matricule</th>
-                            <th>Marque</th>
-                            <th>Couleur</th>
-                            <th>Type de vehicule</th>
-                            <th>Reference de boîtier</th>
-                            <th>Type de boîtier</th>
-                            <th>Type d'abonnement</th>
-                            <th>Prix</th>
-                            <th>Date d'ajout</th>
+                            <th class="text-center" style="width:11.11%">MATRICULE</th>
+                            <th class="text-center" style="width:11.11%">MARQUE</th>
+                            <th class="text-center" style="width:11.11%">MODEL</th>
+                            <th class="text-center" style="width:11.11%">TYPE DE VEHICULE</th>
+                            <th class="text-center" style="width:11.11%">IMEI</th>
+                            <th class="text-center" style="width:11.11%">MODEL DE BOITIER</th>
+                            <th class="text-center" style="width:11.11%">TYPE D'ABONNEMENT</th>
+                            <th class="text-center" style="width:11.11%">PRIX</th>
+                            <th class="text-center" style="width:11.11%">DATE D'AJOUT</th>
                         </tr>
                         </thead>
                         <tbody>
