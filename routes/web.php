@@ -55,6 +55,7 @@ Route::view('/addClient', 'add_client');
 
 
 Route::get('deleteAbonnement/{id}','AbonnementsController@deleteAbonnement');
+Route::post('/updateAbonnement','AbonnementsController@updateAbonnement');
 Route::post('/add','ClientsController@saveCustomer');
 Route::post("/add_type",'AbonnementsController@saveAbonnement');
 Route::post('/contract/addVehicule/{idContract}','ContratController@addVehicule');
