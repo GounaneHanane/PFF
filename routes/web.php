@@ -30,6 +30,8 @@ Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
 Route::get('/clients/delete/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
+Route::get('/clients/city/{city}', 'ClientsController@CustomerCity');
+
 Route::get('/abonnement', 'AbonnementsController@idAbonnement');
 Route::view('/addcontrat', 'add_contrat');
 Route::view('/clientinfo', 'ClientInfo');
@@ -40,7 +42,7 @@ Route::view('/alertes', 'Alertes');
 Route::view('/dashboard', 'Dashboard');
 
 Route::view('/contrat', 'Contrat');
-=======
+
 Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');

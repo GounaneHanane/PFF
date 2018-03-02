@@ -39,12 +39,23 @@
                     <div class="form-group">
                         <table>
                             <form class="form" method="post" onclick="e.preventDefault()">
-                                <select class="form-control col-sm-3" style=" width: 35%; margin-left: 4%;">
+                                <select id="critiere" class="form-control col-sm-3" style=" width: 35%; margin-left: 4%;">
                                     <option value="matricule" disabled selected>Rechercher par --</option>
                                     <option value="nom">Nom</option>
                                     <option value="type_de_client">Type de client</option>
+                                    <option value="city">ville</option>
                                 </select>
-                                <input type="text" name="search" id="search_input" class="form-control col-sm-3" style=" width: 35%;     margin-left: 4%;" >
+                                <div class="">
+                                     <input type="text" name="search" id="search_input" class="form-control col-sm-3" placeholder="Rechecher un nom" style=" width: 35%;  display:none;   margin-left: 4%;" />
+                                          <select id="TypesClients"  class="form-control col-sm-3" style="display: none; width: 35%; margin-left: 4%;">
+                                              <option disabled selected>Types Clients</option>
+                                              @foreach($type_client as $type)
+                                                  <option value="{{$type->type}}">{{$type->type}}</option>
+                                              @endforeach
+                                          </select>
+                                       <input type="text" id="city_input" class="form-control col-sm-3"  placeholder="Rechercher par ville" style=" width: 35%;  display:none;   margin-left: 4%;" />
+
+                                </div>
                                 <button class="btn btn-info col-sm-3" type="button" id="search" style="width: 11%;     margin-left: 6%;">Rechercher</button>
                             </form>
                         </table>

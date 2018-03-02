@@ -103,7 +103,9 @@ class ClientsController extends Controller
         //return response('correct', 200)::json($c);
         //return response()->json($c);
 
-        return view('client',['client'=>$c]);
+        $type_client =  DB::table('types_customers')->get();
+
+        return view('client',['client'=>$c,'type_client'=>$type_client]);
     }
     public function Contrat()
     {
@@ -137,7 +139,7 @@ class ClientsController extends Controller
     public function CustomerName($name)
     {
         //$name = $request->input('name');
-        $c = DB::table('customers')->where('name', '=', $name)
+        $c = DB::table('customers')->where('name', 'like', $name."%")
 
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
             ->join('contracts','customers.id','=','contracts.id_customer')
@@ -148,9 +150,19 @@ class ClientsController extends Controller
     }
     public function CustomerType($type)
     {
-        $c = DB::table('types_customers')->where('types_customers.type', 'like', "%".$type."%")
+        $c = DB::table('types_customers')->where('types_customers.type', '=', $type)
 
             ->join('customers', 'types_customers.id', '=', 'customers.id_type_customer')
+            ->join('contracts','customers.id','=','contracts.id_customer')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
+        return view('ClientsLines',['client'=>$c]);
+    }
+
+    public function CustomerCity($city)
+    {
+        $c = DB::table('customers')->where('city', 'like', "%".$city."%")
+            ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
+
             ->join('contracts','customers.id','=','contracts.id_customer')
             ->select('customers.*','types_customers.*','contracts.id as id_contract')->get();
         return view('ClientsLines',['client'=>$c]);
@@ -199,10 +211,7 @@ class ClientsController extends Controller
         */
     }
 
-    public function json(Request $request)
-    {
-       return $request->input('v');
-    }
+
 
 }
 
