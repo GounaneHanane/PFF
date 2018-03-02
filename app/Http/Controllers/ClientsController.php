@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customers;
+use  App\Models\Contract;
 use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Facades\Redirect;
@@ -98,6 +99,9 @@ class ClientsController extends Controller
 
 
 
+
+
+
        // return Illuminate\Routing\ResponseFactory::json($c);
        // json_encode($c);
         //return response('correct', 200)::json($c);
@@ -120,10 +124,10 @@ class ClientsController extends Controller
 
             ->join('contracts','customers.id','=','contracts.id_customer')
 
+            ->join('details','details.id_contract','contrats.id')
 
 
-
-            ->select('customers.*','types_customers.*','contracts.id as id_contract')
+            ->select('customers.*','types_customers.*','contracts.id as id_contract','count(details) as NumVehicule')
 
             ->get();
 
@@ -189,7 +193,6 @@ class ClientsController extends Controller
     {
         $customer = new Customers();
         $customer->name = $request->input('nom');
-
         $customer->contact = $request->input('contact');
         $customer->contact_phone = $request->input('NContact');
         $customer->email = $request->input('mail');
@@ -197,10 +200,26 @@ class ClientsController extends Controller
         $customer->phone = $request->input('phone');
         $customer->id_type_customer = 1;
 
+
+
+
         $customer->save();
 
+        $customerId = DB::table('customers')->where('name','=',$request->input('nom'))->
+            select('customers.id')->pluck('id')->first();
 
-        return Redirect::to('addcontrat');
+        $contract = new Contract();
+        $contract->id_customer = $customerId;
+        $today = date("Y-m-d H:i:s");
+        $contract->start_date =  $today;
+        $date = date_create($today);
+        date_modify($date, '+1 year');
+        $contract->urlContract = "/contractPdf/".$request->input('nom');
+        $contract->end_date = date_format($date, 'Y-m-d H:i:s');
+        $contract->save();
+
+
+        return Redirect::to('addcontrat/'.$customer->name);
 
 
         /*

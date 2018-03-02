@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/css/form.css" />
     <script  src="/js/search.js"></script>
     <script  src="/js/delete.js"></script>
-    <script  src="/js/add_contrat.js"></script>
 @endsection
 
 
@@ -17,6 +16,8 @@
     @parent
 
 @endsection
+
+
 
 @section('content')
     <script
@@ -30,50 +31,51 @@
             </div>
             <div class="panel-body">
                 <div class="form" >
-                    <form onsubmit="event.preventDefault();" method="post" >
+                    <form action="/contract/addVehicule/{{$id_contract}}" method="post" >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="contrat_save" placeholder="N°Contrat" name="cin">
+                            <input type="text" class="form-control" id="contrat_save" disabled placeholder="{{ $id_contract}}" name="cin" />
+
                         </div>
                         <hr>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="matricule" placeholder="Matricule"  name="nom">
+                            <input type="text" class="form-control" id="matricule" placeholder="Matricule"  name="matricule">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="matricule" placeholder="Marque"  name="nom">
+                            <input type="text" class="form-control" id="matricule" placeholder="Marque"  name="mark">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="couleur" placeholder="Couleur" name="prn">
+                            <input type="text" class="form-control" id="couleur" placeholder="Modele" name="model">
                         </div>
-                        <div class="form-group">
-                            <select class="form-control" id="type_vehicule">
-                                <option value="" disabled selected>Type de vehicule</option>
-                                <option value="transport" >Transport</option>
-                            </select>
-                        </div>
+
                         <hr>
                         <div class="form-group">
                             <input type="text" class="form-control" id="reference_boitier" placeholder="Réference de boitier" name="reference_boitier">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="type_boitier">
+                            <select class="form-control" id="type_boitier" name="type_boitier">
                                 <option value="" disabled selected>Type de boîtier</option>
                                 <option value="avance" >Avancé</option>
                             </select>
                         </div><hr>
                         <div class="form-group">
-                            <select class="form-control" id="type_abonnement">
-                                <option value="" disabled selected>Type d'abonnement</option>
-                                <option value="lite">Lite</option>
+                            <select class="form-control" id="type_abonnement" name="type_abonnement">
+                                <option disabled selected>Types Abonnements</option>
+                            @foreach($types_subscribe as $type)
+                                    <option value="{{$type->id}}">{{$type->type}}</option>
+                                @endforeach
                             </select>
                         </div>
-                        <div class="form-group addcar">
-                            <span class="glyphicon glyphicon-plus plus"></span> Ajouter une voiture
+                        <div class="form-group addcar" >
+                            <button class="btn btn-info" type="submit" id="Add" style="    width: 101%;"> <span class="glyphicon glyphicon-plus plus"></span> Ajouter une véhicule</button>
                         </div>
+
                         <div>
                             <span class="glyphicon glyphicon-pencil edit edit_pencil" ></span>
                             <span class="glyphicon glyphicon-trash edit trash "></span>
                         </div>
+
+
                         <div class="table-div">
                             <table class="table table-bordered" id="vehicles_table">
                                 <thead>
@@ -89,6 +91,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                   @foreach($details as $detail)
+                                     <tr>
+                                         <td>{{$detail->car_number}}</td>
+                                         <td>{{$detail->mark}}</td>
+                                         <td>X</td>
+                                         <td>X</td>
+                                         <td>{{$detail->reference}}</td>
+                                         <td>{{$detail->type_box}}</td>
+                                         <td>{{$detail->type}}</td>
+                                         <td><input type="checkbox" id="checkCont"/></td>
+                                     </tr>
+                                       @endforeach
                                 </tbody>
                             </table>
                             <center><button class="btn btn-info" id="Add" onclick="">Ajouter</button></center>
