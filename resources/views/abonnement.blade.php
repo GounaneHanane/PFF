@@ -34,12 +34,12 @@
                     <table class="table table-bordered" id="vehicles_table">
                         <thead>
                         <tr>
-                            <th>Type d'abonnement</th>
-                            <th>Type de client</th>
-                            <th>Prix</th>
-                            <th>Nombre de clients</th>
-                            <th>Nombre de vehicules</th>
-                            <th></th>
+                            <th class="text-center" style="width:16.66%">TYPE D'ABONNEMENT</th>
+                            <th class="text-center" style="width:16.66%">TYPE DE CLIENT</th>
+                            <th class="text-center" style="width:16.66%">PRIX</th>
+                            <th class="text-center" style="width:16.66%">NOMBRE DE CLIENTS</th>
+                            <th class="text-center" style="width:16.66%">NOMBRE DE VEHICULES</th>
+                            <th class="text-center" style="width:16.66%">COCHER</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -47,12 +47,12 @@
                             <tr id="{{ $A->id }}" style="cursor: pointer;" >
 
 
-                                <td>{{ $A->ClientType}}</td>
-                                <td>{{ $A->AbonnementType}}</td>
-                                <td>{{ $A->price }}</td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="checkbox"></td>
+                                <td class="text-center">{{ $A->ClientType}}</td>
+                                <td class="text-center">{{ $A->AbonnementType}}</td>
+                                <td class="text-center">{{ $A->price }}</td>
+                                <td class="text-center"></td>
+                                <td class="text-center"></td>
+                                <td class="text-center"><input type="checkbox"></td>
                             </tr>
                         @endforeach
                         </tbody>

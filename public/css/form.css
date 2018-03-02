@@ -119,4 +119,11 @@ body
 {
 	border:1px solid #f4f4f4;
 	width:100%;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333;
+}
+thead tr
+{
+	color: #2a4f7d;
 }

@@ -71,34 +71,34 @@
                 <table class="table table-bordered" id="CustomerTable">
                     <thead>
                     <tr>
-                        <th>Nom</th>
-                        <th>Ville</th>
-                        <th>Télèphone</th>
-                        <th>Mail</th>
-                        <th>Type de client</th>
-                        <th>Contact</th>
-                        <th>Tél Contact</th>
-                        <th>Adresse</th>
-                        <th>Nombre de vehicule</th>
-                        <th>N°Contrat</th>
-                        <th></th>
+                        <th class="text-center" style="width: 9.09%">NOM</th>
+                        <th class="text-center" style="width: 9.09%">VILLE</th>
+                        <th class="text-center" style="width: 9.09%">TELEPHONE</th>
+                        <th class="text-center" style="width: 9.09%">MAIL</th>
+                        <th class="text-center" style="width: 9.09%">TYPE DE CLIENT</th>
+                        <th class="text-center" style="width: 9.09%">CONTACT</th>
+                        <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
+                        <th class="text-center" style="width: 9.09%">ADRESSE</th>
+                        <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULES</th>
+                        <th class="text-center" style="width: 9.09%">N°CONTRAT</th>
+                        <th class="text-center" style="width: 9.09%">COCHER</th>
                     </tr>
                     </thead>
                    <tbody>
                     @foreach ($client as $c)
                       <tr id="{{ $c->id }}" style="cursor: pointer;" onclick="window.open('http://127.0.0.1:8000/clients/{{$c->name}}/info/','_self');" >
 
-                        <td>{{ $c->name }}</td>
-                        <td>{{ $c->city }}</td>
-                        <td>{{ $c->phone }}</td>
-                        <td>{{ $c->email }}</td>
-                        <td>{{ $c->type }}</td>
-                        <td>{{ $c->contact }}</td>
-                        <td>{{$c->contact_phone }}</td>
-                         <td> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
-                         <td>X</td>
-                          <td>{{ $c->id_contract }}</td>
-                          <td><input type="checkbox" id="checkCust"/></td>
+                        <td class="text-center">{{ $c->name }}</td>
+                        <td class="text-center">{{ $c->city }}</td>
+                        <td class="text-center">{{ $c->phone }}</td>
+                        <td class="text-center">{{ $c->email }}</td>
+                        <td class="text-center">{{ $c->type }}</td>
+                        <td class="text-center">{{ $c->contact }}</td>
+                        <td class="text-center">{{$c->contact_phone }}</td>
+                         <td class="text-center"> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
+                         <td class="text-center">X</td>
+                          <td class="text-center">{{ $c->id_contract }}</td>
+                          <td class="text-center"><input type="checkbox" id="checkCust"/></td>
                       </tr>
                     @endforeach
                    </tbody>
