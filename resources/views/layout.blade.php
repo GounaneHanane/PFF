@@ -25,7 +25,7 @@
 <header>
     <div class="user">
         <i class="glyphicon glyphicon-user" style="    float: left;
-    padding-right: 8px;   "></i>Bonjour :
+    padding-right: 8px;   "></i>Bonjour : Admin
     </div>
 </header>
 <div  class="container-fluid">

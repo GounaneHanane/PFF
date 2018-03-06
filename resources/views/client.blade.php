@@ -35,7 +35,6 @@
                 </div>
                 <div class="edit">
                     <a href="/addClient" ><span class="glyphicon glyphicon-plus" style=""></span></a>
-                    <span class="glyphicon glyphicon-trash trash" style=""></span>
                     <span class="glyphicon glyphicon-refresh" id="refresh"></span>
                 </div>
                 <div class="panel panel-default">

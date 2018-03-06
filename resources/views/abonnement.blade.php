@@ -90,7 +90,7 @@
                                 <select id="type_abonnement" name="type_abonnement" class="form-control">
                                     <option disabled selected>Type d'abonnement</option>
                                     @foreach ($abonnementTypes as $AbonnementType)
-                                        <option id="type_abonnement" name="{{ $AbonnementType->AbonnementType}}" value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
+                                        <option id="type_abonnement"  name="{{ $AbonnementType->AbonnementType}}" value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -98,7 +98,7 @@
                                 <select id="type_client" name="type_client" class="form-control">
                                     <option disabled selected>Type de client</option>
                                     @foreach ($clientTypes as $ClientType)
-                                        <option id="type_client" name="{{ $ClientType->ClientType}}" value="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
+                                        <option id="type_client"  name="{{ $ClientType->ClientType}}" value="{{$ClientType->ClientTypeId}}">{{ $ClientType->ClientType}}</option>
                                     @endforeach
                                 </select>
                             </div>
