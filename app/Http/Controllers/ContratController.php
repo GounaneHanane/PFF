@@ -33,7 +33,7 @@ class ContratController extends Controller
              select('vehicles.*','boxes.*','types_subscribes.*')->get();
 
 
-       return view('add_contrat',['types_subscribe'=>$typesSubscribes , 'id_contract'=>$contratId , 'details'=>$details]);
+       return view('add_client',['types_subscribe'=>$typesSubscribes , 'id_contract'=>$contratId , 'details'=>$details]);
 
    }
 
@@ -89,7 +89,7 @@ class ContratController extends Controller
 
        $detail->save();
 
-       return Redirect::to('addcontrat/'.$CustomerName);
+       return Redirect::to('add_client'.$CustomerName);
 
    }
 

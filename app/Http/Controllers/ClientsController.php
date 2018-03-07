@@ -221,6 +221,8 @@ class ClientsController extends Controller
         ]);
 
 */
+       /*
+ 
         $customer = new Customers();
         $customer->name = $request->input('nom');
         $customer->contact = $request->input('contact');
@@ -236,6 +238,7 @@ class ClientsController extends Controller
 
 
         $customer->save();
+       $customer->save();
 
         $customerId = DB::table('customers')->where('name','=',$request->input('nom'))->
             select('customers.id')->pluck('id')->first();
@@ -251,9 +254,10 @@ class ClientsController extends Controller
         $contract->save();
 
 
-        return Redirect::to('addcontrat/'.$customer->name);
+         return Redirect::to('/addClient');
 
-
+         */
+          return response($request->all());
         /*
                 return response('Good'
                 ,200) ->header('Content-Type', 'text/plain');
@@ -261,6 +265,7 @@ class ClientsController extends Controller
                 //echo var_dump($_POST);
         */
     }
+
 
     public function CustomerInfo($name)
     {
