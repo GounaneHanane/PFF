@@ -88,7 +88,7 @@
                    <tbody>
                      <?php $i = 1; ?>
                     @foreach ($client as $c)
-                      <tr id="{{ $c->id }}" style="cursor: pointer;"  >
+                      <tr id="{{ $c->idCustomer }}" style="cursor: pointer;"  >
 
 
 
@@ -99,11 +99,11 @@
                         <td class="text-center">{{ $c->type }}</td>
                         <td class="text-center">{{ $c->contact }}</td>
                         <td class="text-center">{{$c->contact_phone }}</td>
-                         <td class="text-center"> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
+                         <td class="text-center"> {{ $c->address }}</td>
                          <td class="text-center">{{ $c->vehicles }}</td>
                           <td class="text-center">{{ $c->id_contract }}</td>
 
-                          <td class="text-center"><a class="btn btn-danger" > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                          <td class="text-center"><a href="/clients/delete/{{$c->idCustomer}}" class="btn btn-danger" > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
                               <a class=" btn btn-primary" href="/clientinfo/{{$c->name}}" id="edit_abonnement"><span class="glyphicon glyphicon-info-sign edit edit_pencil "></span></a></td>
                       </tr>
                         <?php $i++; ?>

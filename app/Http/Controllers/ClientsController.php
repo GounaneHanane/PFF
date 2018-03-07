@@ -88,13 +88,14 @@ class ClientsController extends Controller
     public function idC()
     {
         $c = DB::table('customers')
+            ->where('customers.isActive','=',1)
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
 
 
             ->join('contracts','customers.id','=','contracts.id_customer')
            // CV is view couting details per contract
             ->join('cv','cv.id_contract','contracts.id')
-            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
+            ->select('customers.*' , 'customers.id as idCustomer','types_customers.*','contracts.id as id_contract','cv.vehicles')
 
             ->get();
 
@@ -190,10 +191,13 @@ class ClientsController extends Controller
     {
 
 
-        $deleteQuery = DB::table('customers')->where('id', $id)->delete();
+        $disableCustomers = DB::table('customers')->where('customers.id','=',$id)->update(['isActive' => 0]);
+        //$disableContracts = DB::table('contracts')->where('contracts.id_customer','=',$id)->update(['isActive' => 0]);
 
-        return response('Le client a été supprimé', 200)
-            ->header('Content-Type', 'text/plain');
+
+
+        return Redirect::to('/clients');
+
     }/*
     public function AddCustomer($nom,$contact)
     {
@@ -205,6 +209,18 @@ class ClientsController extends Controller
 
     public function saveCustomer(Request $request)
     {
+        /*
+        $request->validate([
+            'name' => 'required|unique:posts|max:255',
+            'contact' => 'required',
+            'contact_phone' => 'required',
+            'email' => 'required|unique:posts|max:255',
+            'city' => 'required',
+            'phone' => 'required',
+            'address'=>'required'
+        ]);
+
+*/
         $customer = new Customers();
         $customer->name = $request->input('nom');
         $customer->contact = $request->input('contact');
@@ -213,6 +229,8 @@ class ClientsController extends Controller
         $customer->city = $request->input('city');
         $customer->phone = $request->input('phone');
         $customer->id_type_customer = 1;
+        $customer->address = "iufgdfu";
+        $customer->isactive=1;
 
 
 

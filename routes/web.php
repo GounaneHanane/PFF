@@ -27,7 +27,7 @@ Route::view('/home', 'home');
 Route::get('/clients/', 'ClientsController@idC');
 Route::get('/clients/all','ClientsController@AllC');
 Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
-Route::get('/clients/delete/{name}', 'ClientsController@DeleteCustomer');
+Route::get('/clients/delete/{id}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
 Route::get('/clients/city/{city}', 'ClientsController@CustomerCity');

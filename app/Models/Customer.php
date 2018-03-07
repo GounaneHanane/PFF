@@ -44,7 +44,8 @@ class Customer extends Eloquent
 		'email',
 		'city',
 		'phone',
-		'id_type_customer'
+		'id_type_customer',
+        'isActive'
 	];
 
 	public function types_customer()
