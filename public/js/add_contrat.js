@@ -16,12 +16,11 @@ $(document).ready(function(){
 
 
 
-        // if(matricule=="" || couleur=="" || type_vehicule=="" || marque=="" || reference_boitier=="" || type_abonnement=="" || type_boitier=="" )
-        // {
-        // 	alert("Veuillez entrer tous les champs!");
-        // }
-        // else
-        // {
+         if(matricule=="" || couleur=="" || type_vehicule=="" || marque=="" || reference_boitier=="" || type_abonnement=="" || type_boitier=="" )
+         {
+        	alert("Veuillez entrer tous les champs!");}
+        else
+         {
         //obj=JSON.parse(vehicles);
         vehicles.tab_num_contart = contract;
         vehicles.tab_matricule = matricule;
@@ -43,7 +42,7 @@ $(document).ready(function(){
         $("#type_boitier").val('');
         $("#type_abonnement").val('');
         i++;
-        //}
+        }
     });
     $(".trash").click(function(){
         alert("x");
@@ -100,5 +99,37 @@ $(document).ready(function(){
        });
 
    })
+    $('#saveContrat :input').attr('disabled', true);
+    $('#contrat :input').attr('disabled', true);
+    $('#AddVehicles').click(function () {
+        $('#saveContrat :input').attr('disabled', false);
+        document.getElementById("saveContrat").style.opacity = "1";
+        window.location.href = '#saveContrat';
+        document.getElementById("contrat").style.opacity = "0.2";
+        $('#contrat :input').attr('disabled', true);
+    });
 });
+function addClient() {
+    var nom = $("#nom").val();
+    var city=$("#city").val();
+    var phone=$("#phone").val();
+    var mail=$("#mail").val();
+    var type_client=$("#type_client").val();
+    var contact=$("#contact").val();
+    var ncontact=$("#ncontact").val();
+    var address=$("#address").val();
+    if(nom=="" || city=="" || phone=="" || mail=="" || type_client=="" || contact=="" || ncontact==""|| address=="" )
+    {
+        alert("Veuillez entrer tous les champs!");
+    }
+    else {
+       // document.getElementById("client_form").action="/add";alert("2");
+       // document.getElementById("add_client").type="submit";
+        $('#contrat :input').attr('disabled', false);
+        document.getElementById("contrat").style.opacity = "1";
+        window.location.href = '#contrat';
+        document.getElementById("client").style.opacity = "0.2";
+        $('#client :input').attr('disabled', true);
 
+    }
+}

@@ -29,9 +29,7 @@ function addType()
 function addOrEdit() {
     if(document.getElementById("addOrEditButton").firstChild.data=="Modifier")
     {
-        /*var typeClientId=document.getElementById('type_client').value;
-        var typeAbonnmenetId=document.getElementById('type_abonnement').value;
-        var price=document.getElementById('price').value;*/
+
         document.getElementById("addOrEdit").action="updateAbonnement/";
 
 
