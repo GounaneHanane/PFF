@@ -17,7 +17,9 @@ $(document).ready(function(){
                     function (data, status) {
                         $('tbody *').remove();
                         $('tbody').prepend(data);
-                    });
+                    }
+
+                    );
 
 
             }

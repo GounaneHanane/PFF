@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use Response;
+use Validator;
 use Illuminate\Support\Facades\DB;
 class ContratController extends Controller
 {
@@ -37,59 +38,104 @@ class ContratController extends Controller
 
    }
 
-   public function addVehicule(Request $request,$idContract)
+   public function addVehicule(Request $request)
    {
-       $vehicle = new Vehicle();
-       $vehicle->car_number = $request->input('matricule');
-       $vehicle->mark = $request->input('mark');
-       $vehicle->add_date = date("Y-m-d H:i:s");
 
-       $vehicle->save();
-
-       $box = new Box();
-       $box->reference = $request->input('reference_boitier');
-       $box->type_box = $request->input('type_boitier');
-       $box->numero_operetor = "0645209199";
-
-       $box->save();
-
-       $VehicleId = DB::table('vehicles')->where('car_number','=',$request->input('matricule'))->
-       select('vehicles.id')->pluck('id')->first();
+       $messages = [
+           'required' => strtoupper(':attribute') .' est obligatoire',
+           'unique' => strtoupper(':attribute').' est déja existe'
+       ];
 
 
-       $BoxId = DB::table('boxes')->where('reference','=',$request->input('reference_boitier'))->
-       select('boxes.id')->pluck('id')->first();
 
 
-       $idTypeSubscribe  = $request->input('type_abonnement');
 
-       $idTypeCustomer = DB::table('contracts')->where('contracts.id','=',$idContract)->
-           join('customers','customers.id','contracts.id_customer')->
-           join('types_customers','types_customers.id','customers.id_type_customer')->
+
+       $validator = Validator::make($request->all(), [
+           'matricule' => 'required|unique:vehicles,car_number',
+           'mark' => 'required',
+           'modele' => 'required',
+           'reference_boitier' => 'required',
+           'type_boitier' => 'required',
+           'type_abonnement' => 'required',
+
+
+
+       ],$messages);
+
+       if ($validator->fails())
+       {
+           $errors = $validator->errors();
+
+
+
+           return response()->json([
+               'success' => false,
+               'message' => $errors
+           ], 422);
+       }
+
+       else {
+
+
+           $idContract = $request->input('idContract');
+           $vehicle = new Vehicle();
+           $vehicle->car_number = $request->input('matricule');
+           $vehicle->mark = $request->input('mark');
+           $vehicle->model = $request->input('modele');
+           $vehicle->add_date = date("Y-m-d H:i:s");
+
+           $vehicle->save();
+
+           $box = new Box();
+           $box->reference = $request->input('reference_boitier');
+           $box->type_box = $request->input('type_boitier');
+           $box->numero_operetor = "0645209199";
+
+           $box->save();
+
+
+           $VehicleId = DB::table('vehicles')->where('car_number', '=', $request->input('matricule'))->
+           select('vehicles.id')->pluck('id')->first();
+
+
+           $BoxId = DB::table('boxes')->where('reference', '=', $request->input('reference_boitier'))->
+           select('boxes.id')->pluck('id')->first();
+
+
+           $idTypeSubscribe = DB::table('types_subscribes')->where('type', '=', $request->input('type_abonnement'))->select('types_subscribes.id')->pluck('id')->first();
+
+           $idTypeCustomer = DB::table('contracts')->where('contracts.id', '=', $idContract)->
+           join('customers', 'customers.id', 'contracts.id_customer')->
+           join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
            select('types_customers.id')->pluck('id')->first();
 
-       $TypeCustomerSubscribe = DB::table('types_customers_subscribes')->where('id_subscribe','=',$idTypeSubscribe)
-           ->where('id_type_customer','=',$idTypeCustomer)->select('types_customers_subscribes.*');
+           $TypeCustomerSubscribe = DB::table('types_customers_subscribes')->where('id_subscribe', '=', $idTypeSubscribe)
+               ->where('id_type_customer', '=', $idTypeCustomer)->select('types_customers_subscribes.*');
 
-       $idTypeCustomerSubscribe = $TypeCustomerSubscribe->pluck('id')->first();
-       $price = $TypeCustomerSubscribe->pluck('price')->first();
+           $idTypeCustomerSubscribe = $TypeCustomerSubscribe->pluck('id')->first();
+           $price = $TypeCustomerSubscribe->pluck('price')->first();
 
-       $CustomerName = DB::table('contracts')->where('contracts.id','=',$idContract)->
-           join('customers','customers.id','contracts.id_customer')->
+           $CustomerName = DB::table('contracts')->where('contracts.id', '=', $idContract)->
+           join('customers', 'customers.id', 'contracts.id_customer')->
            select('customers.name')->pluck('name')->first();
 
 
-       $detail = new Detail();
-       $detail->id_contract = $idContract;
-       $detail->id_vehicle = $VehicleId;
-       $detail->id_type_customer_subscribe = $idTypeCustomerSubscribe;
-       $detail->id_boxe = $BoxId;
-       $detail->price = $price;
-       $detail->offer = 0;
+           $detail = new Detail();
+           $detail->id_contract = $idContract;
+           $detail->id_vehicle = $VehicleId;
+           $detail->id_type_customer_subscribe = $idTypeCustomerSubscribe;
+           $detail->id_boxe = $BoxId;
+           $detail->price = $price;
+           $detail->offer = 0;
 
-       $detail->save();
+           $detail->save();
 
-       return Redirect::to('add_client'.$CustomerName);
+           return response($VehicleId . $BoxId . $idTypeSubscribe . $idTypeCustomer . $idTypeCustomerSubscribe . $price . $CustomerName);
+
+
+       }
+
 
    }
 

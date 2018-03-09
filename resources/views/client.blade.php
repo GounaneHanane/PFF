@@ -53,7 +53,7 @@
                                         <select id="TypesClients"  class="form-control col-sm-3" style="display: none; width: 35%; margin-left: 4%;">
                                             <option disabled selected>Types Clients</option>
                                             @foreach($type_client as $type)
-                                                <option value="{{$type->type}}">{{$type->type}}</option>
+                                                <option value="{{$type->id}}">{{$type->type}}</option>
                                             @endforeach
                                         </select>
                                         <input type="text" id="city_input" class="form-control col-sm-3"  placeholder="Rechercher par ville" style=" width: 35%;  display:none;   margin-left: 4%;" />
