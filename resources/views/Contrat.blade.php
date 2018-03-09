@@ -150,7 +150,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="checkbox" id="newVehicleCombo" onclick=""> Nouveau vehicule
+                                                        <input type="checkbox" id="newVehicleCombo" onclick="addVehicle()"> Nouveau vehicule
                                                     </div>
                                                     <div class="form-group" id="newVehicle" style="display: none">
                                                         <input type="text" class="form-control">

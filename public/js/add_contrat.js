@@ -344,3 +344,18 @@ function addOrEdit() {
 
 
 }
+var checkVehicle=true;
+function addVehicle() {
+    if(checkVehicle==true)
+    {
+        checkVehicle=false;
+        document.getElementById('newVehicle').style.display='inline';
+        document.getElementById('selectVehicle').style.display='none';
+    }
+    else
+    {
+        checkVehicle=true;
+        document.getElementById('newVehicle').style.display='none';
+        document.getElementById('selectVehicle').style.display='inline';
+    }
+}
