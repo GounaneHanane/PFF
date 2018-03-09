@@ -91,7 +91,9 @@
                                     </div>
                                     <hr>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="matricule" placeholder="Matricule"  name="matricule">
+                                        <select class="form-control" id="type_abonnement" name="type_abonnement">
+                                            <option value="1" disabled selected>Matricule</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="mark" placeholder="Marque"  name="mark">
