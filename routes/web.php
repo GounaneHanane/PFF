@@ -25,6 +25,7 @@ Route::get('/foo', function () {
 
 Route::view('/home', 'home');
 Route::get('/clients/', 'ClientsController@idC');
+Route::get('/contrat/', 'ContratController@contrat');
 Route::get('/clients/all','ClientsController@AllC');
 Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
 Route::get('/clients/delete/{id}', 'ClientsController@DeleteCustomer');
@@ -41,7 +42,7 @@ Route::view('/login', 'Login');
 Route::view('/alertes', 'Alertes');
 Route::view('/dashboard', 'Dashboard');
 
-Route::view('/contrat', 'Contrat');
+//Route::view('/contrat', 'Contrat');
 
 Route::view('/home', 'home');
 Route::post('/contract','ClientsController@json');
