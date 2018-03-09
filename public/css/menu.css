@@ -58,7 +58,23 @@ menu li {
     transition: all 1s ease;
 }
 
+.dropdown
+{
 
+    float: right;
+    margin-right: 2%;
+    margin-top: 1%;
+}
+#notif_icon
+{
+    float: right;
+    margin-right: 2%;
+    margin-top: 1%;
+}
+#setting
+{
+    height: 36%;
+}
 .nav-side-menu li a {
     width: 100%;
     display: inline-block;
@@ -69,12 +85,13 @@ menu li {
     padding-right: 20px;
 }
 header
-{
-    background-color: white;
-    margin-left: 9%;
-    margin-right: -1%;
-    margin-bottom: 3%;
-    padding-bottom: 17px;
+{    position: fixed;
+    top: 0;
+    background-color: #fff;
+    width: 100%;
+    height: 72px;
+    line-height: 18px;
+    z-index: 1;
 }
 .user
 {

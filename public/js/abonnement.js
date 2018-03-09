@@ -1,9 +1,25 @@
 
 function addType()
 {
+    var tabAbonnement=document.getElementById("type_abonnement");
+    var tabClient=document.getElementById("type_client");
+    var tabClienttLength=tabClient.length;
+    var tabAbonnementLength=tabAbonnement.length;
     document.getElementById('add_dialog').showModal();
+    document.getElementById("add_title").style.display="inline";
     document.getElementById("edit_title").style.display="none";
     document.getElementById("addOrEditButton").firstChild.data="Ajouter";
+    document.getElementById("price").value="";
+    for(var i=0;i<tabAbonnementLength;i++)
+    {
+        if(tabAbonnement[i].id=="defaultAbo")
+            tabAbonnement[i].selected=true;
+    }
+    for(var i=0;i<tabClienttLength;i++)
+    {
+        if(tabClient[i].id=="defaultCli")
+            tabClient[i].selected=true;
+    }
 }
     function ShowType(typeClientId,typeAbonnmenetId,price) {
 
@@ -12,6 +28,7 @@ function addType()
         var tabClient=document.getElementById("type_client");
         var tabClienttLength=tabClient.length;
       var tabAbonnementLength=tabAbonnement.length;
+        document.getElementById("edit_title").style.display="inline";
       document.getElementById("add_title").style.display="none";
         document.getElementById("addOrEditButton").firstChild.data="Modifier";
        for(var i=0;i<tabAbonnementLength;i++)

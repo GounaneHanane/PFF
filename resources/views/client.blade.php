@@ -24,95 +24,105 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid body">
-
-                <div class="panel-body">
-
-        <div class="panel">
-            <div class="panel-heading">
-                <div class="form">
-                    <h3><strong>La liste des clients</strong></h3>
+    <div class="body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="pull-left">Clients</h3>
+                    <a  class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
                 </div>
-                <div class="edit">
-                    <a href="/addClient" ><span class="glyphicon glyphicon-plus" style=""></span></a>
-                    <span class="glyphicon glyphicon-refresh" id="refresh"></span>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <table>
-                                <form class="form" method="post" onclick="e.preventDefault()">
-                                    <select id="critiere" class="form-control col-sm-3" style=" width: 35%; margin-left: 4%;">
-                                        <option value="matricule" disabled selected>Rechercher par --</option>
-                                        <option value="nom">Nom</option>
-                                        <option value="type_de_client">Type de client</option>
-                                        <option value="city">ville</option>
-                                    </select>
-                                    <div class="">
-                                        <input type="text" name="search" id="search_input" class="form-control col-sm-3" placeholder="Rechecher un nom" style=" width: 35%;  display:none;   margin-left: 4%;" />
-                                        <select id="TypesClients"  class="form-control col-sm-3" style="display: none; width: 35%; margin-left: 4%;">
-                                            <option disabled selected>Types Clients</option>
-                                            @foreach($type_client as $type)
-                                                <option value="{{$type->type}}">{{$type->type}}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" id="city_input" class="form-control col-sm-3"  placeholder="Rechercher par ville" style=" width: 35%;  display:none;   margin-left: 4%;" />
-
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading clearfix">
+                            <div class="row">
+                                <form>
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">CLIENT</label>
+                                            <select name="costumer_search" class="form-control chosen-select" style="">
+                                                <option value="0">Veuillez selectionner un client</option>
+                                                <option value="0">1</option>
+                                                <option value="0">2</option>
+                                                <option value="0">3</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">VILLE</label>
+                                            <input type="date" class="form-control" name="matricule_searsh" placeholder="Ville" value="">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">TYPE DE CLIENT</label>
+                                            <select name="costumer_search" class="form-control chosen-select" style="">
+                                                <option value="0">Veuillez selectionner un type</option>
+                                                <option value="0">1</option>
+                                                <option value="0">2</option>
+                                                <option value="0">3</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-info col-sm-3" type="button" id="search" style="width: 11%;     margin-left: 6%;">Rechercher</button>
+                                    <div class="row">
+                                        <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
+                                        </div>
+                                    </div>
                                 </form>
+                            </div>
+                        </div>
+                        <div class="panel-heading clearfix">
+                            <div class="pull-right col-md-2 col-lg-3"><br>
+                                <a href="/addClient" id="showmodal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CLIENT</a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr style="color: #2a4f7d;">
+                                    <th class="text-center" style="width: 9.09%">NOM</th>
+                                    <th class="text-center" style="width: 9.09%">VILLE</th>
+                                    <th class="text-center" style="width: 9.09%">TELEPHONE</th>
+                                    <th class="text-center" style="width: 9.09%">MAIL</th>
+                                    <th class="text-center" style="width: 9.09%">TYPE DE CLIENT</th>
+                                    <th class="text-center" style="width: 9.09%">CONTACT</th>
+                                    <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
+                                    <th class="text-center" style="width: 9.09%">ADRESSE</th>
+                                    <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULES</th>
+                                    <th class="text-center" style="width: 9.09%">N°CONTRAT</th>
+
+
+                                    <th class="text-center" style="width: 9.09%">ACTIONS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($client as $c)
+                                    <tr id="{{ $c->id }}"  >
+
+
+
+                                        <td class="text-center">{{ $c->name }}</td>
+                                        <td class="text-center">{{ $c->city }}</td>
+                                        <td class="text-center">{{ $c->phone }}</td>
+                                        <td class="text-center">{{ $c->email }}</td>
+                                        <td class="text-center">{{ $c->type }}</td>
+                                        <td class="text-center">{{ $c->contact }}</td>
+                                        <td class="text-center">{{$c->contact_phone }}</td>
+                                        <td class="text-center"> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
+                                        <td class="text-center">{{ $c->vehicles }}</td>
+                                        <td class="text-center">{{ $c->id_contract }}</td>
+
+                                        <td class="text-center"><a class="btn btn-danger" > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                                            <a class=" btn btn-primary" href="/clientinfo/{{$c->name}}" id="edit_abonnement"><span class="glyphicon glyphicon-info-sign edit edit_pencil "></span></a></td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                @endforeach
+
+                                <?php ?>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="table-div">
-                <table class="table table-bordered" id="CustomerTable">
-                    <thead>
-                    <tr>
-                        <th class="text-center" style="width: 9.09%">NOM</th>
-                        <th class="text-center" style="width: 9.09%">VILLE</th>
-                        <th class="text-center" style="width: 9.09%">TELEPHONE</th>
-                        <th class="text-center" style="width: 9.09%">MAIL</th>
-                        <th class="text-center" style="width: 9.09%">TYPE DE CLIENT</th>
-                        <th class="text-center" style="width: 9.09%">CONTACT</th>
-                        <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
-                        <th class="text-center" style="width: 9.09%">ADRESSE</th>
-                        <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULES</th>
-                        <th class="text-center" style="width: 9.09%">N°CONTRAT</th>
-
-
-                        <th class="text-center" style="width: 9.09%">ACTIONS</th>
-                    </tr>
-                    </thead>
-                   <tbody>
-                     <?php $i = 1; ?>
-                    @foreach ($client as $c)
-                      <tr id="{{ $c->id }}" style="cursor: pointer;"  >
-
-
-
-                        <td class="text-center">{{ $c->name }}</td>
-                        <td class="text-center">{{ $c->city }}</td>
-                        <td class="text-center">{{ $c->phone }}</td>
-                        <td class="text-center">{{ $c->email }}</td>
-                        <td class="text-center">{{ $c->type }}</td>
-                        <td class="text-center">{{ $c->contact }}</td>
-                        <td class="text-center">{{$c->contact_phone }}</td>
-                         <td class="text-center"> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
-                         <td class="text-center">{{ $c->vehicles }}</td>
-                          <td class="text-center">{{ $c->id_contract }}</td>
-
-                          <td class="text-center"><a class="btn btn-danger" > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                              <a class=" btn btn-primary" href="/clientinfo/{{$c->name}}" id="edit_abonnement"><span class="glyphicon glyphicon-info-sign edit edit_pencil "></span></a></td>
-                      </tr>
-                        <?php $i++; ?>
-                    @endforeach
-
-                   <?php ?>
-                   </tbody>
-                </table>
-            </div>
         </div>
-    </div></div>
+    </div>
 @endsection

@@ -31,7 +31,7 @@ Route::get('/clients/delete/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
 Route::get('/clients/city/{city}', 'ClientsController@CustomerCity');
-
+Route::get('/abonnement/count/{id}', 'AbonnementsController@count');
 Route::get('/abonnement', 'AbonnementsController@idAbonnement');
 Route::view('/addclient','ClientController@AddingInfo');
 Route::get('/clientinfo/{name}', 'ClientsController@CustomerInfo');
@@ -43,7 +43,7 @@ Route::view('/dashboard', 'Dashboard');
 
 Route::view('/contrat', 'Contrat');
 
-
+Route::view('/home', 'home');
 Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');

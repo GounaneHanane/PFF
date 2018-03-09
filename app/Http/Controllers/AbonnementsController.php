@@ -17,12 +17,18 @@ class AbonnementsController extends Controller
         $A=DB::table('types_customers_subscribes')
             ->join('types_customers','types_customers.id','=','types_customers_subscribes.id_type_customer')
             ->join('types_subscribes','types_subscribes.id','=','types_customers_subscribes.id_subscribe')
-            ->select('types_customers_subscribes.*','types_customers.type as ClientType','types_customers.id as ClientTypeId','types_subscribes.type as AbonnementType','types_subscribes.id as AbonnementTypeId')->get();
+            ->join('nbAbonnementVehicle','nbAbonnementVehicle.typeid','=','types_customers_subscribes.id')
+            ->select('types_customers_subscribes.*','types_customers.type as ClientType','types_customers.id as ClientTypeId','types_subscribes.type as AbonnementType','types_subscribes.id as AbonnementTypeId','count as VehicleCount')->get();
+        $id=DB::table('types_customers_subscribes')->select('types_customers_subscribes.id')->get();
         $ClientType=DB::table('types_customers')
             ->select('types_customers.type as ClientType','types_customers.id as ClientTypeId')->get();
         $AbonnementType=DB::table('types_subscribes')
             ->select('types_subscribes.type as AbonnementType','types_subscribes.id as AbonnementTypeId')->get();
-        return view('abonnement',['abonnement'=>$A,'clientTypes'=>$ClientType,'abonnementTypes'=>$AbonnementType]);
+        $CountVehicle=DB::table('details')->where("	id_type_customer_subscribe",$id)
+            ->select("count")
+            ->get();
+
+        return view('abonnement',['abonnement'=>$A,'clientTypes'=>$ClientType,'abonnementTypes'=>$AbonnementType,'CountVehicle'=>$CountVehicle]);
     }
     public function saveAbonnement(Request $request)
     {
@@ -36,6 +42,13 @@ class AbonnementsController extends Controller
 
         return Redirect::to('abonnement');
 
+    }
+    public function count($id)
+    {
+        $CountVehicle=DB::table('details')->where("	id_type_customer_subscribe",$id)
+            ->select("count")
+            ->get();
+        return view("abonnement",['CountVehicle'=>$CountVehicle]);
     }
         /*
                 return response('Good'
@@ -54,7 +67,6 @@ public function updateAbonnement(Request $request)
 
     return Redirect::to('abonnement');
 }
-
 public function DeleteAbonnement($id)
 {
     $deleteQuery = DB::table('types_customers_subscribes')->where('id', $id)->delete();

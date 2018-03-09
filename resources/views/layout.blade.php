@@ -1,18 +1,48 @@
 <html>
 <head>
-    <title>Gestion Abonement - @yield('title')</title>
+    <title>OMS| @yield('title')</title>
     @section('import')
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="shortcut icon" href="http://oms.opentech.codes/dist/img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
         <link rel="stylesheet" href="/css/menu.css" />
         <link rel="stylesheet" href="/css/mobile.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <style>
 
-        </style>
+
+
+
+<style>
+    #alert
+    {
+        border-bottom: 2px solid #3498DB;
+        padding-bottom: 4%;
+
+
+    }
+</style>
+
+
+<script>
+    var x=false;
+    function openNotif() {
+
+
+            if(x==false)
+            {
+                document.getElementById('notification').style.display="block";
+                x=true;
+            }
+            else
+            {
+                document.getElementById('notification').style.display="none";
+                x=false;
+            }
+
+    }
+</script>
     @show
 </head>
 <body>
@@ -23,6 +53,26 @@
 
 
 <header>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><img src="/img/settings-work-tool.png" id="setting">
+            </button>
+        <ul class="dropdown-menu dropdown-menu-right ">
+            <li><a href="/abonnement">Abonnement</a></li>
+        </ul>
+    </div>
+    <div id="notif_icon">
+        <div type="button" onclick="openNotif()"><img src="/img/notifications-button.png" id="setting">
+        </div>
+       <div class="panel-default" id="notification" style="margin-left: -355%; display: none">
+           <div class="panel-heading" style="background-color: #3498DB;color: white; height: 68%; ">
+                <strong>ALERTES</strong>
+           </div>
+           <div class="panel-body" style="border: none; padding: 0px;">
+               <div id="alert" > <h4>NOM : </h4>CONTACT
+               </div>
+           </div>
+       </div>
+    </div>
     <div class="user">
         <i class="glyphicon glyphicon-user" style="    float: left;
     padding-right: 8px;   "></i>Bonjour : Admin
@@ -33,14 +83,14 @@
     <div class="row" style="    margin-left: -15px;">
         <div class="col-sm-3">
             <div class="nav-side-menu">
-                <div class="brand" style="color: #337ab7">  <a><img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></a></div>
+
                 <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
                 <div class="menu-list">
 
                     <ul id="menu-content" class="menu-content collapse out">
 
-
+                        <div class="brand" style="color: #337ab7">  <a href="/home"><img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></a></div>
 
                         <li >
                             <a href="/clients"  class="submenu-toggle">
@@ -57,20 +107,8 @@
                             </a>
 
                         </li>
-                        <li >
-                            <a  href="/alertes" class="submenu-toggle">
-                                <i class="glyphicon glyphicon-bullhorn"></i>
-                                <span>ALERTES</span>
-                            </a>
 
-                        </li>
-                        <li >
-                            <a href="/abonnement"  class="submenu-toggle">
-                                <i class="glyphicon glyphicon-th"></i>
-                                <span>ABONNEMENTS</span>
-                            </a>
 
-                        </li>
                         <li >
                             <a href="/contrat"  class="submenu-toggle">
                                 <i class="glyphicon glyphicon-file"></i>

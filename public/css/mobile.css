@@ -11,7 +11,7 @@
     font-weight: 200;
     background-color: #2e353d;
     position: fixed;
-
+    z-index: 1;
     width: 190px;
     height: 100%;
     color: #e1ffff;
@@ -108,7 +108,7 @@
     padding-right: 24px;
     float: left;
     top: 11px;
-
+    padding-top: 6%;
 }
 .nav-side-menu li:hover {
     border-left: 3px solid #d19b3d;
