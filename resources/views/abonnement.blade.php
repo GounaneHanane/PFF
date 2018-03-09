@@ -41,7 +41,6 @@
                                     <th class="text-center" style="width:16.66%">TYPE D'ABONNEMENT</th>
                                     <th class="text-center" style="width:16.66%">TYPE DE CLIENT</th>
                                     <th class="text-center" style="width:16.66%">PRIX</th>
-                                    <th class="text-center" style="width:16.66%">NOMBRE DE CLIENTS</th>
                                     <th class="text-center" style="width:16.66%">NOMBRE DE VEHICULES</th>
                                     <th class="text-center" style="width:16.66%">COCHER</th>
                                 </tr>
@@ -54,8 +53,7 @@
                                         <td class="text-center">{{ $A->ClientType}}</td>
                                         <td class="text-center">{{ $A->AbonnementType}}</td>
                                         <td class="text-center">{{ $A->price }}</td>
-                                        <td class="text-center" action="/abonnement/count/"></td>
-                                        <td class="text-center">{{$A->count}}</td>
+                                        <td class="text-center">{{$A->VehicleCount}}</td>
                                         <td class="text-center"><a class="btn btn-danger" href="{{URL::to('/deleteAbonnement/'.$A->id) }}"> <span class="glyphicon glyphicon-trash edit trash " ></span></a>
                                             <a class=" btn btn-primary"  id="edit_abonnement" onclick="ShowType('{{ $A->ClientTypeId}}','{{ $A->AbonnementTypeId}}','{{ $A->price }}');"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
                                     </tr>

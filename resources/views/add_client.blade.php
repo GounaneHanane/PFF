@@ -123,13 +123,9 @@
                                         </select>
                                     </div>
                                     <div class="form-group addcar" >
-                                        <button class="btn btn-info"   type="button" style="    width: 101%;"> <span class="glyphicon glyphicon-plus plus"></span> Ajouter une véhicule</button>
+                                        <button class="btn btn-info"   type="button" style="    width: 101%;"> <span class="glyphicon glyphicon-plus plus"></span> Ajouter</button>
                                     </div>
 
-                                    <div>
-                                        <span class="glyphicon glyphicon-pencil edit edit_pencil" ></span>
-                                        <span class="glyphicon glyphicon-trash edit trash "></span>
-                                    </div>
 
 
                                     <div class="table-div">
@@ -145,13 +141,14 @@
                                                 <th class="text-center" style="width: 9.09%">ACTIONS</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="detail">
 
                                             </tbody>
                                         </table>
-                                        <center><button class="btn btn-info" id="AddVehicles" onclick="">Ajouter</button></center>
+
                                     </div>
                                 </form>
+                                <center><button class="btn btn-info" id="AddVehicles" onclick="saveContrat()">Ajouter</button></center>
                             </div>
                         </div>
                     </div>
@@ -169,16 +166,16 @@
             <div class="panel-body">
                 <form class="form " onsubmit="event.preventDefault();" method="post">
                     <div class="form-group col-sm-4">
-                        <label>CIN : </label>
-                        <label id="CIN"></label>
-                    </div>
-                    <div class="form-group col-sm-4">
                         <label>Nom : </label>
-                        <label id="CIN"></label>
+                        <label id="savenom"></label>
                     </div>
                     <div class="form-group col-sm-4">
-                        <label>Prénom : </label>
-                        <label id="CIN"></label>
+                        <label>Contact : </label>
+                        <label id="savecontact"></label>
+                    </div>
+                    <div class="form-group col-sm-4">
+                        <label>Numero : </label>
+                        <label id="savenumero"></label>
                     </div>
                     <div class="form-group col-sm-4">
                         <label>N°Contrat : </label>
@@ -186,11 +183,11 @@
                     </div>
                     <div class="form-group col-sm-4">
                         <label>Date de debut : </label>
-                        <label id="CIN"></label>
+                        <label id="dated"></label>
                     </div>
                     <div class="form-group col-sm-4">
                         <label>Date de fin : </label>
-                        <label id="CIN"></label>
+                        <label id="datef"></label>
                     </div>
                     <table class="table" id="vehicles_table">
                         <thead>
@@ -202,10 +199,10 @@
                             <th class="text-center" style="width:12.5%">IMEI</th>
                             <th class="text-center" style="width:12.5%">MODEL DU BOÎTIER</th>
                             <th class="text-center" style="width:12.5%">TYPE D'ABONNEMENT</th>
-                            <th class="text-center" style="width:12.5%">COCHER</th>
+                            <th class="text-center" style="width:12.5%">ACTIONS</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="verify">
                         </tbody>
                     </table>
                     <center><button class="btn btn-info addBtn" onclick="window.open('clientInfo.html','_self');">Enregistrer</button></center>
