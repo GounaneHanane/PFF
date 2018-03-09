@@ -4,6 +4,7 @@
 
 @section('import')
     @parent
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <link rel="stylesheet" href="/css/form.css" />
@@ -32,37 +33,39 @@
             <div class="form">
                                             <div class="form-group"  >
                                                 <form id="client_form" method="POST" action="">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="hidden" name="_token" id="ClientToken" value="{{ csrf_token() }}">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" id="nom" placeholder="Nom"  name="nom">
+
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="city" placeholder="Ville" name="city">
+                                                        <input type="text" class="form-control" id="ville" placeholder="Ville" name="city">
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="phone" placeholder="Télèphone" name="phone">
+                                                        <input type="text" class="form-control" id="telephone" placeholder="Télèphone" name="phone">
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="mail" placeholder="Mail" name="mail">
+                                                        <input type="text" class="form-control" id="email" placeholder="Mail" name="mail">
                                                     </div>
                                                     <div class="form-group">
                                                         <select class="form-control" id="type_client">
                                                             <option value="" disabled selected>Type de client</option>
-                                                            <option value="location">Location</option>
-                                                            <option value="personnel">Personnel</option>
+                                                            @foreach($types_customers as $type)
+                                                                <option value="{{$type->id}}">{{$type->type}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" id="contact" placeholder="Contact" name="contact">
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="ncontact" placeholder="Tél Contact" name="NContact">
+                                                        <input type="text" class="form-control" id="NContact" placeholder="Tél Contact" name="NContact">
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" id="address" placeholder="Adresse" name="address">
                                                     </div>
-                                                   <center><button class="btn btn-info " id="add_client" type="button" OnClick="addClient()">Ajouter </button></center>
+                                                   <center><button class="btn btn-info " id="add_client" type="button" >Ajouter </button></center>
 
                                             </form>
                                         </div>
@@ -81,6 +84,7 @@
                             <div class="form" >
                                 <form action="" method="post" >
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <div id="form-errors"></div>
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="contrat_save" disabled placeholder="" name="cin" />
 
@@ -90,10 +94,10 @@
                                         <input type="text" class="form-control" id="matricule" placeholder="Matricule"  name="matricule">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="matricule" placeholder="Marque"  name="mark">
+                                        <input type="text" class="form-control" id="mark" placeholder="Marque"  name="mark">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="couleur" placeholder="Modele" name="model">
+                                        <input type="text" class="form-control" id="modele" placeholder="Modele" name="model">
                                     </div>
 
                                     <hr>
@@ -101,21 +105,25 @@
                                         <input type="text" class="form-control" id="reference_boitier" placeholder="Réference de boitier" name="reference_boitier">
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control" id="type_boitier" name="type_boitier">
-                                            <option value="" disabled selected>Type de boîtier</option>
+                                        <select value="1"class="form-control" id="type_boitier" name="type_boitier">
+                                            <option id="disabled" disabled selected>Type de boîtier</option>
                                             <option value="avance" >Avancé</option>
+                                            <option value="lite">lite</option>
                                         </select>
+
                                     </div><hr>
                                     <div class="form-group">
                                         <select class="form-control" id="type_abonnement" name="type_abonnement">
-                                            <option disabled selected>Types Abonnements</option>
+                                            <option value="1" disabled selected>Types Abonnements</option>
 
-                                                <option value=""></option>
+                                            @foreach($types_subscribe as $type)
+                                                <option value="{{$type->type}}">{{$type->type}}</option>
+                                            @endforeach
 
                                         </select>
                                     </div>
                                     <div class="form-group addcar" >
-                                        <button class="btn btn-info" type="submit" id="Add" style="    width: 101%;"> <span class="glyphicon glyphicon-plus plus"></span> Ajouter une véhicule</button>
+                                        <button class="btn btn-info"   type="button" style="    width: 101%;"> <span class="glyphicon glyphicon-plus plus"></span> Ajouter une véhicule</button>
                                     </div>
 
                                     <div>
@@ -131,11 +139,10 @@
                                                 <th  class="text-center" style="width:12.5%">MATRICULE</th>
                                                 <th class="text-center" style="width:12.5%">MARQUE</th>
                                                 <th class="text-center" style="width:12.5%">MODEL</th>
-                                                <th class="text-center" style="width:12.5%">TYPE DE VEHICULE</th>
                                                 <th class="text-center" style="width:12.5%">IMEI</th>
                                                 <th class="text-center" style="width:12.5%">MODEL DU BOÎTIER</th>
                                                 <th class="text-center" style="width:12.5%">TYPE D'ABONNEMENT</th>
-                                                <th class="text-center" style="width:12.5%">COCHER</th>
+                                                <th class="text-center" style="width: 9.09%">ACTIONS</th>
                                             </tr>
                                             </thead>
                                             <tbody>

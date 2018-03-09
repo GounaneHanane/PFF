@@ -31,6 +31,7 @@
                     <h3 class="pull-left">Clients</h3>
                     <a  class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
                 </div>
+
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
@@ -64,6 +65,7 @@
                                         <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
                                             <button type="submit" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
                                         </div>
+
                                     </div>
                                 </form>
                             </div>
@@ -123,6 +125,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

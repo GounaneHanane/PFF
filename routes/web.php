@@ -27,7 +27,7 @@ Route::view('/home', 'home');
 Route::get('/clients/', 'ClientsController@idC');
 Route::get('/clients/all','ClientsController@AllC');
 Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
-Route::get('/clients/delete/{name}', 'ClientsController@DeleteCustomer');
+Route::get('/clients/delete/{id}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
 Route::get('/clients/city/{city}', 'ClientsController@CustomerCity');
@@ -49,7 +49,7 @@ Route::post('/contract','ClientsController@json');
 //Route::view('/contrat', 'contrat');
 //Route::view('/layout', 'layout');
 
-Route::view('/addClient', 'add_client');
+Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
 
 
@@ -57,7 +57,7 @@ Route::post('/add','ClientsController@saveCustomer');
 Route::get('deleteAbonnement/{id}','AbonnementsController@deleteAbonnement');
 Route::post('/updateAbonnement','AbonnementsController@updateAbonnement');
 Route::post("/add_type",'AbonnementsController@saveAbonnement');
-Route::post('/contract/addVehicule/{idContract}','ContratController@addVehicule');
+Route::post('/contract/addVehicule/','ContratController@addVehicule');
 
 
 

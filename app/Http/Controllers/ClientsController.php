@@ -6,6 +6,7 @@ use App\Customers;
 use  App\Models\Contract;
 use Illuminate\Http\Request;
 use Response;
+use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 class ClientsController extends Controller
@@ -88,13 +89,14 @@ class ClientsController extends Controller
     public function idC()
     {
         $c = DB::table('customers')
+            ->where('customers.isActive','=',1)
             ->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id')
 
 
             ->join('contracts','customers.id','=','contracts.id_customer')
            // CV is view couting details per contract
             ->join('cv','cv.id_contract','contracts.id')
-            ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
+            ->select('customers.*' , 'customers.id as idCustomer','types_customers.*','contracts.id as id_contract','cv.vehicles')
 
             ->get();
 
@@ -190,56 +192,90 @@ class ClientsController extends Controller
     {
 
 
-        $deleteQuery = DB::table('customers')->where('id', $id)->delete();
+        $disableCustomers = DB::table('customers')->where('customers.id','=',$id)->update(['isActive' => 0]);
+        //$disableContracts = DB::table('contracts')->where('contracts.id_customer','=',$id)->update(['isActive' => 0]);
 
-        return response('Le client a été supprimé', 200)
-            ->header('Content-Type', 'text/plain');
-    }/*
-    public function AddCustomer($nom,$contact)
-    {
-        $deleteQuery = DB::table('customers')->insert([[]])
 
-        return response('Le client a été supprimé', 200)
-            ->header('Content-Type', 'text/plain');
-    }*/
+
+        return Redirect::to('/clients');
+
+    }
 
     public function saveCustomer(Request $request)
     {
-       /*
-        $customer = new Customers();
-        $customer->name = $request->input('nom');
-        $customer->contact = $request->input('contact');
-        $customer->contact_phone = $request->input('NContact');
-        $customer->email = $request->input('mail');
-        $customer->city = $request->input('city');
-        $customer->phone = $request->input('phone');
-        $customer->id_type_customer = 1;
-       $customer->save();
 
-        $customerId = DB::table('customers')->where('name','=',$request->input('nom'))->
+
+        $messages = [
+            'required' => strtoupper(':attribute') .' est obligatoire',
+            'unique' => strtoupper(':attribute').' est déja existe'
+        ];
+
+
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|unique:customers,name',
+            'contact' => 'required',
+            'NContact' => 'required',
+            'email' => 'required',
+            'ville' => 'required',
+            'telephone' => 'required',
+            'address' => 'required',
+            'type_client' => 'required',
+
+
+        ],$messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            //$errors->add('nom','Le nom est obligatoire');
+            //$errors =  json_decode($errors);
+
+
+
+            return response()->json([
+                'success' => false,
+                'message' => $errors
+            ], 422);
+        } else {
+
+
+            $customer = new Customers();
+            $customer->name = $request->input('nom');
+            $customer->contact = $request->input('contact');
+            $customer->contact_phone = $request->input('NContact');
+            $customer->email = $request->input('email');
+            $customer->city = $request->input('ville');
+            $customer->phone = $request->input('telephone');
+            $customer->id_type_customer = $request->input('type_client');
+            $customer->address = $request->input('address');
+            $customer->isactive = 1;
+
+
+            $customer->save();
+
+
+            $customerId = DB::table('customers')->where('name', '=', $request->input('nom'))->
             select('customers.id')->pluck('id')->first();
 
-        $contract = new Contract();
-        $contract->id_customer = $customerId;
-        $today = date("Y-m-d H:i:s");
-        $contract->start_date =  $today;
-        $date = date_create($today);
-        date_modify($date, '+1 year');
-        $contract->urlContract = "/contractPdf/".$request->input('nom');
-        $contract->end_date = date_format($date, 'Y-m-d H:i:s');
-        $contract->save();
+            $contract = new Contract();
+            $contract->id_customer = $customerId;
+            $today = date("Y-m-d H:i:s");
+            $contract->start_date = $today;
+            $date = date_create($today);
+            date_modify($date, '+1 year');
+            $contract->urlContract = "/contractPdf/" . $request->input('nom');
+            $contract->end_date = date_format($date, 'Y-m-d H:i:s');
+            $contract->save();
 
 
-         return Redirect::to('/addClient');
+            $contractId = DB::table('contracts')->where('contracts.id_customer', '=', $customerId)->
+            select('contracts.id')->pluck('id')->first();
 
-         */
-          return response($request->all());
-        /*
-                return response('Good'
-                ,200) ->header('Content-Type', 'text/plain');
-                //return response()->json($request['nom']);
-                //echo var_dump($_POST);
-        */
+
+            return response($contractId
+                , 200)->header('Content-Type', 'text/plain');
+
+        }
+
     }
 
 
@@ -273,6 +309,15 @@ class ClientsController extends Controller
 
         return view('ClientInfo',['c'=>$c,'types_client'=>$type_client,'details'=>$details]);
 
+    }
+
+    public function AddCustomerView()
+    {
+        $typesSubscribes = DB::table('types_subscribes')->get();
+        $typesCustomers = DB::table('types_customers')->get();
+
+
+        return view('add_client',['types_subscribe'=>$typesSubscribes , 'types_customers'=>$typesCustomers]);
     }
 
 
