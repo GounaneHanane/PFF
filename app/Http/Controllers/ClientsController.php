@@ -207,7 +207,7 @@ class ClientsController extends Controller
 
         $messages = [
             'required' => strtoupper(':attribute') .' est obligatoire',
-            'unique' => strtoupper(':attribute').' est déja existe'
+
         ];
 
 
@@ -298,6 +298,7 @@ class ClientsController extends Controller
 
         $contratId = DB::table('contracts')->where('id_customer','=',$customerId)->pluck('id')->first();
 
+
         $details = DB::table('details')->where('id_contract','=',$contratId)->
         join('vehicles','vehicles.id','=','details.id_vehicle')->
         join('boxes','boxes.id','=','details.id_boxe')->
@@ -318,6 +319,66 @@ class ClientsController extends Controller
 
 
         return view('add_client',['types_subscribe'=>$typesSubscribes , 'types_customers'=>$typesCustomers]);
+    }
+
+
+    public function critiere(Request $request)
+    {
+
+        $customers = DB::table('customers');
+
+
+        //return view('ClientsLines',['client'=>$c]);
+
+
+        $client_name =      ($request->input('name') == null) ? null : $request->input('name');
+        $ville = ($request->input('ville') == null) ? null : $request->input('ville');
+        $type_client = ($request->input('type_client') == null) ? null : $request->input('type_client');
+        $critiere = [];
+        $i = 0;
+
+        $c = $customers
+            ->join('contracts','customers.id','=','contracts.id_customer')
+            ->join('contracts','customers.id','=','contracts.id_customer')
+            ->join('cv','cv.id_contract','contracts.id');
+        if($client_name != null)
+        {
+            $critiere[$i] = ['customers.name','=',$client_name] ;
+            $i++;
+
+        }
+        if($ville != null)
+        {
+            $critiere[$i] = ['customers.city','like',$ville] ;
+            $i++;
+
+        }
+
+        if($type_client != null) {
+            $clients = $c->join('types_customers', function($join){
+                $join->on('customers.id_type_customer', '=', 'types_customers.id')
+                    ->where('types_customers.id', '=', 1);
+            });
+
+        }
+             else
+            $clients = $c->join('types_customers', 'customers.id_type_customer', '=', 'types_customers.id');
+
+
+
+
+
+
+         $clients
+             ->select('customers.*','types_customers.*','contracts.id as id_contract','cv.vehicles')
+             ->where($critiere)
+             ->get();;
+
+
+
+
+        return view('ClientsLines',['client'=>$clients]);
+        //return response()->json([$c]);
     }
 
 

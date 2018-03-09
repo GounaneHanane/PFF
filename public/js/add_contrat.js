@@ -265,7 +265,7 @@ alert(id);
     $("#reference_boitier").val(lines.children('.liste_reference_boitier').text());
     $("#type_boitier").val(lines.children('.liste_type_boitier').text());
     $("#type_abonnement").val(lines.children('.liste_type_abonnement').text());
-    lines.remove();
+
 }
 function saveContrat() {
     contrat_save

@@ -40,30 +40,34 @@
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">CLIENT</label>
-                                            <select name="costumer_search" class="form-control chosen-select" style="">
-                                                <option value="0">Veuillez selectionner un client</option>
-                                                <option value="0">1</option>
-                                                <option value="0">2</option>
-                                                <option value="0">3</option>
+                                            <select id="client_name" name="costumer_search" class="form-control chosen-select" style="">
+                                                <option value="" disabled selected >Veuillez selectionner un client</option>
+                                                 @foreach($client as $c)
+                                                     <option value="{{$c->name}}">{{ $c->name }}</option>
+
+                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">VILLE</label>
-                                            <input type="date" class="form-control" name="matricule_searsh" placeholder="Ville" value="">
+                                            <input id="ville" type="text" class="form-control" name="matricule_searsh" placeholder="Ville" value="">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">TYPE DE CLIENT</label>
-                                            <select name="costumer_search" class="form-control chosen-select" style="">
-                                                <option value="0">Veuillez selectionner un type</option>
-                                                <option value="0">1</option>
-                                                <option value="0">2</option>
-                                                <option value="0">3</option>
+                                            <select id="type_client" name="costumer_search" class="form-control chosen-select" style="">
+                                                <option value="" disabled selected>Veuillez selectionner un type</option>
+
+                                                @foreach($type_client as $type)
+                                                    <option value="{{$type->id}}">{{ $type->type }}</option>
+
+                                                @endforeach
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
+                                            <button type="button" id="search" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
                                         </div>
 
                                     </div>
@@ -108,7 +112,7 @@
                                         <td class="text-center">{{ $c->type }}</td>
                                         <td class="text-center">{{ $c->contact }}</td>
                                         <td class="text-center">{{$c->contact_phone }}</td>
-                                        <td class="text-center"> VIJIVJFIJIBJGIBJGIBJGI BJGIBJGIJBOIBJUHUTHUBH UBHGUBHUHBGHBUAAAAAA VVVUHVUHUF </td>
+                                        <td class="text-center"> {{ $c->address }} </td>
                                         <td class="text-center">{{ $c->vehicles }}</td>
                                         <td class="text-center">{{ $c->id_contract }}</td>
 

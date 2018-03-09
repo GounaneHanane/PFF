@@ -2,61 +2,42 @@ $(document).ready(function(){
 
     $('#search').click(function() {
 
-            var str = "";
+        var nameCustomer = $('#client_name').val();
+        var ville = $ ('#ville').val();
+        var  type_client = $('#type_client').val();
+        critiere = {};
 
-            $("select[id='critiere'] option:selected").each(function () {
-                str += $(this).attr('value');
+        if(nameCustomer != "" && nameCustomer != null)
+            critiere['name'] = nameCustomer;
 
-                console.log(str);
-            });
+        if(ville != "" && ville != null)
+            critiere['ville'] = ville;
 
-            var search_input = $('#search_input').val();
-            if (str == "nom") {
-                $.get("http://127.0.0.1:8000/clients/name/" + search_input,
-                    {},
-                    function (data, status) {
-                        $('tbody *').remove();
-                        $('tbody').prepend(data);
-                    }
+        if(type_client != "" && type_client != null)
+            critiere['type_client'] = type_client;
 
-                    );
+        if(critiere['name'] != null)
+        {
+            $.get("http://127.0.0.1:8000/clients/critiere/",
+                critiere
+                ,
 
+                function (data, status) {
 
-            }
-            else if (str == "type_de_client") {
+                                          $('tbody *').remove();
+                                          $('tbody').prepend(data);
 
-                $("select[id='TypesClients'] option:selected").each(function () {
+               console.log(status);
+                    console.log(data);
+                });
+        }
 
-                    var type = $(this).attr('value');
-                    console.log(type);
-                    $.get("http://127.0.0.1:8000/clients/type/" + type,
-                        {}, function (data, status) {
-
-                            $('tbody *').remove();
-                            $('tbody').prepend(data);
-                        });
-
-
-                })
-
-            }
-            else if(str == "city")
-           {
-             var city_input = $('#city_input').val();
-               $.get("http://127.0.0.1:8000/clients/city/" + city_input,
-                   {}, function (data, status) {
-
-                       $('tbody *').remove();
-                       $('tbody').prepend(data);
-                   });
-
-
-           }
             });
 
     $('#refresh').click(function(){
         $.get("http://127.0.0.1:8000/clients/all",
             {
+
             },
             function(data, status){
                 $('tbody *').remove();

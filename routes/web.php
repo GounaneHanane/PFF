@@ -25,6 +25,7 @@ Route::get('/foo', function () {
 
 Route::view('/home', 'home');
 Route::get('/clients/', 'ClientsController@idC');
+Route::get('/clients/critiere/','ClientsController@critiere');
 Route::get('/clients/all','ClientsController@AllC');
 Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
 Route::get('/clients/delete/{id}', 'ClientsController@DeleteCustomer');
