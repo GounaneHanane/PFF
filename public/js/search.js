@@ -19,17 +19,17 @@ $(document).ready(function(){
         if(critiere['name'] != null)
         {
             $.get("http://127.0.0.1:8000/clients/critiere/",
-                critiere
-                ,
+            critiere
+            ,
 
-                function (data, status) {
+            function (data, status) {
 
-                                          $('tbody *').remove();
-                                          $('tbody').prepend(data);
+                $('tbody *').remove();
+                $('tbody').prepend(data);
 
-               console.log(status);
-                    console.log(data);
-                });
+                console.log(status);
+                console.log(data);
+            });
         }
 
             });

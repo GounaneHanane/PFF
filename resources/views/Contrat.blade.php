@@ -10,6 +10,8 @@
     <script  src="/js/chosen.js"></script>
     <script src='jquery.min.js'></script>
     <script src='jquery-paginate.min.js'></script>
+    <script src='js/omscontrat.js'></script>
+
     <style>
         #search_input
         {
@@ -31,7 +33,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="pull-left">Contrats</h3>
-                    <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
+                    <a class="btn btn-primary pull-right" id="refresh"><span class="glyphicon glyphicon-refresh" ></span></a>
                 </div>
                 <div class="col-md-12">
                     <div class="panel panel-default">
@@ -41,38 +43,38 @@
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">N°CONTRAT</label>
-                                            <input type="text" class="form-control" name="matricule_searsh" placeholder="N°Contrat" value="">
+                                            <input id="matricule" type="text" class="form-control" name="matricule_searsh" placeholder="N°Contrat" value="">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">CLIENT</label>
-                                            <select name="costumer_search" class="form-control chosen-select" style="">
+                                            <select id="client" name="costumer_search" class="form-control chosen-select" style="">
                                                 <option value="0">Veuillez selectionner un client</option>
-                                                <option value="0">1</option>
-                                                <option value="0">2</option>
-                                                <option value="0">3</option>
+                                                    @foreach($Customers as $customer)
+                                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                        @endforeach
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-3">
+                                        <div  class="form-group col-md-3">
                                             <label class="control-label">DATE DE DEBUT</label>
-                                            <input type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
+                                            <input id="debut_contrat" type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">DATE DE FIN</label>
-                                            <input type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
+                                            <input id="fin_contrat" type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">TYPE DE CLIENT</label>
-                                            <select name="costumer_search" class="form-control chosen-select" style="">
+                                            <select id="typeClient" name="costumer_search" class="form-control chosen-select" style="">
                                                 <option value="0">Veuillez selectionner un type</option>
-                                                <option value="0">1</option>
-                                                <option value="0">2</option>
-                                                <option value="0">3</option>
+                                                @foreach($clientTypes as $clientType)
+                                                    <option value="{{ $clientType->ClientTypeId  }}">{{ $clientType->ClientType }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
+                                            <button id="recheche" type="button" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
                                         </div>
                                     </div>
                                 </form>
@@ -101,20 +103,20 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach($contracts as $c)
-                                        <tr>
-                                <td class="text-center" style="width: 11.11%" >{{$c ->id}}</td>
-                                <td class="text-center" style="width: 11.11%">{{$c->start_date}}</td>
-                                <td class="text-center" style="width: 12.5%">{{$c->end_date}}</td>
-                                <td class="text-center" style="width: 11.11%">{{$c->name}}</td>
-                                <td class="text-center" style="width: 12.5%">TYPE DE CLIENT</td>
-                                <td class="text-center" style="width: 11.11%">{{$c->contact}}</td>
-                                <td class="text-center" style="width: 11.11%">{{$c->contact_phone}}</td>
-                                <td class="text-center" style="width: 11.11%">{{$c->vehicles}}</td>
-                                <td class="text-center" style="width: 11.11%"><a class="btn btn-danger" > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                    <a class=" btn btn-primary" id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
-                                </tr>
-                                        @endforeach
+                                @foreach($contracts as $c)
+                                    <tr id="Contrat{{ $c->id_contract  }}">
+                                        <td class="text-center" style="width: 11.11%" >{{$c ->id_contract}}</td>
+                                        <td class="text-center" style="width: 11.11%">{{$c->start_contract}}</td>
+                                        <td class="text-center" style="width: 12.5%">{{$c->end_contract}}</td>
+                                        <td class="text-center" style="width: 11.11%">{{$c->name}}</td>
+                                        <td class="text-center" style="width: 12.5%">{{ $c->type_customer }}</td>
+                                        <td class="text-center" style="width: 11.11%">{{$c->contact}}</td>
+                                        <td class="text-center" style="width: 11.11%">{{$c->phone_number}}</td>
+                                        <td class="text-center" style="width: 11.11%">{{ $c->numberVehicles }}</td>
+                                        <td class="text-center" style="width: 11.11%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                                            <a class=" btn btn-primary" id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                    </tr>
+                                @endforeach
 
                                 </tbody>
                             </table>
@@ -142,10 +144,10 @@
                                                         <input type="date" class="form-control" id="price" placeholder="Date de début" name="price">
                                                     </div>
                                                     <div class="form-group">
-                                                        <select id="type_abonnement" name="type_abonnement" class="form-control">
-                                                            <option disabled selected id="defaultAbo">Nom du client</option>
-                                                            @foreach($contracts as $c)
-                                                                <option id="type_client"  name="{{ $c->id_customer}}" value="{{$c->name}}">{{$c->name}}</option>
+                                                        <select id="type_client" name="type_client" class="form-control">
+                                                            <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
+                                                            @foreach($Customers as $customer)
+                                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -174,17 +176,13 @@
 
                                                         <select id="type_abonnement" name="type_abonnement" class="form-control">
                                                             <option disabled selected id="defaultAbo">Matricule</option>
-                                                            @foreach ($vehicle as $v)
-                                                                <option id="type_abonnement"  name="{{ $v->id}}" value="{{ $v->car_number}}">{{ $v->car_number}}</option>
-                                                            @endforeach
+
                                                         </select>
                                                     </div>
                                                     <div class="form-group" >
                                                         <select id="type_abonnement" name="type_abonnement" class="form-control">
                                                             <option disabled selected id="defaultAbo">Type d'abonnement</option>
-                                                            @foreach ($abonnementTypes as $AbonnementType)
-                                                                <option id="type_abonnement"  name="{{ $AbonnementType->AbonnementType}}" value="{{$AbonnementType->AbonnementTypeId}}">{{ $AbonnementType->AbonnementType}}</option>
-                                                            @endforeach
+
                                                         </select>
                                                     </div>
 

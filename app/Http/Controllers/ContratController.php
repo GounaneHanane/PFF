@@ -138,22 +138,7 @@ class ContratController extends Controller
 
 
    }
-    public function contrat()
-    {
-        $c=DB::table('contracts')
-            ->join('customers','customers.id','=','contracts.id_customer')
-            ->join('cv','cv.id_contract','contracts.id')
-            ->select('contracts.*' , 'customers.*','contracts.id as id_contract','cv.vehicles')
-            ->get();
-        $ClientType=DB::table('types_customers')
-            ->select('types_customers.type as ClientType','types_customers.id as ClientTypeId')->get();
-        $AbonnementType=DB::table('types_subscribes')
-            ->select('types_subscribes.type as AbonnementType','types_subscribes.id as AbonnementTypeId')->get();
-        $v=DB::table('vehicles')
-            ->select('vehicles.*')->get();
-        //return response()->json([$c]);
-        return view('Contrat',['contracts'=>$c,'clientTypes'=>$ClientType,'abonnementTypes'=>$AbonnementType,'vehicle'=>$v]);
-    }
+
 
 
 }

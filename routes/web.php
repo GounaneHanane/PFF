@@ -22,11 +22,10 @@ Route::get('/foo', function () {
 });
 */
 
-
+/*
 Route::view('/home', 'home');
 Route::get('/clients/', 'ClientsController@idC');
 Route::get('/clients/critiere/','ClientsController@critiere');
-Route::get('/contrat/', 'ContratController@contrat');
 Route::get('/clients/all','ClientsController@AllC');
 Route::get('/clients/name/{name}', 'ClientsController@CustomerName');
 Route::get('/clients/delete/{id}', 'ClientsController@DeleteCustomer');
@@ -34,9 +33,12 @@ Route::get('/clients/{}/{name}', 'ClientsController@DeleteCustomer');
 Route::get('/clients/type/{type}', 'ClientsController@CustomerType');
 Route::get('/clients/city/{city}', 'ClientsController@CustomerCity');
 Route::get('/abonnement/count/{id}', 'AbonnementsController@count');
-Route::get('/abonnement', 'AbonnementsController@idAbonnement');
+
 Route::view('/addclient','ClientController@AddingInfo');
 Route::get('/clientinfo/{name}', 'ClientsController@CustomerInfo');
+*/
+
+Route::get('/abonnement', 'AbonnementsController@idAbonnement');
 Route::view('/editclient', 'EditClient');
 Route::view('/savecontrat', 'SaveContrat');
 Route::view('/login', 'Login');
@@ -44,6 +46,11 @@ Route::view('/alertes', 'Alertes');
 Route::view('/dashboard', 'Dashboard');
 
 //Route::view('/contrat', 'Contrat');
+Route::get('/contrat/', 'OMSContratController@contrat');
+Route::get('/contrat/search/', 'OMSContratController@searchContrat');
+Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
+Route::get('/contrat/refresh/','OMSContratController@refresh');
+
 
 Route::view('/home', 'home');
 Route::post('/contract','ClientsController@json');
@@ -51,16 +58,20 @@ Route::post('/contract','ClientsController@json');
 //Route::view('/contrat', 'contrat');
 //Route::view('/layout', 'layout');
 
+
 Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
 
 
+
+
+/*
 Route::post('/add','ClientsController@saveCustomer');
 Route::get('deleteAbonnement/{id}','AbonnementsController@deleteAbonnement');
 Route::post('/updateAbonnement','AbonnementsController@updateAbonnement');
 Route::post("/add_type",'AbonnementsController@saveAbonnement');
 Route::post('/contract/addVehicule/','ContratController@addVehicule');
-
+*/
 
 
 

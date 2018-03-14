@@ -40,8 +40,8 @@
 }
 .abonnement_dialog .form
 {
-	margin-left: -132%;
-	margin-right: -116%;
+	margin-left: -95%;
+	margin-right: -59%;
 
 }
 body
@@ -151,6 +151,7 @@ thead tr
 	border-radius: 0;
 	box-shadow: none;
 	border-color: #d2d6de;
+	width: 94%;
 }
 .chosen-container {
 	position: relative;
