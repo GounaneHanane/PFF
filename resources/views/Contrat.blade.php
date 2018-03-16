@@ -147,7 +147,7 @@
                                                             <input type="date" class="form-control" id="dated" placeholder="Date de début" name="dated">
                                                         </div>
                                                         <div class="form-group">
-                                                            <select id="client" name="client" class="form-control">
+                                                            <select id="clients" name="client" class="form-control">
                                                                 <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
                                                                 @foreach($Customers as $customer)
                                                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -155,10 +155,10 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <center><button class="btn btn-info" id="addContratBtn" >Suivant</button></center>
+                                                            <center><button class="btn btn-info" type="button" id="addContratBtn" >Suivant</button></center>
                                                         </div>
                                                </form>
-                                                <form id="addOrEdit" method="POST" action="" >
+                                                <form id="addOrEdit" method="POST">
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <div style="opacity: 0.2;" id="vehicles">
                                                         <div class="form-group">
@@ -184,7 +184,7 @@
                                                         </div>
                                                         <div class="form-group" id="selectVehicle">
 
-                                                            <select id="type_abonnement" name="type_abonnement" class="form-control">
+                                                            <select id="mat" name="type_abonnement" class="form-control">
                                                                 <option disabled selected id="defaultAbo">Matricule</option>
 
                                                             </select>
