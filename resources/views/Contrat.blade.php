@@ -82,7 +82,7 @@
                         </div>
                         <div class="panel-heading clearfix">
                             <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a onclick="addType();" id="showmodal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
+                                <a onclick="addContratDialog();" id="showmodal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -103,24 +103,26 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+<script>var i=0;</script>
                                 @foreach($contracts as $c)
-                                    <tr id="Contrat{{ $c->id_contract  }}">
-                                        <td class="text-center" style="width: 9.09%" >{{$c ->id_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->end_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->name}}</td>
-                                        <td class="text-center" style="width:9.09%">{{ $c->type_customer }}</td>
+                                    <tr id="Contrat{{ $c->idcontract  }}">
+                                        <td class="text-center" style="width: 9.09%" >{{$c ->idcontract}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$c->dated}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$c->datef}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$c->nom}}</td>
+                                        <td class="text-center" style="width:9.09%">{{ $c->type}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->contact}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{ $c->numberVehicles }}</td>
-                                        <td class="text-center" style="width:9.09%"></td>
-                                        <td class="text-center" style="width:9.09%"><h2 class="btn btn-warning">En Cours</h2></td>
-                                        <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                            <a class=" btn btn-primary" id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbvehicle }}</td>
+                                        <td class="text-center" style="width:9.09%">{{$c->total_price}}</td>
+                                        <td class="text-center" style="width:9.09%" class="etat">
+                                            <?php if($c->nbvehicle == 0)  { echo "<h2 class='btn btn-warning'>En Cours</h2>";}
+                                            else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
+                                        </td>
+                                        <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->idcontract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a><a class="btn btn-info"><span class="glyphicon glyphicon-info-sign edit"></span></a></td>
                                     </tr>
                                 @endforeach
-
                                 </tbody>
                             </table>
                             <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
@@ -155,10 +157,10 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <center><button class="btn btn-info" id="addContratBtn" >Suivant</button></center>
+                                                            <center><button class="btn btn-info" type="button" id="addContratBtn" >Suivant</button></center>
                                                         </div>
                                                </form>
-                                                <form id="addOrEdit" method="POST" action="" >
+                                                <form id="addOrEdit" method="POST" >
                                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                     <div style="opacity: 0.2;" id="vehicles">
                                                         <div class="form-group">

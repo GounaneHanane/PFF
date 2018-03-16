@@ -20,12 +20,8 @@ class OMSContratController extends Controller
 
     public function contrat()
     {
-        $c = DB::table('contracts')
-            ->where('contracts.isActive', '=', '1')
-            ->join('customers', 'customers.id', '=', 'contracts.id_customer')
-            ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->join('count_vehicle', 'count_vehicle.customer_id', '=', 'customers.id')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_vehicle.*')
+        $c = DB::table('contractveiw')
+            ->select('contractveiw.*')
             ->get();
 
         $AllC = DB::table('customers')->select('customers.id', 'customers.name')->get();
@@ -109,25 +105,6 @@ class OMSContratController extends Controller
 
     }
 
-    public function addContract(Request $request)
-    {
-
-        $messages = [
-            'required' => strtoupper(':attribute') . ' est obligatoire',
-
-        ];
-
-
-        $validator = Validator::make($request->all(), [
-            'NContrat' => 'required',
-            'date' => 'required',
-            'customer_id' => 'required',
-            'type_subscribe' => 'required',
-            'price' => 'required',
-
-
-        ], $messages);
-    }
 
     public function refresh()
     {

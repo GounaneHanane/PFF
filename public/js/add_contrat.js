@@ -143,109 +143,6 @@ $(document).ready(function(){
 
 
 
-  $('#addContratBtn').click(function(){
-      var ncontrat = $("#ncontrat").val();
-      var dated=$("#dated").val();
-      var client=$("#client").val();
-      var  inputs = [ 'ncontrat','dated','client'];
-
-      for(var j = 0;j<inputs.length;j++)
-      {
-
-
-          if ($('#Err' + inputs[j]).length) {
-
-
-              $('#Err' + inputs[j]).remove();
-
-          }
-
-
-
-
-
-      }
-
-      $.ajax({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          url: '/contrat/addcontrat',
-          type: 'POST',
-          data: {
-              ncontrat: ncontrat,
-              dated: dated,
-              client : client,
-              _token : $('#ContratToken').attr('value')
-          },
-          success: function (data, status) {
-              console.log(data);
-              alert(data);
-              var contrat=document.getElementById('contrat');
-              var vehicles=document.getElementById('vehicles');
-              contrat.style.opacity=0.2;
-              vehicles.style.opacity=1;
-              window.location.href = '#vehicles';
-
-              var  inputs = [ 'ncontrat','dated','client'];
-
-              for(var j = 0;j<inputs.length;j++)
-              {
-
-
-                  if ($('#Err' + inputs[j]).length) {
-
-
-                      $('#Err' + inputs[j]).remove();
-
-                  }
-
-
-
-
-
-              }
-
-
-          },
-          error: function (jqXhr) {console.log(jqXhr);
-
-              if (jqXhr.status === 422) {
-                  var errors = jqXhr.responseJSON;
-                  $.each( errors.message , function( key, value ) {
-                      console.log(errors);
-
-                      var l = 0;
-                      $.each(errors.message, function (key, value) {
-                          // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-
-                          if ($('#Err' + key).length) {
-                              //$('#Err' + key).html(value);
-
-                              $('#Err' + key).text(value);
-                          }
-                          else {
-                              $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
-                              l++;
-
-                          }
-                      });
-
-
-
-                  });
-
-                  // $( '#form-errors' ).html( errorsHtml );
-
-              }
-          }
-
-      })
-
-
-
-
-  });
 
 
     $('#add_client').click(function(){
@@ -395,7 +292,7 @@ function saveContrat() {
     $("#savenumero").text($("#NContact").val());
 }
 $('#vehicles :input').attr('disabled', true);
-function addType()
+function addContratDialog()
 {
     var tabAbonnement=document.getElementById("type_abonnement");
     var tabClient=document.getElementById("client");
@@ -405,7 +302,33 @@ function addType()
     document.getElementById("add_title").style.display="inline";
     document.getElementById("edit_title").style.display="none";
     document.getElementById("addOrEditButton").firstChild.data="Ajouter";
-    document.getElementById("price").value="";
+
+    for(var i=0;i<tabAbonnementLength;i++)
+    {
+        if(tabAbonnement[i].id=="defaultAbo")
+            tabAbonnement[i].selected=true;
+    }
+    for(var i=0;i<tabClienttLength;i++)
+    {
+        if(tabClient[i].id=="defaultCli")
+            tabClient[i].selected=true;
+    }
+}
+function editContratDialog()
+{
+    var tabAbonnement=document.getElementById("type_abonnement");
+    var tabClient=document.getElementById("client");
+    var tabClienttLength=tabClient.length;
+    var tabAbonnementLength=tabAbonnement.length;
+    document.getElementById('add_dialog').showModal();
+    document.getElementById("add_title").style.display="none";
+    document.getElementById("edit_title").style.display="inline";
+    document.getElementById("addOrEditButton").firstChild.data="Modifier";
+    var contrat=document.getElementById('contrat');
+    var vehicles=document.getElementById('vehicles');
+    vehicles.style.opacity=1;
+    contrat['input'].attr('disabled','true');
+    $('#contrat :input').disabled=true;
     for(var i=0;i<tabAbonnementLength;i++)
     {
         if(tabAbonnement[i].id=="defaultAbo")
