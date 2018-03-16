@@ -32,15 +32,16 @@ class Contract extends Eloquent
 	];
 
 	protected $dates = [
-		'start_date',
-		'end_date'
+		'start_contract',
+		'end_contract'
 	];
 
 	protected $fillable = [
 		'id_customer',
-		'start_date',
-		'end_date',
-		'urlContract'
+		'start_contract',
+		'end_contract',
+		'urlContract',
+        'isActive'
 	];
 
 	public function customer()

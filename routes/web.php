@@ -61,7 +61,7 @@ Route::post('/contract','ClientsController@json');
 
 Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
-
+Route::post('/contrat/addcontrat','OMSContratController@addContrat');
 
 
 
