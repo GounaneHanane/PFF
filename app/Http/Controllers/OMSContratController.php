@@ -29,6 +29,8 @@ class OMSContratController extends Controller
         $ClientType = DB::table('types_customers')
             ->select('types_customers.type as ClientType', 'types_customers.id as ClientTypeId')->get();
 
+        $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
+
         /*
         $AbonnementType=DB::table('types_subscribes')
         ->select('types_subscribes.type as AbonnementType','types_subscribes.id as AbonnementTypeId')->get();
@@ -105,6 +107,10 @@ class OMSContratController extends Controller
 
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 11d9cab3eaf12c2f962cd1b4a107ab51abb76d69
 
     public function refresh()
     {
@@ -161,7 +167,10 @@ class OMSContratController extends Controller
         $contract->isActive = 1;
         $contract->save();
 
+        $vehicles = DB::table('vehicles')->where('customer_id','=',$client)->get();
 
+
+        return response()->json(['vehicles'=>$vehicles]);
     }
 
 }
