@@ -13,11 +13,7 @@ class CreateTypesSubscribesTable extends Migration
      */
     public function up()
     {
-        Schema::create('TYPES_SUBSCRIBES', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('type',45);
-            $table->timestamps();
-        });
+
     }
 
     /**

@@ -13,11 +13,7 @@ class CreateTypesCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('TYPES_CUSTOMERS', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('type');
-            $table->timestamps();
-        });
+
     }
 
     /**

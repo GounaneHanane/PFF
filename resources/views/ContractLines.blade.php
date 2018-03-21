@@ -8,6 +8,8 @@
         <td class="text-center" style="width: 11.11%">{{$c->contact}}</td>
         <td class="text-center" style="width: 11.11%">{{$c->phone_number}}</td>
         <td class="text-center" style="width: 11.11%">{{ $c->numberVehicles }}</td>
+        <td class="text-center" style="width:9.09%">{{ $c->total }} DH</td>
+        <td class="text-center" style="width:9.09%"><h2 class="btn btn-warning">En Cours</h2></td>
         <td class="text-center" style="width: 11.11%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
             <a class=" btn btn-primary" id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
     </tr>

@@ -279,6 +279,40 @@ function editDetail(id)
     $("#type_abonnement").val(lines.children('.liste_type_abonnement').text());
 
 }
+var checkVehicle=true;
+var checkVehicleEdit=true;
+function addVehicle1() {
+    if(checkVehicleEdit==true)
+    {
+        checkVehicleEdit=false;
+
+        document.getElementById('newVehicle1').style.display='inline';
+        document.getElementById('selectVehicle1').style.display='none';
+    }
+    else
+    {
+        checkVehicleEdit=true;
+        document.getElementById('newVehicle1').style.display='none';
+        document.getElementById('selectVehicle1').style.display='inline';
+    }
+}
+function addVehicle() {
+    if(checkVehicle==true)
+    {
+
+        checkVehicle=false;
+        document.getElementById('newVehicle').style.display='inline';
+        document.getElementById('selectVehicle').style.display='none';
+    }
+    else
+    {
+        checkVehicle=true;
+        document.getElementById('newVehicle').style.display='none';
+        document.getElementById('selectVehicle').style.display='inline';
+    }
+}
+alert("true");
+
 function saveContrat() {
 
     $('#saveContrat :input').attr('disabled', false);
@@ -294,51 +328,32 @@ function saveContrat() {
 $('#vehicles :input').attr('disabled', true);
 function addContratDialog()
 {
-    var tabAbonnement=document.getElementById("type_abonnement");
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
+    var tabAbonnement=document.getElementById("typeAbonnement");
     var tabAbonnementLength=tabAbonnement.length;
+    document.getElementById("price").value="";
+    document.getElementById("newVehicleCombo").checked=false;
+    document.getElementById("newVehicle").style.display="none";
+    document.getElementById("selectVehicle").style.display="inline";
     document.getElementById('add_dialog').showModal();
-    document.getElementById("add_title").style.display="inline";
-    document.getElementById("edit_title").style.display="none";
-    document.getElementById("addOrEditButton").firstChild.data="Ajouter";
+    for(var i=0;i<tabClienttLength;i++)
+    {
 
+        if(tabClient[i].id=="defaultCli")
+            tabClient[i].selected=true;
+    }
     for(var i=0;i<tabAbonnementLength;i++)
     {
         if(tabAbonnement[i].id=="defaultAbo")
             tabAbonnement[i].selected=true;
-    }
-    for(var i=0;i<tabClienttLength;i++)
-    {
-        if(tabClient[i].id=="defaultCli")
-            tabClient[i].selected=true;
     }
 }
 function editContratDialog()
 {
-    var tabAbonnement=document.getElementById("type_abonnement");
-    var tabClient=document.getElementById("client");
-    var tabClienttLength=tabClient.length;
-    var tabAbonnementLength=tabAbonnement.length;
-    document.getElementById('add_dialog').showModal();
-    document.getElementById("add_title").style.display="none";
-    document.getElementById("edit_title").style.display="inline";
-    document.getElementById("addOrEditButton").firstChild.data="Modifier";
-    var contrat=document.getElementById('contrat');
-    var vehicles=document.getElementById('vehicles');
-    vehicles.style.opacity=1;
-    contrat['input'].attr('disabled','true');
-    $('#contrat :input').disabled=true;
-    for(var i=0;i<tabAbonnementLength;i++)
-    {
-        if(tabAbonnement[i].id=="defaultAbo")
-            tabAbonnement[i].selected=true;
-    }
-    for(var i=0;i<tabClienttLength;i++)
-    {
-        if(tabClient[i].id=="defaultCli")
-            tabClient[i].selected=true;
-    }
+    document.getElementById('edit_dialog').showModal();
+
+
 }
 function ShowType(typeClientId,typeAbonnmenetId,price) {
 
@@ -346,6 +361,7 @@ function ShowType(typeClientId,typeAbonnmenetId,price) {
     var tabAbonnement=document.getElementById("type_abonnement");
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
+    checkVehicle=true;
     var tabAbonnementLength=tabAbonnement.length;
     document.getElementById("edit_title").style.display="inline";
     document.getElementById("add_title").style.display="none";
@@ -378,21 +394,7 @@ function addOrEdit() {
 
 
 }
-var checkVehicle=true;
-function addVehicle() {
-    if(checkVehicle==true)
-    {
-        checkVehicle=false;
-        document.getElementById('newVehicle').style.display='inline';
-        document.getElementById('selectVehicle').style.display='none';
-    }
-    else
-    {
-        checkVehicle=true;
-        document.getElementById('newVehicle').style.display='none';
-        document.getElementById('selectVehicle').style.display='inline';
-    }
-}
+
 function addContrat(){
     var contrat=document.getElementById('contrat');
     var vehicles=document.getElementById('vehicles');
@@ -400,4 +402,46 @@ function addContrat(){
     vehicles.style.opacity=1;
     window.location.href = '#vehicles';
     contrat.action="/contrat/addcontrat";
+}
+function addContratDialog()
+{
+    var tabClient=document.getElementById("client");
+    var tabClienttLength=tabClient.length;
+    var tabAlpha=document.getElementById("alpha");
+    var tabAlphaLength=tabAlpha.length;
+    var tabAbonnement=document.getElementById("typeAbonnement");
+    var tabAbonnementLength=tabAbonnement.length;
+    var tabInt=document.getElementById("int");
+    var tabIntLength=tabInt.length;
+    document.getElementById("price").value="";
+    document.getElementById("dated").value="";
+    checkVehicle=true;
+
+    document.getElementById("ft").value="";
+    document.getElementById("newVehicleCombo").checked=false;
+    document.getElementById("newVehicle").style.display="none";
+    document.getElementById("selectVehicle").style.display="inline";
+    document.getElementById('add_dialog').showModal();
+    for(var i=0;i<tabClienttLength;i++)
+    {
+
+        if(tabClient[i].id=="defaultCli")
+            tabClient[i].selected=true;
+    }
+    for(var i=0;i<tabAlphaLength;i++)
+    {
+
+        if(tabAlpha[i].value=="www")
+            tabAlpha[i].selected=true;
+    }
+    for(var i=0;i<tabAbonnementLength;i++)
+    {
+        if(tabAbonnement[i].id=="defaultAbo")
+            tabAbonnement[i].selected=true;
+    }
+    for(var i=0;i<tabIntLength;i++)
+    {
+        if(tabInt[i].value=="www")
+            tabInt[i].selected=true;
+    }
 }

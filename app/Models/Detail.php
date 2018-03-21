@@ -35,7 +35,6 @@ class Detail extends Eloquent
 		'id_contract' => 'int',
 		'id_vehicle' => 'int',
 		'id_type_customer_subscribe' => 'int',
-		'id_boxe' => 'int',
 		'price' => 'float',
 		'offer' => 'bool'
 	];
@@ -44,15 +43,12 @@ class Detail extends Eloquent
 		'id_contract',
 		'id_vehicle',
 		'id_type_customer_subscribe',
-		'id_boxe',
+
 		'price',
 		'offer'
 	];
 
-	public function box()
-	{
-		return $this->belongsTo(\App\Models\Box::class, 'id_boxe');
-	}
+
 
 	public function contract()
 	{

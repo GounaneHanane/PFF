@@ -13,13 +13,7 @@ class CreateAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ACCOUNTS', function (Blueprint $table) {
-            $table->increments('idAccount');
-            $table->string('login',45);
-            $table->integer('id_customer')->unsigned();
-            $table->foreign('id_customer')->references('id')->on('customers');
-            $table->timestamps();
-        });
+
     }
 
     /**
