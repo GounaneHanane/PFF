@@ -115,7 +115,10 @@
                                         <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
                                         <td class="text-center" style="width: 9.09%">{{ $c->numberVehicles }}</td>
                                         <td class="text-center" style="width:9.09%">{{ $c->total }} DH</td>
-                                        <td class="text-center" style="width:9.09%"><h2 class="btn btn-warning">En Cours</h2></td>
+                                        <td class="text-center" style="width:9.09%">
+                                        <?php if($c->numberVehicles == 0)  { echo "<h2 class='btn btn-warning'>En Cours</h2>";}
+                                        else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
+                                        </td>
                                         <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
                                             <a class=" btn btn-primary" id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
                                     </tr>
@@ -140,9 +143,7 @@
 
                                                <form id="contrat" method="POST" >
                                                         <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="ncontrat" placeholder="N°Contrat" name="ncontrat">
-                                                        </div>
+
                                                         <div class="form-group">
                                                             <input type="date" class="form-control" id="dated" placeholder="Date de début" name="dated">
                                                         </div>
@@ -165,29 +166,30 @@
                                                             <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle()"> Nouveau vehicule
                                                         </div>
                                                         <div class="form-group" id="newVehicle" style="display: none">
-                                                            <input type="text" class="form-control">
-                                                            <select id="imei" class="form-control">
-                                                                <option value="">WWW</option>
-                                                                <?php
-                                                                for($i = 'A'; $i <= 'Z'; $i++)
-                                                                {echo "<option value='.$i.'>".$i."</option>";}
-                                                                ?>
-                                                            </select>
+                                                            <div class="form-group" >
+                                                            <input type="text" id="imei" class="form-control">
+                                                            </div>
+
+                                                            <div class="form-group" >
 
                                                             <select id="model" class="form-control">
                                                                 <option value="">WWW</option>
                                                                 <?php
                                                                 for($i = 1; $i < 100; $i++)
-                                                                {echo "<option value='.$i.'>".$i."</option>";}
+                                                                {echo "<option value=".$i.">".$i."</option>";}
                                                                 ?>
                                                             </select>
+                                                            </div>
+                                                            <div class="form-group" >
                                                             <select id="marque" class="form-control">
                                                                 <option value="">WWW</option>
                                                                 <?php
                                                                 for($i = 1; $i < 100; $i++)
-                                                                {echo "<option value='.$i.'>".$i."</option>";}
+                                                                {echo "<option value=".$i.">".$i."</option>";}
                                                                 ?>
                                                             </select>
+                                                            </div>
+
                                                         </div>
                                                         <div class="form-group" id="selectVehicle">
 
@@ -211,10 +213,11 @@
                                                         <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Ajouter</button></center>
                                                     </div>
                                                 </form>
+                                                <center> <button class="btn btn-info" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                     </div>
 
-                                                </form>
-                                                <center> <button class="btn btn-info" onclick="closeDialog()">Cancel</button></center>
+
+
 
                                             </div>
                                         </div>

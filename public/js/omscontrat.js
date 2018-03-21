@@ -92,7 +92,6 @@ $(document).ready(function(){
     });
 
     $('#addContratBtn').click(function(){
-        var ncontrat = $("#ncontrat").val();
         var dated=$("#dated").val();
         var client=$("#client").val();
         var  inputs = [ 'ncontrat','dated','clients'];
@@ -113,7 +112,6 @@ $(document).ready(function(){
 
 
         }
-        console.log(client + " " + dated + " " + ncontrat);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -121,7 +119,6 @@ $(document).ready(function(){
             url: '/contrat/addcontrat',
             type: 'POST',
             data: {
-                ncontrat: ncontrat,
                 dated: dated,
                 client : client,
                 _token : $('#ContratToken').attr('value')
@@ -215,6 +212,8 @@ $(document).ready(function(){
         var model = $('#model').val();
         var imei = $('#imei').val();
 
+        alert(marque + ' ' + model + ' ' + imei);
+
 
         if(!checkVehicle) {
             newVehicle = 1;
@@ -237,11 +236,9 @@ $(document).ready(function(){
             type: 'POST',
             data: {
                 client: client,
-
+matricule:matricule,
                 typeAbonnement: typeAbonnement,
-                matricule: matricule,
                 price: price,
-
                 newvehicle : newVehicle,
                 model : model,
                 imei:imei,
@@ -257,6 +254,8 @@ $(document).ready(function(){
                 if (jqXhr.status === 422) {
                     var errors = jqXhr.responseJSON;
                     $.each( errors.message , function( key, value ) {
+                        console.log(errors.message);
+                        console.log(errors.inputs);
                         $.each(errors.message, function (key, value) {
                             // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
 
@@ -284,9 +283,32 @@ $(document).ready(function(){
         });
 
 
+        inputs = ['typeAbonnement','price','marque','imei','model','matricule'];
+        for(var j = 0;j<inputs.length;j++)
+        {
+
+
+            if ($('#Err' + inputs[j]).length) {
+
+
+                $('#Err' + inputs[j]).remove();
+
+            }
+
+
+
+
+
+        }
+
+
         $('#matricule').val(0);
         $('#typeAbonnement').val(0);
         $('#price').val('');
+
+         $('#marque').val('');
+         $('#model').val('');
+          $('#imei').val('');
 
     });
 
