@@ -22,14 +22,30 @@ function disableContract(id)
 
 }
 
+var checkVehicle=true;
+function addVehicle() {
+    if(checkVehicle==true)
+    {
+        checkVehicle=false;
+        document.getElementById('newVehicle').style.display='inline';
+        document.getElementById('selectVehicle').style.display='none';
+    }
+    else
+    {
+        checkVehicle=true;
+        document.getElementById('newVehicle').style.display='none';
+        document.getElementById('selectVehicle').style.display='inline';
+    }
+}
+
 $(document).ready(function(){
 
     $('#recheche').click(function(){
 
         var critiere = {};
 
-         var matricule = $('#matricule').val();
-         var client = $('#client').val();
+         var matricule = $('#mat').val();
+         var client = $('#customer').val();
          var debut_contrat = $('#debut_contrat').val();
          var fin_contrat = $('#fin_contrat').val();
          var typeClient = $('#typeClient').val();
@@ -61,12 +77,10 @@ $(document).ready(function(){
                 $('tbody *').remove();
                 $('tbody').prepend(data);
 
-                console.log(status);
-                console.log(data);
+
             });
 
 
-         console.log(matricule + " " + client + " " + debut_contrat + " " + fin_contrat + " " + typeClient);
         clear();
     });
 
@@ -80,7 +94,7 @@ $(document).ready(function(){
     $('#addContratBtn').click(function(){
         var ncontrat = $("#ncontrat").val();
         var dated=$("#dated").val();
-        var client=$("#clients").val();
+        var client=$("#client").val();
         var  inputs = [ 'ncontrat','dated','clients'];
 
         for(var j = 0;j<inputs.length;j++)
@@ -146,8 +160,7 @@ $(document).ready(function(){
 
                 if(vehicles.length > 0 && vehicles != null) {
                     for (var x = 0; x < vehicles.length; x++) {
-                        alert(vehicles[x].id + " " + vehicles[x].imei);
-                        $('#mat').append($('<option value='+vehicles[x].id +'>' +vehicles[x].imei+ '</option>'));
+                        $('#matricule').append($('<option value='+vehicles[x].id +'>' +vehicles[x].imei+ '</option>'));
                     }
                 }
 
@@ -157,8 +170,6 @@ $(document).ready(function(){
                 if (jqXhr.status === 422) {
                     var errors = jqXhr.responseJSON;
                     $.each( errors.message , function( key, value ) {
-
-                        var l = 0;
                         $.each(errors.message, function (key, value) {
                             // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
 
@@ -166,12 +177,12 @@ $(document).ready(function(){
                                 //$('#Err' + key).html(value);
 
                                 $('#Err' + key).text(value);
-                            }
-                            else {
-                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
-                                l++;
 
                             }
+                            else
+                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+
+
                         });
 
 
@@ -192,6 +203,118 @@ $(document).ready(function(){
 
 
 
+    $('#AddDetail').click(function(){
+
+        var matricule = $('#matricule').val();
+        var typeAbonnement = $('#typeAbonnement').val();
+        var price = $('#price').val();
+        var newVehicle = 0;
+        var client = $('#client').val();
+
+        var marque = $('#marque').val();
+        var model = $('#model').val();
+        var imei = $('#imei').val();
+
+
+        if(!checkVehicle) {
+            newVehicle = 1;
+
+
+        }
+        else
+            newVehicle = 0;
+
+        console.log(newVehicle);
+
+
+
+        console.log(matricule + " " + typeAbonnement + " " + price);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/addDetail',
+            type: 'POST',
+            data: {
+                client: client,
+
+                typeAbonnement: typeAbonnement,
+                matricule: matricule,
+                price: price,
+
+                newvehicle : newVehicle,
+                model : model,
+                imei:imei,
+                marque:marque,
+                _token: $('#DetailToken').attr('value')
+            },
+
+            success: function (data, status) {
+                console.log(data);
+            },
+            error: function (jqXhr) {console.log(jqXhr);
+
+                if (jqXhr.status === 422) {
+                    var errors = jqXhr.responseJSON;
+                    $.each( errors.message , function( key, value ) {
+                        $.each(errors.message, function (key, value) {
+                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                            if ($('#Err' + key).length) {
+                                //$('#Err' + key).html(value);
+
+                                $('#Err' + key).text(value);
+
+                            }
+                            else {
+                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+
+                            }
+                        });
+
+
+
+                    });
+
+                    // $( '#form-errors' ).html( errorsHtml );
+
+                }
+            }
+
+        });
+
+
+        $('#matricule').val(0);
+        $('#typeAbonnement').val(0);
+        $('#price').val('');
+
+    });
+
+    $("#typeAbonnement").change(function() {
+
+        var client = $("#client").val();
+
+        $("#typeAbonnement option:selected").each(function () {
+
+            var choice = $(this).attr('value');
+            $.get("/contrat/price/"+client+"/"+choice,
+
+
+                {
+
+                },
+
+                function (data, status) {
+                    console.log(data);
+                   $('#price').val(data);
+
+                });
+
+
+
+        });
+
+    });
 
 
 });

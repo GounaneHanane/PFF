@@ -21,8 +21,6 @@ class CreateDetailsTable extends Migration
             $table->foreign('id_vehicle')->references('id')->on('vehicles');
             $table->integer('id_type_customer_subscribe')->unsigned();
             $table->foreign('id_type_customer_subscribe')->references('id')->on('types_customers_subscribes');
-            $table->integer('id_boxe')->unsigned();
-            $table->foreign('id_boxe')->references('id')->on('Boxes');
             $table->unique('id_vehicle');
             $table->float('price');
             $table->boolean('offer');

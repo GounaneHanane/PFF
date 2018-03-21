@@ -43,11 +43,11 @@
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">N°CONTRAT</label>
-                                            <input id="matricule" type="text" class="form-control" name="matricule_searsh" placeholder="N°Contrat" value="">
+                                            <input id="mat" type="text" class="form-control" name="matricule_searsh" placeholder="N°Contrat" value="">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">CLIENT</label>
-                                            <select id="client" name="costumer_search" class="form-control chosen-select" style="">
+                                            <select id="customer" name="costumer_search" class="form-control chosen-select" style="">
                                                 <option value="0">Veuillez selectionner un client</option>
                                                     @foreach($Customers as $customer)
                                                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -114,7 +114,7 @@
                                         <td class="text-center" style="width: 9.09%">{{$c->contact}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
                                         <td class="text-center" style="width: 9.09%">{{ $c->numberVehicles }}</td>
-                                        <td class="text-center" style="width:9.09%"></td>
+                                        <td class="text-center" style="width:9.09%">{{ $c->total }} DH</td>
                                         <td class="text-center" style="width:9.09%"><h2 class="btn btn-warning">En Cours</h2></td>
                                         <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
                                             <a class=" btn btn-primary" id="edit_abonnement"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
@@ -147,7 +147,7 @@
                                                             <input type="date" class="form-control" id="dated" placeholder="Date de début" name="dated">
                                                         </div>
                                                         <div class="form-group">
-                                                            <select id="clients" name="client" class="form-control">
+                                                            <select id="client" name="client" class="form-control">
                                                                 <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
                                                                 @foreach($Customers as $customer)
                                                                     <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -158,48 +158,57 @@
                                                             <center><button class="btn btn-info" type="button" id="addContratBtn" >Suivant</button></center>
                                                         </div>
                                                </form>
-                                                <form id="addOrEdit" method="POST">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <form id="addOrEdit" >
+                                                    <input type="hidden" id="DetailToken" name="_token" value="{{ csrf_token() }}">
                                                     <div style="opacity: 0.2;" id="vehicles">
                                                         <div class="form-group">
-                                                            <input type="checkbox" id="newVehicleCombo" onclick="addVehicle()"> Nouveau vehicule
+                                                            <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle()"> Nouveau vehicule
                                                         </div>
                                                         <div class="form-group" id="newVehicle" style="display: none">
                                                             <input type="text" class="form-control">
-                                                            <select class="form-control">
-                                                                <option>WWW</option>
+                                                            <select id="imei" class="form-control">
+                                                                <option value="">WWW</option>
                                                                 <?php
                                                                 for($i = 'A'; $i <= 'Z'; $i++)
-                                                                {echo "<option>".$i."</option>";}
+                                                                {echo "<option value='.$i.'>".$i."</option>";}
                                                                 ?>
                                                             </select>
 
-                                                            <select class="form-control">
-                                                                <option>WWW</option>
+                                                            <select id="model" class="form-control">
+                                                                <option value="">WWW</option>
                                                                 <?php
                                                                 for($i = 1; $i < 100; $i++)
-                                                                {echo "<option>".$i."</option>";}
+                                                                {echo "<option value='.$i.'>".$i."</option>";}
+                                                                ?>
+                                                            </select>
+                                                            <select id="marque" class="form-control">
+                                                                <option value="">WWW</option>
+                                                                <?php
+                                                                for($i = 1; $i < 100; $i++)
+                                                                {echo "<option value='.$i.'>".$i."</option>";}
                                                                 ?>
                                                             </select>
                                                         </div>
                                                         <div class="form-group" id="selectVehicle">
 
-                                                            <select id="mat" name="type_abonnement" class="form-control">
-                                                                <option disabled selected id="defaultAbo">Matricule</option>
+                                                            <select id="matricule" name="type_abonnement" class="form-control">
+                                                                <option value="0" disabled selected id="defaultAbo">Matricule</option>
 
                                                             </select>
                                                         </div>
                                                         <div class="form-group" >
-                                                            <select id="type_abonnement" name="type_abonnement" class="form-control">
-                                                                <option disabled selected id="defaultAbo">Type d'abonnement</option>
-
+                                                            <select id="typeAbonnement" name="type_abonnement" class="form-control">
+                                                                <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>
+                                                                @foreach($typeSubscribes as $typeSubscribe)
+                                                                    <option value="{{ $typeSubscribe->id  }}">{{ $typeSubscribe->type }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" id="price" placeholder="Prix" name="price">
                                                         </div>
-                                                        <center><button class="btn btn-info" id="addOrEditButton" onclick="addOrEdit();">Ajouter</button></center>
+                                                        <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Ajouter</button></center>
                                                     </div>
                                                 </form>
                                                     </div>

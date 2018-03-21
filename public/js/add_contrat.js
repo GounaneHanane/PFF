@@ -294,14 +294,14 @@ function saveContrat() {
 $('#vehicles :input').attr('disabled', true);
 function addType()
 {
-    var tabAbonnement=document.getElementById("type_abonnement");
+    var tabAbonnement=document.getElementById("typeAbonnement");
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
     var tabAbonnementLength=tabAbonnement.length;
     document.getElementById('add_dialog').showModal();
     document.getElementById("add_title").style.display="inline";
     document.getElementById("edit_title").style.display="none";
-    document.getElementById("addOrEditButton").firstChild.data="Ajouter";
+    document.getElementById("AddDetail").firstChild.data="Ajouter";
     document.getElementById("price").value="";
     for(var i=0;i<tabAbonnementLength;i++)
     {
@@ -352,21 +352,7 @@ function addOrEdit() {
 
 
 }
-var checkVehicle=true;
-function addVehicle() {
-    if(checkVehicle==true)
-    {
-        checkVehicle=false;
-        document.getElementById('newVehicle').style.display='inline';
-        document.getElementById('selectVehicle').style.display='none';
-    }
-    else
-    {
-        checkVehicle=true;
-        document.getElementById('newVehicle').style.display='none';
-        document.getElementById('selectVehicle').style.display='inline';
-    }
-}
+
 function addContrat(){
     var contrat=document.getElementById('contrat');
     var vehicles=document.getElementById('vehicles');
