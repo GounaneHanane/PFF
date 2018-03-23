@@ -112,7 +112,6 @@
                                         <td class="text-center" style="width:9.09%">{{ $c->type_customer}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->contact}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
-
                                         <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbvehicle }}</td>
                                         <td class="text-center" style="width:9.09%">{{$c->total}}</td>
                                         <td class="text-center" style="width:9.09%" class="etat">
@@ -121,6 +120,7 @@
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
                                             <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a><a class="btn btn-info"><span class="glyphicon glyphicon-info-sign edit"></span></a></td>
+
 
 
 
@@ -237,6 +237,7 @@
                                         <div class="panel-body">
                                             <div class="form" >
 
+<<<<<<< HEAD
                                                 <form id="contrat" method="POST" >
                                                     <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
 
@@ -255,38 +256,37 @@
                                                         <center><button class="btn btn-info" type="button" id="addContratBtn" >Suivant</button></center>
                                                     </div>
                                                 </form>
+                                                <div class="form-group" id="selectVehicle1">
 
-                                                <form id="addOrEdit" method="POST">
+                                            <form id="addOrEdit" method="POST">
 
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
-                                                    <div class="form-group">
-                                                        <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle1()"> Nouveau vehicule
+                                            <div class="form-group">
+                                                    <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle1()"> Nouveau vehicule
                                                     </div>
-                                                    <div class="form-group" id="newVehicle1" style="display: none">
-                                                        <input type="text" class="form-control">
-                                                        <select id="model" class="form-control">
-                                                            <option value="">WWW</option>
-                                                            <?php
-                                                            for($i = 1; $i < 100; $i++)
-                                                            {echo "<option value='.$i.'>".$i."</option>";}
-                                                            ?>
-                                                        </select>
-                                                        <select id="marque" class="form-control">
-                                                            <option value="">WWW</option>
-                                                            <?php
-                                                            for($i = 'a'; $i < 'z'; $i++)
-                                                            {echo "<option value='.$i.'>".$i."</option>";}
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group" id="selectVehicle1">
+                                            <div class="form-group" id="newVehicle1" style="display: none">
+                                                    <input type="text" class="form-control">
+                                                    <select id="model" class="form-control">
+                                                    <option value="">WWW</option>
+                                                    <?php
+                                            for($i = 1; $i < 100; $i++)
+                                            {echo "<option value='.$i.'>".$i."</option>";}
+                                            ?>
+                                                    </select>
+                                                    <select id="marque" class="form-control">
+                                                    <option value="">WWW</option>
+                                                    <?php
+                                            for($i = 'a'; $i < 'z'; $i++)
+                                            {echo "<option value='.$i.'>".$i."</option>";}
+                                            ?>
+                                                    </select>
 
-                                                        <select id="matricule" name="type_abonnement" class="form-control">
-                                                            <option value="0" disabled selected id="defaultAbo">Matricule</option>
+                                                    <select id="matricule" name="type_abonnement" class="form-control">
+                                                    <option value="0" disabled selected id="defaultAbo">Matricule</option>
 
-                                                        </select>
+                                                    </select>
                                                     </div>
                                                     <div class="form-group" >
                                                         <select id="typeAbonnement" name="type_abonnement" class="form-control">

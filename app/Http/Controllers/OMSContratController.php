@@ -153,8 +153,6 @@ class OMSContratController extends Controller
 
 
            $validator = Validator::make($request->all(), [
-               'ncontrat' => 'required',
-               'dated' => 'required',
                'client' => 'required|unique:contracts,id_customer',
 
 
@@ -253,15 +251,23 @@ class OMSContratController extends Controller
             'unique' => strtoupper(':attribute') .' est deja existe'
         ];
 
+$input = array(  'typeAbonnement' => 'required',
+    'price' => 'required');
 
-        $validator = Validator::make($request->all(), [
-            'typeAbonnement' => 'required',
-            'price' => 'required',
-            'matricule' => 'required|unique:details,id_vehicle',
+        $vehicleAdd = $request->input('newvehicle');
 
 
-        ],$messages);
+        if($vehicleAdd == 1) {
+            $input['imei'] = 'required';
+            $input['marque'] = 'required';
+            $input['model'] = 'required';
 
+        }
+        else
+        {
+            $input['matricule'] = 'required';
+        }
+            $validator = Validator::make($request->all(),$input,$messages);
         if ($validator->fails()) {
             $errors = $validator->errors();
             //$errors->add('nom','Le nom est obligatoire');
@@ -271,40 +277,48 @@ class OMSContratController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => $errors
+                'message' => $errors,
+                'inputs' => $input
             ], 422);
         }
 
         else {
 
-            $vehicleAdd = $request->all('newvehicle');
-            $client = $request->input('client');
 
+            $client = $request->input('client');
+            $idTypeCustomer = DB::table('customers')->where('customers.id', '=', $client)->select('customers.id_type_customer')->
+            pluck('id_type_customer')->first();
+            $idTypeSubscribe = $request->input('typeAbonnement');
+
+            $imei = $request->input('imei');
+            $marque = $request->input('marque');
+            $model = $request->input('model');
+            $matricule = $request->input('matricule');
+
+
+            $id_type_customer_subscribe = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+                ->where('type_customers_subscribes.id_type_subscribe', '=', $idTypeSubscribe)->select('type_customers_subscribes.id')
+                ->pluck('id')->first();
+
+
+            $idContrat = DB::table('contracts')->where('contracts.id_customer', '=', $client)->
+            select('contracts.id')->pluck('id')->first();
+            $idVehicle = $request->input('matricule');
+            $price = $request->input('price');
+
+            $Defaultprice = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+                ->where('type_customers_subscribes.id_type_subscribe', '=', $idTypeSubscribe)->select('type_customers_subscribes.price')
+                ->pluck('price')->first();
+            if ($price == $Defaultprice)
+                $offre = 0;
+            else
+                $offre = 1;
             if($vehicleAdd == 0) {
 
 
-                $idTypeCustomer = DB::table('customers')->where('customers.id', '=', $client)->select('customers.id_type_customer')->
-                pluck('id_type_customer')->first();
-                $idTypeSubscribe = $request->input('typeAbonnement');
-
-                $id_type_customer_subscribe = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
-                    ->where('type_customers_subscribes.id_type_subscribe', '=', $idTypeSubscribe)->select('type_customers_subscribes.id')
-                    ->pluck('id')->first();
 
 
-                $idContrat = DB::table('contracts')->where('contracts.id_customer', '=', $client)->
-                select('contracts.id')->pluck('id')->first();
-                $idVehicle = $request->input('matricule');
-                $price = $request->input('price');
 
-                $Defaultprice = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
-                    ->where('type_customers_subscribes.id_type_subscribe', '=', $idTypeSubscribe)->select('type_customers_subscribes.price')
-                    ->pluck('price')->first();
-
-                if ($price == $Defaultprice)
-                    $offre = 0;
-                else
-                    $offre = 1;
                 $detail = new Detail();
                 $detail->id_contract = $idContrat;
                 $detail->id_vehicle = $idVehicle;
@@ -317,6 +331,27 @@ class OMSContratController extends Controller
             else
             {
 
+
+                 $vehicle = new Vehicle();
+                 $vehicle->imei = $imei;
+                 $vehicle->marque = $marque;
+                 $vehicle->model = $model;
+                 $vehicle->customer_id = $client;
+                 $vehicle->user_id = 10;
+
+                 $vehicle->save();
+
+
+                 $idVehicle = DB::table('vehicles')->where('vehicles.imei','=',$imei)->select('vehicles.id')->pluck('id')->first();
+
+                $detail = new Detail();
+                $detail->id_contract = $idContrat;
+                $detail->id_vehicle = $idVehicle;
+                $detail->price = $price;
+                $detail->id_type_customer_subscribe = $id_type_customer_subscribe;
+                $detail->offer = $offre;
+
+                $detail->save();
             }
 
             return response()->json($request->all());
