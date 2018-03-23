@@ -126,7 +126,7 @@ $(document).ready(function(){
 
     });
     $(".trash").click(function(){
-        alert("x");
+
         $('#vehicles_table').find('input[type="checkbox"]:checked').each(function () {
             $( this ).parent().parent().remove();
         });
@@ -311,7 +311,7 @@ function addVehicle() {
         document.getElementById('selectVehicle').style.display='inline';
     }
 }
-alert("true");
+
 
 function saveContrat() {
 

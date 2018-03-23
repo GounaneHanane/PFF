@@ -112,10 +112,10 @@
                                         <td class="text-center" style="width:9.09%">{{ $c->type_customer}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->contact}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbvehicle }}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->numberVehicles }}</td>
                                         <td class="text-center" style="width:9.09%">{{$c->total}}</td>
                                         <td class="text-center" style="width:9.09%" class="etat">
-                                            <?php if($c->nbvehicle == 0)  { echo "<h2 class='btn btn-warning'>En Cours</h2>";}
+                                            <?php if($c->numberVehicles == 0)  { echo "<h2 class='btn btn-warning'>En Cours</h2>";}
                                             else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
@@ -161,7 +161,7 @@
                                                 </div>
                                             </form>
 
-                                            <form id="addOrEdit" method="POST">
+                                            <form id="vehicles" method="POST">
 
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -237,7 +237,6 @@
                                         <div class="panel-body">
                                             <div class="form" >
 
-<<<<<<< HEAD
                                                 <form id="contrat" method="POST" >
                                                     <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
 
