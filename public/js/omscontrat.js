@@ -23,23 +23,114 @@ function disableContract(id)
 }
 
 var checkVehicle=true;
-function addVehicle() {
-    if(checkVehicle==true)
-    {
-        checkVehicle=false;
-        document.getElementById('newVehicle').style.display='inline';
-        document.getElementById('selectVehicle').style.display='none';
-    }
-    else
-    {
-        checkVehicle=true;
-        document.getElementById('newVehicle').style.display='none';
-        document.getElementById('selectVehicle').style.display='inline';
-    }
-}
 
 $(document).ready(function(){
 
+    $('#addContratBtn').click(function(){
+
+        var ncontrat = $("#ncontrat").val();
+        var dated=$("#dated").val();
+        var client=$("#client").val();
+        var  inputs = [ 'ncontrat','dated','client'];
+
+        for(var j = 0;j<inputs.length;j++)
+        {
+
+
+            if ($('#Err' + inputs[j]).length) {
+
+
+                $('#Err' + inputs[j]).remove();
+
+            }
+
+
+           alert('hola');
+
+
+        }
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/addcontrat',
+            type: 'POST',
+            data: {
+                ncontrat: ncontrat,
+                dated: dated,
+                client : client,
+                _token : $('#ContratToken').attr('value')
+            },
+            success: function (data, status) {
+                console.log(data);
+                alert(data);
+                var contrat=document.getElementById('contrat');
+                var vehicles=document.getElementById('vehicles');
+                contrat.style.opacity=0.2;
+                vehicles.style.opacity=1;
+                window.location.href = '#vehicles';
+
+                var  inputs = [ 'ncontrat','dated','client'];
+
+
+                for(var j = 0;j<inputs.length;j++)
+                {
+
+
+                    if ($('#Err' + inputs[j]).length) {
+
+
+                        $('#Err' + inputs[j]).remove();
+
+                    }
+
+
+
+
+
+                }
+
+
+            },
+            error: function (jqXhr) {console.log(jqXhr);
+
+                if (jqXhr.status === 422) {
+                    var errors = jqXhr.responseJSON;
+                    $.each( errors.message , function( key, value ) {
+                        console.log(errors);
+
+                        var l = 0;
+                        $.each(errors.message, function (key, value) {
+                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                            if ($('#Err' + key).length) {
+                                //$('#Err' + key).html(value);
+
+                                $('#Err' + key).text(value);
+                            }
+                            else {
+                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+                                l++;
+
+                            }
+                        });
+
+
+
+                    });
+
+                    // $( '#form-errors' ).html( errorsHtml );
+
+                }
+            }
+
+        })
+
+
+
+
+    });
     $('#recheche').click(function(){
 
         var critiere = {};

@@ -20,6 +20,8 @@ class OMSContratController extends Controller
 
     public function contrat()
     {
+
+
         $c = DB::table('contracts')
             ->where('contracts.isActive', '=', '1')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
@@ -28,8 +30,13 @@ class OMSContratController extends Controller
             ->join('count_price','count_price.id_contract','=','contracts.id')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                  'count_price.*')
+            ->leftjoin('nbvehicle', 'contracts.id', '=', 'nbvehicle.id_contract')
+            ->join('count_price','count_price.id_contract','=','contracts.id')
+            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'nbvehicle.*',
+                 'count_price.*')->get();
 
-            ->get();
+
+
 
         $AllC = DB::table('customers')->select('customers.id', 'customers.name')->get();
 
