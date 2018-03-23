@@ -24,9 +24,9 @@ class OMSContratController extends Controller
             ->where('contracts.isActive', '=', '1')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->join('count_vehicle', 'count_vehicle.customer_id', '=', 'customers.id')
+            ->join('count_contract', 'count_contract.id_contract', '=', 'contracts.id')
             ->join('count_price','count_price.id_contract','=','contracts.id')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_vehicle.*',
+            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                  'count_price.*')
 
             ->get();
@@ -96,11 +96,10 @@ class OMSContratController extends Controller
         $QueryContracts = $contracts
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->join('count_vehicle', 'count_vehicle.customer_id', '=', 'customers.id')
+            ->join('count_contract', 'count_contract.id_contract', '=', 'contracts.id')
             ->join('count_price','count_price.id_contract','=','contracts.id')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_vehicle.*',
+            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                 'count_price.*')
-
 
             ->where($critiere)
             ->get();
@@ -113,7 +112,11 @@ class OMSContratController extends Controller
     {
 
         $contrat = DB::table('contracts')->where('contracts.id', $id)->update(['isActive' => 0]);
-        $details = DB::table('details')->where('details.id', $id)->update(['isActive' => 0]);
+
+        $idDetails = DB::table('details')->where('details.id_contract','=',$contrat);
+
+        if(isset($idDetails))
+            $details = DB::table('details')->where('details.id_contract', $contrat)->update(['isActive' => 0]);
 
 
 
@@ -131,11 +134,10 @@ class OMSContratController extends Controller
             ->where('contracts.isActive', '=', '1')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->join('count_vehicle', 'count_vehicle.customer_id', '=', 'customers.id')
+            ->join('count_contract', 'count_contract.id_contract', '=', 'contracts.id')
             ->join('count_price','count_price.id_contract','=','contracts.id')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_vehicle.*',
+            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                 'count_price.*')
-
             ->get();
 
         return view('ContractLines', ['contracts' => $c]);
