@@ -89,9 +89,9 @@ $(document).ready(function(){
                     vehicles = data['vehicles'];
                 }
 
-                for (var i = 0; i <= vehicles.length; i++) {
-                    alert("b");
-                    $('#matricule').append($('<option>' + vehicles[i].imei + '</option>'));
+                for (var i = 0; i < vehicles.length; i++) {
+                    console.log(vehicles[i].imei);
+                    $('#matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
                  //   console.log(data[i].imei);
                 }
 
@@ -172,7 +172,7 @@ $(document).ready(function(){
                     critiere['typeClient'] = typeClient;
 
 
-        $.get("http://127.0.0.1:8000/contrat/search/",
+        $.get("/contrat/search/",
             critiere
             ,
 
@@ -188,12 +188,14 @@ $(document).ready(function(){
         clear();
     });
 
-    $('#refresh').click(function(){
+    $('#refresh,#AddDetail,#btnCancel').click(function(){
           $.get("/contrat/refresh/",{},function(data,status){
               $('tbody *').remove();
               $('tbody').prepend(data);
           });
     });
+
+
 
 
 
@@ -219,11 +221,8 @@ $(document).ready(function(){
         else
             newVehicle = 0;
 
-        console.log(newVehicle);
 
 
-
-        console.log(matricule + " " + typeAbonnement + " " + price);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -243,15 +242,14 @@ $(document).ready(function(){
             },
 
             success: function (data, status) {
-                console.log(data);
+                            console.log(data);
             },
-            error: function (jqXhr) {console.log(jqXhr);
+            error: function (jqXhr) {
+
 
                 if (jqXhr.status === 422) {
                     var errors = jqXhr.responseJSON;
                     $.each( errors.message , function( key, value ) {
-                        console.log(errors.message);
-                        console.log(errors.inputs);
                         $.each(errors.message, function (key, value) {
                             // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
 

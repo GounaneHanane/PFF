@@ -405,19 +405,28 @@ function addContrat(){
 }
 function addContratDialog()
 {
+
+    var contrat=document.getElementById('contrat');
+    var vehicles=document.getElementById('vehicles');
+    contrat.style.opacity=1;
+
+    $("#client").val('0');
+    $('#date').val('');
+    $('#matricule * ').remove();
+
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
-    var tabAlpha=document.getElementById("alpha");
+    var tabAlpha=document.getElementById("imei");
     var tabAlphaLength=tabAlpha.length;
     var tabAbonnement=document.getElementById("typeAbonnement");
     var tabAbonnementLength=tabAbonnement.length;
-    var tabInt=document.getElementById("int");
+    var tabInt=document.getElementById("marque");
     var tabIntLength=tabInt.length;
     document.getElementById("price").value="";
     document.getElementById("dated").value="";
     checkVehicle=true;
 
-    document.getElementById("ft").value="";
+    document.getElementById("imei").value="";
     document.getElementById("newVehicleCombo").checked=false;
     document.getElementById("newVehicle").style.display="none";
     document.getElementById("selectVehicle").style.display="inline";

@@ -119,7 +119,7 @@
                                             else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a><a class="btn btn-info"><span class="glyphicon glyphicon-info-sign edit"></span></a></td>
+                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
 
 
 
@@ -143,7 +143,7 @@
                                         <div class="form" >
 
                                             <form id="contrat" method="POST" >
-                                                <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" id="ContratToken"   name="_token" value="{{ csrf_token() }}">
 
                                                 <div>
                                                     <input type="date" class="form-control" id="dated" name="dated">
@@ -163,22 +163,22 @@
 
                                             <form id="vehicles" method="POST">
 
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="_token" id="DetailToken" value="{{ csrf_token() }}">
 
 
                                                 <div class="form-group">
                                                     <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle()"> Nouveau vehicule
                                                 </div>
                                                 <div class="form-group" id="newVehicle" style="display: none">
-                                                    <input type="text" id="ft" class="form-control">
-                                                    <select id="alpha" class="form-control">
+                                                    <input type="text" id="imei" class="ft form-control">
+                                                    <select id="marque" class="alpha form-control">
                                                         <option value="www">WWW</option>
                                                         <?php
                                                         for($i = 'a'; $i <= 'z'; $i++)
                                                         {echo "<option value='.$i.'>".$i."</option>";}
                                                         ?>
                                                     </select>
-                                                    <select id="int" class="form-control">
+                                                    <select id="model" class=" form-control">
                                                         <option value="www">WWW</option>
                                                         <?php
                                                         for($i = 1; $i < 100; $i++)
@@ -208,7 +208,7 @@
 
                                                 <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Ajouter</button></center>
                                             </form>
-                                            <center> <button class="btn btn-info" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                                            <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                         </div>
 
 

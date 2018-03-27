@@ -48,6 +48,7 @@ Route::view('/dashboard', 'Dashboard');
 //Route::view('/contrat', 'Contrat');
 Route::get('/contrat/', 'OMSContratController@contrat');
 Route::get('/contrat/search/', 'OMSContratController@searchContrat');
+Route::get('/contrat/recherche/', 'OMSContratController@recherche');
 Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
 Route::get('/contrat/refresh/','OMSContratController@refresh');
 Route::get("/contrat/price/{idClient}/{idTypeSubscribe}",'OMSContratController@getPrice');
