@@ -126,6 +126,13 @@ class OMSContratController extends Controller
 
     }
 
+    public function DisableDetail($id)
+    {
+
+        $detail = DB::table('details')->where('details.id', $id)->update(['isActive' => 0]);
+
+    }
+
 
     public function refresh()
     {
@@ -140,6 +147,18 @@ class OMSContratController extends Controller
             ->get();
 
         return view('ContractLines', ['contracts' => $c]);
+    }
+    public function update($id)
+    {
+        $details = DB::table('details')->where('details.id_contract','=',$id)
+            ->where('details.isActive','=','1')
+            ->join('vehicles','vehicles.id','details.id_vehicle')
+            ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+            ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+            ->select('details.id as id_detail','details.*','vehicles.*','types_subscribes.*')->get();
+
+        return view('DetailsLines',['details' => $details]);
+
     }
 
     public function addContrat(Request $request)

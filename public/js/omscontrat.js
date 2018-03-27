@@ -22,6 +22,17 @@ function disableContract(id)
 
 }
 
+
+function disableDetail(id)
+{
+
+    $.get("/detail/delete/"+id,{},function(data, status){
+
+
+        $("#Detail"+id).remove();
+    });
+}
+
 var checkVehicle=true;
 
 $(document).ready(function(){

@@ -16,7 +16,7 @@
         <td class="text-center" style="width: 15%">
 
             <a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
+            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
         </td>
 
 

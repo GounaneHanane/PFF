@@ -349,11 +349,17 @@ function addContratDialog()
             tabAbonnement[i].selected=true;
     }
 }
-function editContratDialog()
+function editContratDialog(id)
 {
     document.getElementById('edit_dialog').showModal();
 
 
+    $.get("/contrat/update/"+id,{},function(data, status){
+
+      $("#DetailModify tbody *").remove();
+      $("#DetailModify tbody").prepend(data);
+
+    });
 }
 function ShowType(typeClientId,typeAbonnmenetId,price) {
 

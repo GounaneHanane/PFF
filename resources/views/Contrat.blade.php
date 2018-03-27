@@ -119,7 +119,7 @@
                                             else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
 
 
 
@@ -301,7 +301,7 @@
                                                     </div>
                                                     <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Ajouter</button></center>
                                                     <div>
-                                                        <table class="table table-bordered">
+                                                        <table id="DetailModify" class="table table-bordered">
                                                             <thead>
                                                             <tr>
                                                                 <th>Matricule</th>
