@@ -177,6 +177,9 @@
                                                     <div class="form-group" style="    width: 45%;    margin-left: 48%;">
                                                         <input type="text" class="form-control" placeholder="Nombre des vehicules">
                                                     </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" placeholder="Prix">
+                                                    </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%; margin-top: -9%;">
                                                         <span class="btn btn-success glyphicon glyphicon-ok" ></span>
                                                     </div>

@@ -37,7 +37,7 @@
         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><img src="/img/notifications-button.png" id="setting">
             </button>
     </div>
-   
+
     <div class="user">
         <i class="glyphicon glyphicon-user" style="    float: left;
     padding-right: 8px;   "></i>Bonjour : Admin
