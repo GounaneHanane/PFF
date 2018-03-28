@@ -161,6 +161,24 @@ class OMSContratController extends Controller
 
     }
 
+    public function PriceVehicles($idCustomer,$type,$many)
+    {
+
+        $vehciles = DB::table('vehicles')->where('vehicles.customer_id','=',$idCustomer)->get()->count();
+
+        $typeCustomerId = DB::table('customers')->where('customers.id','=',$idCustomer)->select('customers.id_type_customer')->pluck('id_type_customer')->first();
+
+        $price = $this->getPrice($idCustomer,$type);
+
+        $total = $many * $price;
+
+
+
+        return response()->json(['vehicles'=>$vehciles , 'typeCustomerId'=>$typeCustomerId ,'price'=>$price,'typeSubscribe'=>$type , 'total'=>$total]);
+
+       // return response()->json(['price'=>$price , 'type'=>$type,'idCustomer'=>$idCustomer]);
+    }
+
     public function DetailVehicles($id)
     {
         $vehicles = DB::table('contracts')
@@ -168,7 +186,7 @@ class OMSContratController extends Controller
             ->where('contracts.id','=',$id)
             ->join('customers','customers.id','contracts.id_customer')
             ->join('vehicles','vehicles.customer_id','customers.id')
-            ->select('vehicles.*')
+            ->select('vehicles.*','contracts.id as contract_id','contracts.*')
             ->get();
 
         return response()->json(['vehicles'=>$vehicles]);
@@ -183,10 +201,7 @@ class OMSContratController extends Controller
              ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
               ->select('details.id as id_detail','details.*','vehicles.*','vehicles.*','types_subscribes.id as types_subscribe_id')->first();
 
-        /*
 
-*/
-            //  ->select('details.*')->first();
         return response()->json(['details'=>$details ]);
 
     }
@@ -296,7 +311,7 @@ class OMSContratController extends Controller
             ->pluck('price')->first();
 
 
-        return response()->json($price);
+        return $price;
     }
 
     public function addDetail(Request $request)

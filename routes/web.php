@@ -56,7 +56,7 @@ Route::get("/contrat/price/{idClient}/{idTypeSubscribe}",'OMSContratController@g
 Route::get('/detail/delete/{id}','OMSContratController@DisableDetail');
 Route::get('/contrat/detail/{id}','OMSContratController@DetailSelected');
 Route::get('/contrat/detailVehicles/{id}','OMSContratController@DetailVehicles');
-
+Route::get('/contrat/priceDetail/{idClient}/{idTypeSubscribe}/{many}','OMSContratController@PriceVehicles');
 
 
 Route::view('/home', 'home');

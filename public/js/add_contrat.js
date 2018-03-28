@@ -355,7 +355,14 @@ function editContratDialog(id)
 
 
 
+
+    $('#dated').val();
+
+
+
     $.get("/contrat/update/"+id,{},function(data, status){
+
+
 
       $("#DetailModify tbody *").remove();
       $("#DetailModify tbody").prepend(data);
@@ -369,6 +376,8 @@ function editContratDialog(id)
 
       var vehicles = data.vehicles;
 
+
+      console.log(vehicles);
         for (var i = 0; i < vehicles.length; i++) {
             $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
         }
