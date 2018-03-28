@@ -286,8 +286,9 @@ function addVehicle1() {
     {
         checkVehicleEdit=false;
 
-        document.getElementById('newVehicle1').style.display='inline';
+        document.getElementById('newVehicle1').style.display='block';
         document.getElementById('selectVehicle1').style.display='none';
+        console.log("hole");
     }
     else
     {
@@ -328,16 +329,16 @@ function saveContrat() {
 $('#vehicles :input').attr('disabled', true);
 function addContratDialog()
 {
-    var tabClient=document.getElementById("client");
+   /* var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
     var tabAbonnement=document.getElementById("typeAbonnement");
     var tabAbonnementLength=tabAbonnement.length;
     document.getElementById("price").value="";
     document.getElementById("newVehicleCombo").checked=false;
     document.getElementById("newVehicle").style.display="none";
-    document.getElementById("selectVehicle").style.display="inline";
+    document.getElementById("selectVehicle").style.display="inline";*/
     document.getElementById('add_dialog').showModal();
-    for(var i=0;i<tabClienttLength;i++)
+   /* for(var i=0;i<tabClienttLength;i++)
     {
 
         if(tabClient[i].id=="defaultCli")
@@ -347,13 +348,32 @@ function addContratDialog()
     {
         if(tabAbonnement[i].id=="defaultAbo")
             tabAbonnement[i].selected=true;
-    }
+    }*/
 }
-function editContratDialog()
+function editContratDialog(id)
 {
     document.getElementById('edit_dialog').showModal();
 
 
+
+    $.get("/contrat/update/"+id,{},function(data, status){
+
+      $("#DetailModify tbody *").remove();
+      $("#DetailModify tbody").prepend(data);
+
+
+
+
+    });
+
+    $.get("/contrat/detailVehicles/"+id,{},function(data, status){
+
+      var vehicles = data.vehicles;
+
+        for (var i = 0; i < vehicles.length; i++) {
+            $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
+        }
+    });
 }
 function ShowType(typeClientId,typeAbonnmenetId,price) {
 
@@ -405,43 +425,36 @@ function addContrat(){
 }
 function addContratDialog()
 {
+
+    var contrat=document.getElementById('contrat');
+    var vehicles=document.getElementById('vehicles');
+    contrat.style.opacity=1;
+
+    $("#client").val('0');
+    $('#date').val('');
+    $('#matricule * ').remove();
+
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
-    var tabAlpha=document.getElementById("alpha");
-    var tabAlphaLength=tabAlpha.length;
-    var tabAbonnement=document.getElementById("typeAbonnement");
+   /* var tabAbonnement=document.getElementById("typeAbonnement");
     var tabAbonnementLength=tabAbonnement.length;
-    var tabInt=document.getElementById("int");
+    var tabInt=document.getElementById("marque");
     var tabIntLength=tabInt.length;
     document.getElementById("price").value="";
     document.getElementById("dated").value="";
-    checkVehicle=true;
-
-    document.getElementById("ft").value="";
-    document.getElementById("newVehicleCombo").checked=false;
-    document.getElementById("newVehicle").style.display="none";
-    document.getElementById("selectVehicle").style.display="inline";
+    checkVehicle=true;*/
     document.getElementById('add_dialog').showModal();
-    for(var i=0;i<tabClienttLength;i++)
+   /* for(var i=0;i<tabClienttLength;i++)
     {
 
         if(tabClient[i].id=="defaultCli")
             tabClient[i].selected=true;
     }
-    for(var i=0;i<tabAlphaLength;i++)
-    {
 
-        if(tabAlpha[i].value=="www")
-            tabAlpha[i].selected=true;
-    }
     for(var i=0;i<tabAbonnementLength;i++)
     {
         if(tabAbonnement[i].id=="defaultAbo")
             tabAbonnement[i].selected=true;
-    }
-    for(var i=0;i<tabIntLength;i++)
-    {
-        if(tabInt[i].value=="www")
-            tabInt[i].selected=true;
-    }
+    }*/
+
 }

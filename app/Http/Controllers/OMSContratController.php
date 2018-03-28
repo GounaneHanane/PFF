@@ -27,13 +27,10 @@ class OMSContratController extends Controller
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
             ->join('count_contract', 'count_contract.id_contract', '=', 'contracts.id')
-            ->join('count_price','count_price.id_contract','=','contracts.id')
+            ->join('count_price', 'count_price.id_contract', '=', 'contracts.id')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
-                 'count_price.*')
-
+                'count_price.*')
             ->get();
-
-
 
 
         $AllC = DB::table('customers')->select('customers.id', 'customers.name')->get();
@@ -53,13 +50,12 @@ class OMSContratController extends Controller
 //return response()->json([$c]);
 //  return view('Contrat',['contracts'=>$c,'clientTypes'=>$ClientType,'abonnementTypes'=>$AbonnementType,'vehicle'=>$v]);
         return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $AllC,
-            'typeSubscribes'=>$types_subscribes]);
+            'typeSubscribes' => $types_subscribes]);
     }
 
 
     public function searchContrat(Request $request)
     {
-
         $id_contract = ($request->input('id_contract') == null) ? null : $request->input('id_contract');
         $id_customer = ($request->input('id_customer') == null) ? null : $request->input('id_customer');
         $debut_contrat = ($request->input('debut_contrat') == null) ? null : $request->input('debut_contrat');
@@ -102,35 +98,40 @@ class OMSContratController extends Controller
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
             ->join('count_contract', 'count_contract.id_contract', '=', 'contracts.id')
-            ->join('count_price','count_price.id_contract','=','contracts.id')
+            ->join('count_price', 'count_price.id_contract', '=', 'contracts.id')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                 'count_price.*')
-
             ->where($critiere)
             ->get();
 
 
         return view('ContractLines', ['contracts' => $QueryContracts]);
+
     }
+
+
 
     public function DisableContract($id)
     {
 
         $contrat = DB::table('contracts')->where('contracts.id', $id)->update(['isActive' => 0]);
 
-        $idDetails = DB::table('details')->where('details.id_contract','=',$contrat);
+        $idDetails = DB::table('details')->where('details.id_contract', '=', $contrat);
 
-        if(isset($idDetails))
+        if (isset($idDetails))
             $details = DB::table('details')->where('details.id_contract', $contrat)->update(['isActive' => 0]);
-
-
-
 
 
         return response()->json([$id]);
 
     }
 
+    public function DisableDetail($id)
+    {
+
+        $detail = DB::table('details')->where('details.id', $id)->update(['isActive' => 0]);
+
+    }
 
 
     public function refresh()
@@ -140,106 +141,160 @@ class OMSContratController extends Controller
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
             ->join('count_contract', 'count_contract.id_contract', '=', 'contracts.id')
-            ->join('count_price','count_price.id_contract','=','contracts.id')
+            ->join('count_price', 'count_price.id_contract', '=', 'contracts.id')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                 'count_price.*')
             ->get();
 
         return view('ContractLines', ['contracts' => $c]);
     }
-
-    public function addContrat(Request $request)
+    public function update($id)
     {
-          $messages = [
-               'required' => strtoupper(':attribute') .' est obligatoire',
-              'unique' => strtoupper(':attribute') .' est deja existe'
-           ];
+        $details = DB::table('details')->where('details.id_contract','=',$id)
+            ->where('details.isActive','=','1')
+            ->join('vehicles','vehicles.id','details.id_vehicle')
+            ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+            ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+            ->select('details.id as id_detail','details.*','vehicles.*','types_subscribes.*')->get();
 
+        return view('DetailsLines',['details' => $details]);
 
-           $validator = Validator::make($request->all(), [
-               'client' => 'required|unique:contracts,id_customer',
+    }
 
+    public function DetailVehicles($id)
+    {
+        $vehicles = DB::table('contracts')
 
-           ],$messages);
-
-           if ($validator->fails()) {
-               $errors = $validator->errors();
-               //$errors->add('nom','Le nom est obligatoire');
-               //$errors =  json_decode($errors);
-
-
-
-               return response()->json([
-                   'success' => false,
-                   'message' => $errors
-               ], 422);
-           } else {
-
-
-        $client= $request->input('client');
-        $contract = new Contract();
-        $contract->id_customer = $client;
-
-
-             if($request->input('dated') != null)
-                $date_start_contract = $request->input('dated');
-             else
-                 $date_start_contract = date("Y-m-d");
-
-
-
-                   $date = explode('-', $date_start_contract);
-
-                   if($date[2] > 1 and $date[2]<15)
-                   {
-                       $date[2]='15';
-                   }
-                   if($date[2] > 15)
-                   {
-                       $time = strtotime($date_start_contract);
-                       $date = date("Y-m-d", strtotime("+1 month", $time));
-                       $date = explode('-', $date);
-                       $date[2]='1';
-
-
-                   }
-
-                   $date = implode('-', $date);
-
-                   $date_start_contract=$date;
-
-               $time = strtotime($date_start_contract);
-               $date_end_contract = date("Y-m-d",strtotime("+1 year", $time));
-
-
-
-
-
-        $contract->urlContract = "/contractPdf/" .$client;
-        $contract->start_contract = $date_start_contract;
-        $contract->end_contract = $date_end_contract;
-        $contract->isActive = 1;
-        $contract->save();
-
-
-
-        $vehicles = DB::table('vehicles')->where('customer_id','=',$client)->get();
-
+            ->where('contracts.id','=',$id)
+            ->join('customers','customers.id','contracts.id_customer')
+            ->join('vehicles','vehicles.customer_id','customers.id')
+            ->select('vehicles.*')
+            ->get();
 
         return response()->json(['vehicles'=>$vehicles]);
     }
 
-
-
-}
-    public function getPrice($idClient,$idTypeSubscribe)
+    public function DetailSelected($id)
     {
-        $idTypeCustomer = DB::table('customers')->where('customers.id','=',$idClient)->select('customers.id_type_customer')->
+        $details = DB::table('details')->where('details.id','=',$id)
+            ->where('details.isActive','=','1')
+            ->join('vehicles','vehicles.id','details.id_vehicle')
+             ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+             ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+              ->select('details.id as id_detail','details.*','vehicles.*','vehicles.*','types_subscribes.id as types_subscribe_id')->first();
+
+        /*
+
+*/
+            //  ->select('details.*')->first();
+        return response()->json(['details'=>$details ]);
+
+    }
+
+    public function UpdateDetailSelected(Request $request)
+    {
+
+
+
+        $messages = [
+            'required' => strtoupper(':attribute') . ' est obligatoire',
+            'unique' => strtoupper(':attribute') . ' est deja existe'
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'client' => 'required|unique:contracts,id_customer',
+
+
+        ], $messages);
+
+    }
+
+    public function addContrat(Request $request)
+    {
+        $messages = [
+            'required' => strtoupper(':attribute') . ' est obligatoire',
+            'unique' => strtoupper(':attribute') . ' est deja existe'
+        ];
+
+
+        $validator = Validator::make($request->all(), [
+            'client' => 'required|unique:contracts,id_customer',
+
+
+        ], $messages);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            //$errors->add('nom','Le nom est obligatoire');
+            //$errors =  json_decode($errors);
+
+
+            return response()->json([
+                'success' => false,
+                'message' => $errors
+            ], 422);
+        } else {
+
+
+            $client = $request->input('client');
+            $contract = new Contract();
+            $contract->id_customer = $client;
+
+
+            if ($request->input('dated') != null)
+                $date_start_contract = $request->input('dated');
+            else
+                $date_start_contract = date("Y-m-d");
+
+
+            $date = explode('-', $date_start_contract);
+
+            if ($date[2] > 1 and $date[2] < 15) {
+                $date[2] = '15';
+            }
+            if ($date[2] > 15) {
+                $time = strtotime($date_start_contract);
+                $date = date("Y-m-d", strtotime("+1 month", $time));
+                $date = explode('-', $date);
+                $date[2] = '1';
+
+
+            }
+
+            $date = implode('-', $date);
+
+            $date_start_contract = $date;
+
+            $time = strtotime($date_start_contract);
+            $date_end_contract = date("Y-m-d", strtotime("+1 year", $time));
+
+
+            $contract->urlContract = "/contractPdf/" . $client;
+            $contract->start_contract = $date_start_contract;
+            $contract->end_contract = $date_end_contract;
+            $contract->isActive = 1;
+            $contract->save();
+
+
+            $vehicles = DB::table('vehicles')->where('customer_id', '=', $client)->get();
+
+
+            return response()->json(['vehicles' => $vehicles]);
+        }
+
+
+    }
+
+    public function getPrice($idClient, $idTypeSubscribe)
+    {
+        $idTypeCustomer = DB::table('customers')->where('customers.id', '=', $idClient)->select('customers.id_type_customer')->
         pluck('id_type_customer')->first();
 
 
-        $price = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer','=',$idTypeCustomer)
-            ->where('type_customers_subscribes.id_type_subscribe','=',$idTypeSubscribe)->select('type_customers_subscribes.price')->first();
+
+        $price = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+            ->where('type_customers_subscribes.id_type_subscribe', '=', $idTypeSubscribe)->select('type_customers_subscribes.price')
+            ->pluck('price')->first();
 
 
 
@@ -250,32 +305,29 @@ class OMSContratController extends Controller
     {
 
         $messages = [
-            'required' => strtoupper(':attribute') .' est obligatoire',
-            'unique' => strtoupper(':attribute') .' est deja existe'
+            'required' => strtoupper(':attribute') . ' est obligatoire',
+            'unique' => strtoupper(':attribute') . ' est deja existe'
         ];
 
-$input = array(  'typeAbonnement' => 'required',
-    'price' => 'required');
+        $input = array('typeAbonnement' => 'required',
+            'price' => 'required');
 
         $vehicleAdd = $request->input('newvehicle');
 
 
-        if($vehicleAdd == 1) {
+        if ($vehicleAdd == 1) {
             $input['imei'] = 'required';
             $input['marque'] = 'required';
             $input['model'] = 'required';
 
-        }
-        else
-        {
+        } else {
             $input['matricule'] = 'required';
         }
-            $validator = Validator::make($request->all(),$input,$messages);
+        $validator = Validator::make($request->all(), $input, $messages);
         if ($validator->fails()) {
             $errors = $validator->errors();
             //$errors->add('nom','Le nom est obligatoire');
             //$errors =  json_decode($errors);
-
 
 
             return response()->json([
@@ -283,9 +335,7 @@ $input = array(  'typeAbonnement' => 'required',
                 'message' => $errors,
                 'inputs' => $input
             ], 422);
-        }
-
-        else {
+        } else {
 
 
             $client = $request->input('client');
@@ -316,10 +366,7 @@ $input = array(  'typeAbonnement' => 'required',
                 $offre = 0;
             else
                 $offre = 1;
-            if($vehicleAdd == 0) {
-
-
-
+            if ($vehicleAdd == 0) {
 
 
                 $detail = new Detail();
@@ -330,22 +377,20 @@ $input = array(  'typeAbonnement' => 'required',
                 $detail->offer = $offre;
 
                 $detail->save();
-            }
-            else
-            {
+            } else {
 
 
-                 $vehicle = new Vehicle();
-                 $vehicle->imei = $imei;
-                 $vehicle->marque = $marque;
-                 $vehicle->model = $model;
-                 $vehicle->customer_id = $client;
-                 $vehicle->user_id = 10;
+                $vehicle = new Vehicle();
+                $vehicle->imei = $imei;
+                $vehicle->marque = $marque;
+                $vehicle->model = $model;
+                $vehicle->customer_id = $client;
+                $vehicle->user_id = 10;
 
-                 $vehicle->save();
+                $vehicle->save();
 
 
-                 $idVehicle = DB::table('vehicles')->where('vehicles.imei','=',$imei)->select('vehicles.id')->pluck('id')->first();
+                $idVehicle = DB::table('vehicles')->where('vehicles.imei', '=', $imei)->select('vehicles.id')->pluck('id')->first();
 
                 $detail = new Detail();
                 $detail->id_contract = $idContrat;
@@ -358,10 +403,14 @@ $input = array(  'typeAbonnement' => 'required',
             }
 
             return response()->json($request->all());
+
+
         }
-
     }
-
-
-
 }
+
+
+
+
+
+

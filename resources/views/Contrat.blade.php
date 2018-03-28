@@ -8,7 +8,6 @@
     <script  src="/js/delete.js"></script>
     <script  src="/js/add_contrat.js"></script>
     <script  src="/js/chosen.js"></script>
-    <script src='jquery.min.js'></script>
     <script src='jquery-paginate.min.js'></script>
     <script src='js/omscontrat.js'></script>
 
@@ -18,6 +17,8 @@
             width: 17%;
             margin-left: 4%;
         }
+
+        #Detail*:hover { background:red; }
     </style>
 @endsection
 
@@ -119,7 +120,7 @@
                                             else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog()"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a><a class="btn btn-info"><span class="glyphicon glyphicon-info-sign edit"></span></a></td>
+                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
 
 
 
@@ -143,7 +144,7 @@
                                         <div class="form" >
 
                                             <form id="contrat" method="POST" >
-                                                <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" id="ContratToken"   name="_token" value="{{ csrf_token() }}">
 
                                                 <div>
                                                     <input type="date" class="form-control" id="dated" name="dated">
@@ -163,52 +164,25 @@
 
                                             <form id="vehicles" method="POST">
 
-                                                <input type="hidden" name="_token" id="DetailToken" value="{{ csrf_token() }}">
-
-
-                                                <div class="form-group">
-                                                    <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle()"> Nouveau vehicule
+                                                <div class="panel" style="margin-bottom: 8%;">
+                                                    <div class="form-group" style="    width: 47%;margin-bottom: -6%;">
+                                                        <select class="form-control">
+                                                            <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>
+                                                            @foreach($typeSubscribes as $typeSubscribe)
+                                                                <option value="{{ $typeSubscribe->id  }}">{{ $typeSubscribe->type }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" style="    width: 45%;    margin-left: 48%;">
+                                                        <input type="text" class="form-control" placeholder="Nombre des vehicules">
+                                                    </div>
+                                                    <div class="form-group" style="    width: 39%; margin-left: 62%; margin-top: -9%;">
+                                                        <span class="btn btn-success glyphicon glyphicon-ok" ></span>
+                                                    </div>
                                                 </div>
-                                                <div class="form-group" id="newVehicle" style="display: none">
-                                                    <input type="text" id="ft" class="form-control">
-                                                    <select id="alpha" class="form-control">
-                                                        <option value="www">WWW</option>
-                                                        <?php
-                                                        for($i = 'a'; $i <= 'z'; $i++)
-                                                        {echo "<option value='.$i.'>".$i."</option>";}
-                                                        ?>
-                                                    </select>
-                                                    <select id="int" class="form-control">
-                                                        <option value="www">WWW</option>
-                                                        <?php
-                                                        for($i = 1; $i < 100; $i++)
-                                                        {echo "<option value='.$i.'>".$i."</option>";}
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" id="selectVehicle">
-
-                                                    <select id="matricule" name="type_abonnement" class="form-control">
-                                                        <option value="0" disabled selected id="defaultMat">Matricule</option>
-
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" >
-                                                    <select id="typeAbonnement" name="type_abonnement" class="form-control">
-                                                        <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>
-                                                        @foreach($typeSubscribes as $typeSubscribe)
-                                                            <option value="{{ $typeSubscribe->id  }}">{{ $typeSubscribe->type }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" id="price" placeholder="Prix" name="price">
-                                                </div>
-
-                                                <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Ajouter</button></center>
+                                                <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Enregistrer</button></center>
                                             </form>
-                                            <center> <button class="btn btn-info" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                                            <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                         </div>
 
 
@@ -226,8 +200,7 @@
 
                             <dialog id="edit_dialog"  class="abonnement_dialog add_dialog ">
 
-                                <div class="container-fluid body" style="    margin-left: 11%;
-    margin-right: 6%;">
+                                <div class="container-fluid body" >
                                     <div class="panel">
 
                                         <div id="edit_title">
@@ -242,8 +215,10 @@
                                                     <div>
                                                         <input type="date" class="form-control" id="dated" name="dated">
                                                     </div>
+
                                                     <div class="form-group">
-                                                        <select id="client" name="client" class="form-control">
+
+                                                        <select id="clientMaj" name="client" class="form-control">
                                                             <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
                                                             @foreach($Customers as $customer)
                                                                 <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -254,74 +229,27 @@
                                                         <center><button class="btn btn-info" type="button" id="addContratBtn" >Suivant</button></center>
                                                     </div>
                                                 </form>
-                                                <div class="form-group" id="selectVehicle1">
-
                                             <form id="addOrEdit" method="POST">
 
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-
-                                            <div class="form-group">
-                                                    <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle1()"> Nouveau vehicule
-                                                    </div>
-                                            <div class="form-group" id="newVehicle1" style="display: none">
-                                                    <input type="text" class="form-control">
-                                                    <select id="model" class="form-control">
-                                                    <option value="">WWW</option>
-                                                    <?php
-                                            for($i = 1; $i < 100; $i++)
-                                            {echo "<option value='.$i.'>".$i."</option>";}
-                                            ?>
-                                                    </select>
-                                                    <select id="marque" class="form-control">
-                                                    <option value="">WWW</option>
-                                                    <?php
-                                            for($i = 'a'; $i < 'z'; $i++)
-                                            {echo "<option value='.$i.'>".$i."</option>";}
-                                            ?>
-                                                    </select>
-
-                                                    <select id="matricule" name="type_abonnement" class="form-control">
-                                                    <option value="0" disabled selected id="defaultAbo">Matricule</option>
-
-                                                    </select>
-                                                    </div>
-                                                    <div class="form-group" >
-                                                        <select id="typeAbonnement" name="type_abonnement" class="form-control">
+                                                <div class="panel" style="margin-bottom: 8%;">
+                                                    <div class="form-group" style="    width: 47%;margin-bottom: -6%;">
+                                                        <select class="form-control">
                                                             <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>
                                                             @foreach($typeSubscribes as $typeSubscribe)
                                                                 <option value="{{ $typeSubscribe->id  }}">{{ $typeSubscribe->type }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="price" placeholder="Prix" name="price">
+                                                    <div class="form-group" style="    width: 45%;    margin-left: 48%;">
+                                                        <input type="text" class="form-control" placeholder="Nombre des vehicules">
                                                     </div>
-                                                    <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Ajouter</button></center>
-                                                    <div>
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                            <tr>
-                                                                <th>Matricule</th>
-                                                                <th>Type d'abonnement</th>
-                                                                <th >Prix</th>
-                                                                <th >Supprimer</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <th>Matricule</th>
-                                                                <th>Type d'abonnement</th>
-                                                                <th >Prix</th>
-                                                                <th >Prix</th>
-                                                            </tr>
-                                                            </tbody>
-
-                                                        </table>
-
+                                                    <div class="form-group" style="    width: 39%; margin-left: 62%; margin-top: -9%;">
+                                                        <span class="btn btn-success glyphicon glyphicon-ok" ></span>
                                                     </div>
+                                                </div>
 
+                                                <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Enregistrer</button></center>
                                                 </form>
                                                 <center> <button class="btn btn-info" onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
                                             </div>

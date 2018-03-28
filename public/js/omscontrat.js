@@ -22,12 +22,189 @@ function disableContract(id)
 
 }
 
+
+function disableDetail(id)
+{
+
+    $.get("/detail/delete/"+id,{},function(data, status){
+
+
+        $("#Detail"+id).remove();
+    });
+}
+
+
+function DetailSelected(id)
+{
+
+
+
+    $.get("/contrat/detail/"+id,{},function(data, status){
+
+        var details = data.details;
+        var vehicles = data.vehicles;
+           $('#edit_dialog #imei').val(details.imei);
+           $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
+           $('#edit_dialog #price').val(details.price);
+           $('#edit_dialog #AddDetail').html('Modifier');
+           $('#edit_dialog #matricule *').remove();
+/*
+        for (var i = 0; i < vehicles.length; i++) {
+            $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
+            //   console.log(data[i].imei);
+        }
+
+*/
+        $('#edit_dialog #matricule').append($('<option id="added" value="' + details.id_vehicle + '">'  + details.imei + '</option>'));
+        $('#edit_dialog #matricule').attr('disabled', 'disabled');
+
+
+        $('#newVehicleCombo').parent().hide();
+
+
+
+
+
+        console.log(vehicles);
+
+
+
+    });
+
+}
+
+function ModifyDetail()
+{
+
+}
+
+
+
+
 var checkVehicle=true;
 
 $(document).ready(function() {
 
 
-    $('#recheche').click(function () {
+    $('#addContratBtn').click(function(){
+
+        var ncontrat = $("#ncontrat").val();
+        var dated=$("#dated").val();
+        var client=$("#client").val();
+        var  inputs = [ 'ncontrat','dated','client'];
+
+        for(var j = 0;j<inputs.length;j++)
+        {
+
+
+            if ($('#Err' + inputs[j]).length) {
+
+
+                $('#Err' + inputs[j]).remove();
+
+            }
+
+
+
+
+
+        }
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/addcontrat',
+            type: 'POST',
+            data: {
+                ncontrat: ncontrat,
+                dated: dated,
+                client: client,
+                _token: $('#ContratToken').attr('value')
+            },
+            success: function (data, status) {
+                var contrat = document.getElementById('contrat');
+                var vehicle = document.getElementById('vehicles');
+                contrat.style.opacity = 0.2;
+                vehicle.style.opacity = 1;
+                window.location.href = '#vehicles';
+
+                var inputs = ['ncontrat', 'dated', 'client'];
+
+
+                for (var j = 0; j < inputs.length; j++) {
+
+
+                    if ($('#Err' + inputs[j]).length) {
+
+
+                        $('#Err' + inputs[j]).remove();
+
+                    }
+
+                }
+
+                var vehicles = null;
+                if (data['vehicles'] != null) {
+                    vehicles = data['vehicles'];
+                }
+
+                for (var i = 0; i < vehicles.length; i++) {
+                    $('#matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
+                 //   console.log(data[i].imei);
+                }
+
+
+
+            }
+
+
+            ,
+            error: function (jqXhr) {
+                console.log(jqXhr);
+
+                if (jqXhr.status === 422) {
+                    var errors = jqXhr.responseJSON;
+                    $.each(errors.message, function (key, value) {
+                        console.log(errors);
+
+                        var l = 0;
+                        $.each(errors.message, function (key, value) {
+                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                            if ($('#Err' + key).length) {
+                                //$('#Err' + key).html(value);
+
+                                $('#Err' + key).text(value);
+                            }
+                            else {
+                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+                                l++;
+
+                            }
+                        });
+
+
+                        // $( '#form-errors' ).html( errorsHtml );
+
+                    });
+
+                }
+
+            }
+
+
+        });
+
+
+
+
+
+
+
+    });
+    $('#recheche').click(function(){
+
 
         var critiere = {};
 
@@ -55,7 +232,7 @@ $(document).ready(function() {
             critiere['typeClient'] = typeClient;
 
 
-        $.get("http://127.0.0.1:8000/contrat/search/",
+        $.get("/contrat/search/",
             critiere
             ,
 
@@ -175,6 +352,15 @@ $(document).ready(function() {
 
     });
 
+    $('#refresh,#AddDetail,#btnCancel').click(function(){
+          $.get("/contrat/refresh/",{},function(data,status){
+              $('tbody *').remove();
+              $('tbody').prepend(data);
+          });
+    });
+
+
+
 
     $('#AddDetail').click(function () {
 
@@ -198,7 +384,6 @@ $(document).ready(function() {
         else
             newVehicle = 0;
 
-        console.log(newVehicle);
 
 
         console.log(matricule + " " + typeAbonnement + " " + price);
@@ -210,7 +395,8 @@ $(document).ready(function() {
             type: 'POST',
             data: {
                 client: client,
-                matricule: matricule,
+
+                matricule:matricule,
                 typeAbonnement: typeAbonnement,
                 price: price,
                 newvehicle: newVehicle,
@@ -221,16 +407,13 @@ $(document).ready(function() {
             },
 
             success: function (data, status) {
-                console.log(data);
+                            console.log(data);
             },
             error: function (jqXhr) {
-                console.log(jqXhr);
 
                 if (jqXhr.status === 422) {
                     var errors = jqXhr.responseJSON;
-                    $.each(errors.message, function (key, value) {
-                        console.log(errors.message);
-                        console.log(errors.inputs);
+                    $.each( errors.message , function( key, value ) {
                         $.each(errors.message, function (key, value) {
                             // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
 
@@ -282,11 +465,11 @@ $(document).ready(function() {
 
     });
 
-    $("#typeAbonnement").change(function () {
+    $("#typeAbonnement,#typeAbonnementMaj").change(function () {
 
-        var client = $("#client").val();
+        var client = $("#clientMaj").val();
         console.log(client);
-        $("#typeAbonnement option:selected").each(function () {
+        $("#typeAbonnementMaj option:selected").each(function () {
 
             var choice = $(this).attr('value');
             console.log(choice);
@@ -296,8 +479,9 @@ $(document).ready(function() {
 
 
                 function (data, status) {
+                    console.log(choice);
                     console.log(data);
-                    $('#price').val(data.price);
+                    $('#priceMaj').val(data);
 
                 });
 
