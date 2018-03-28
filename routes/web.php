@@ -54,6 +54,8 @@ Route::get('/contrat/refresh/','OMSContratController@refresh');
 Route::get("/contrat/price/{idClient}/{idTypeSubscribe}",'OMSContratController@getPrice');
 
 Route::get('/detail/delete/{id}','OMSContratController@DisableDetail');
+Route::get('/contrat/detail/{id}','OMSContratController@DetailSelected');
+Route::get('/contrat/detailVehicles/{id}','OMSContratController@DetailVehicles');
 
 
 

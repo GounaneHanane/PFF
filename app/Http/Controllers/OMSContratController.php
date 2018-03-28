@@ -161,6 +161,54 @@ class OMSContratController extends Controller
 
     }
 
+    public function DetailVehicles($id)
+    {
+        $vehicles = DB::table('contracts')
+
+            ->where('contracts.id','=',$id)
+            ->join('customers','customers.id','contracts.id_customer')
+            ->join('vehicles','vehicles.customer_id','customers.id')
+            ->select('vehicles.*')
+            ->get();
+
+        return response()->json(['vehicles'=>$vehicles]);
+    }
+
+    public function DetailSelected($id)
+    {
+        $details = DB::table('details')->where('details.id','=',$id)
+            ->where('details.isActive','=','1')
+            ->join('vehicles','vehicles.id','details.id_vehicle')
+             ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+             ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+              ->select('details.id as id_detail','details.*','vehicles.*','vehicles.*','types_subscribes.id as types_subscribe_id')->first();
+
+        /*
+
+*/
+            //  ->select('details.*')->first();
+        return response()->json(['details'=>$details ]);
+
+    }
+
+    public function UpdateDetailSelected(Request $request)
+    {
+
+
+
+        $messages = [
+            'required' => strtoupper(':attribute') . ' est obligatoire',
+            'unique' => strtoupper(':attribute') . ' est deja existe'
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'client' => 'required|unique:contracts,id_customer',
+
+
+        ], $messages);
+
+    }
+
     public function addContrat(Request $request)
     {
         $messages = [

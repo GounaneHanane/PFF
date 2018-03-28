@@ -8,7 +8,6 @@
     <script  src="/js/delete.js"></script>
     <script  src="/js/add_contrat.js"></script>
     <script  src="/js/chosen.js"></script>
-    <script src='jquery.min.js'></script>
     <script src='jquery-paginate.min.js'></script>
     <script src='js/omscontrat.js'></script>
 
@@ -18,6 +17,8 @@
             width: 17%;
             margin-left: 4%;
         }
+
+        #Detail*:hover { background:red; }
     </style>
 @endsection
 
@@ -243,7 +244,9 @@
                                                     <div>
                                                         <input type="date" class="form-control" id="dated" name="dated">
                                                     </div>
+
                                                     <div class="form-group">
+
                                                         <select id="client" name="client" class="form-control">
                                                             <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
                                                             @foreach($Customers as $customer)
@@ -265,6 +268,7 @@
                                             <div class="form-group">
                                                     <input type="checkbox"  id="newVehicleCombo" onclick="addVehicle1()"> Nouveau vehicule
                                                     </div>
+
                                             <div class="form-group" id="newVehicle1" style="display: none">
                                                     <input type="text" class="form-control">
                                                     <select id="model" class="form-control">
@@ -286,7 +290,17 @@
                                                     <option value="0" disabled selected id="defaultAbo">Matricule</option>
 
                                                     </select>
+
+
                                                     </div>
+
+                                                <div class="form-group" id="selectVehicle" style="display: inline;">
+
+                                                    <select id="matricule" name="type_abonnement" class="form-control">
+
+
+                                                    </select>
+                                                </div>
                                                     <div class="form-group" >
                                                         <select id="typeAbonnement" name="type_abonnement" class="form-control">
                                                             <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>

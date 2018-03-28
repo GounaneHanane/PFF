@@ -33,9 +33,58 @@ function disableDetail(id)
     });
 }
 
+
+function DetailSelected(id)
+{
+
+
+
+    $.get("/contrat/detail/"+id,{},function(data, status){
+
+        var details = data.details;
+        var vehicles = data.vehicles;
+           $('#edit_dialog #imei').val(details.imei);
+           $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
+           $('#edit_dialog #price').val(details.price);
+           $('#edit_dialog #AddDetail').html('Modifier');
+           $('#edit_dialog #matricule *').remove();
+/*
+        for (var i = 0; i < vehicles.length; i++) {
+            $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
+            //   console.log(data[i].imei);
+        }
+
+*/
+        $('#edit_dialog #matricule').append($('<option id="added" value="' + details.id_vehicle + '">'  + details.imei + '</option>'));
+        $('#edit_dialog #matricule').attr('disabled', 'disabled');
+
+
+        $('#newVehicleCombo').parent().hide();
+
+
+
+
+
+        console.log(vehicles);
+
+
+
+    });
+
+}
+
+function ModifyDetail()
+{
+
+}
+
+
+
+
 var checkVehicle=true;
 
 $(document).ready(function(){
+
 
     $('#addContratBtn').click(function(){
 
@@ -101,7 +150,6 @@ $(document).ready(function(){
                 }
 
                 for (var i = 0; i < vehicles.length; i++) {
-                    console.log(vehicles[i].imei);
                     $('#matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
                  //   console.log(data[i].imei);
                 }
