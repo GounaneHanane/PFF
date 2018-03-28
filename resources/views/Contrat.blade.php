@@ -166,7 +166,7 @@
                                             <form id="vehicles" method="POST">
 
                                                 <div class="panel" style="margin-bottom: 8%;">
-                                                    <div class="form-group" style="    width: 47%;margin-bottom: -6%;">
+                                                    <div class="form-group" style="    width: 31%;margin-bottom: -6%;">
                                                         <select class="form-control">
                                                             <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>
                                                             @foreach($typeSubscribes as $typeSubscribe)
@@ -174,13 +174,13 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group" style="    width: 45%;    margin-left: 48%;">
+                                                    <div class="form-group" style="    width: 31%;    margin-left: 31%;">
                                                         <input type="text" class="form-control" placeholder="Nombre des vehicules">
                                                     </div>
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" placeholder="Prix">
+                                                        <input type="text" class="form-control" placeholder="Prix" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
                                                     </div>
-                                                    <div class="form-group" style="    width: 39%; margin-left: 62%; margin-top: -9%;">
+                                                    <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                         <span class="btn btn-success glyphicon glyphicon-ok" ></span>
                                                     </div>
                                                 </div>
@@ -236,8 +236,9 @@
                                             <form id="addOrEdit" method="POST">
 
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                                                 <div class="panel" style="margin-bottom: 8%;">
-                                                    <div class="form-group" style="    width: 47%;margin-bottom: -6%;">
+                                                    <div class="form-group" style="    width: 31%;margin-bottom: -6%;">
                                                         <select class="form-control">
                                                             <option value="0" disabled selected id="defaultAbo">Type d'abonnement</option>
                                                             @foreach($typeSubscribes as $typeSubscribe)
@@ -245,14 +246,16 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group" style="    width: 45%;    margin-left: 48%;">
+                                                    <div class="form-group" style="    width: 31%;    margin-left: 31%;">
                                                         <input type="text" class="form-control" placeholder="Nombre des vehicules">
                                                     </div>
-                                                    <div class="form-group" style="    width: 39%; margin-left: 62%; margin-top: -9%;">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" placeholder="Prix" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
+                                                    </div>
+                                                    <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                         <span class="btn btn-success glyphicon glyphicon-ok" ></span>
                                                     </div>
                                                 </div>
-
                                                 <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Enregistrer</button></center>
                                                 </form>
                                                 <center> <button class="btn btn-info" onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
