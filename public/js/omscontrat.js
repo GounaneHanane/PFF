@@ -83,7 +83,7 @@ function ModifyDetail()
 
 var checkVehicle=true;
 
-$(document).ready(function(){
+$(document).ready(function() {
 
 
     $('#addContratBtn').click(function(){
@@ -205,30 +205,31 @@ $(document).ready(function(){
     });
     $('#recheche').click(function(){
 
+
         var critiere = {};
 
-         var matricule = $('#mat').val();
-         var client = $('#customer').val();
-         var debut_contrat = $('#debut_contrat').val();
-         var fin_contrat = $('#fin_contrat').val();
-         var typeClient = $('#typeClient').val();
+        var matricule = $('#mat').val();
+        var client = $('#customer').val();
+        var debut_contrat = $('#debut_contrat').val();
+        var fin_contrat = $('#fin_contrat').val();
+        var typeClient = $('#typeClient').val();
 
         critiere = {};
 
-        if(matricule != "" && matricule != null)
+        if (matricule != "" && matricule != null)
             critiere['id_contract'] = matricule;
 
-        if(client != "" && client != '0')
+        if (client != "" && client != '0')
             critiere['id_customer'] = client;
 
-        if(debut_contrat != "" && debut_contrat != null)
+        if (debut_contrat != "" && debut_contrat != null)
             critiere['debut_contrat'] = debut_contrat;
 
-        if(fin_contrat != "" && fin_contrat != null)
+        if (fin_contrat != "" && fin_contrat != null)
             critiere['fin_contrat'] = fin_contrat;
 
-        if(typeClient != "" && typeClient != '0')
-                    critiere['typeClient'] = typeClient;
+        if (typeClient != "" && typeClient != '0')
+            critiere['typeClient'] = typeClient;
 
 
         $.get("/contrat/search/",
@@ -247,6 +248,110 @@ $(document).ready(function(){
         clear();
     });
 
+    $('#refresh').click(function () {
+        $.get("/contrat/refresh/", {}, function (data, status) {
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+        });
+    });
+
+    $('#addContratBtn').click(function () {
+        var dated = $("#dated").val();
+        var client = $("#client").val();
+        var inputs = ['ncontrat', 'dated', 'clients'];
+
+        for (var j = 0; j < inputs.length; j++) {
+
+
+            if ($('#Err' + inputs[j]).length) {
+
+
+                $('#Err' + inputs[j]).remove();
+
+            }
+
+
+        }
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/addcontrat',
+            type: 'POST',
+            data: {
+                dated: dated,
+                client: client,
+                _token: $('#ContratToken').attr('value')
+            },
+            success: function (data, status) {
+
+                var contrat = document.getElementById('contrat');
+                var vehicles = document.getElementById('vehicles');
+                contrat.style.opacity = 0.2;
+                vehicles.style.opacity = 1;
+                window.location.href = '#vehicles';
+
+                var inputs = ['ncontrat', 'dated', 'client'];
+
+                for (var j = 0; j < inputs.length; j++) {
+
+
+                    if ($('#Err' + inputs[j]).length) {
+
+
+                        $('#Err' + inputs[j]).remove();
+
+                    }
+
+
+                }
+
+                var vehicles = null;
+                if (data['vehicles'] != null)
+                    vehicles = data['vehicles'];
+
+
+                if (vehicles.length > 0 && vehicles != null) {
+                    for (var x = 0; x < vehicles.length; x++) {
+                        $('#matricule').append($('<option value=' + vehicles[x].id + '>' + vehicles[x].imei + '</option>'));
+                    }
+                }
+
+            },
+            error: function (jqXhr) {
+                console.log(jqXhr);
+
+                if (jqXhr.status === 422) {
+                    var errors = jqXhr.responseJSON;
+                    $.each(errors.message, function (key, value) {
+                        $.each(errors.message, function (key, value) {
+                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                            if ($('#Err' + key).length) {
+                                //$('#Err' + key).html(value);
+
+                                $('#Err' + key).text(value);
+
+                            }
+                            else
+                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+
+
+                        });
+
+
+                    });
+
+                    // $( '#form-errors' ).html( errorsHtml );
+
+                }
+            }
+
+        })
+
+
+    });
+
     $('#refresh,#AddDetail,#btnCancel').click(function(){
           $.get("/contrat/refresh/",{},function(data,status){
               $('tbody *').remove();
@@ -258,7 +363,7 @@ $(document).ready(function(){
 
 
 
-    $('#AddDetail').click(function(){
+    $('#AddDetail').click(function () {
 
         var matricule = $('#matricule').val();
         var typeAbonnement = $('#typeAbonnement').val();
@@ -272,7 +377,7 @@ $(document).ready(function(){
 
 
 
-        if(!checkVehicle) {
+        if (!checkVehicle) {
             newVehicle = 1;
 
 
@@ -282,6 +387,7 @@ $(document).ready(function(){
 
 
 
+        console.log(matricule + " " + typeAbonnement + " " + price);
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -290,13 +396,14 @@ $(document).ready(function(){
             type: 'POST',
             data: {
                 client: client,
+
                 matricule:matricule,
                 typeAbonnement: typeAbonnement,
                 price: price,
-                newvehicle : newVehicle,
-                model : model,
-                imei:imei,
-                marque:marque,
+                newvehicle: newVehicle,
+                model: model,
+                imei: imei,
+                marque: marque,
                 _token: $('#DetailToken').attr('value')
             },
 
@@ -304,7 +411,6 @@ $(document).ready(function(){
                             console.log(data);
             },
             error: function (jqXhr) {
-
 
                 if (jqXhr.status === 422) {
                     var errors = jqXhr.responseJSON;
@@ -325,7 +431,6 @@ $(document).ready(function(){
                         });
 
 
-
                     });
 
                     // $( '#form-errors' ).html( errorsHtml );
@@ -336,9 +441,8 @@ $(document).ready(function(){
         });
 
 
-        inputs = ['typeAbonnement','price','marque','imei','model','matricule'];
-        for(var j = 0;j<inputs.length;j++)
-        {
+        inputs = ['typeAbonnement', 'price', 'marque', 'imei', 'model', 'matricule'];
+        for (var j = 0; j < inputs.length; j++) {
 
 
             if ($('#Err' + inputs[j]).length) {
@@ -349,9 +453,6 @@ $(document).ready(function(){
             }
 
 
-
-
-
         }
 
 
@@ -359,37 +460,36 @@ $(document).ready(function(){
         $('#typeAbonnement').val(0);
         $('#price').val('');
 
-         $('#marque').val('');
-         $('#model').val('');
-          $('#imei').val('');
+        $('#marque').val('');
+        $('#model').val('');
+        $('#imei').val('');
 
     });
 
-    $("#typeAbonnement").change(function() {
+    $("#typeAbonnement,#typeAbonnementMaj").change(function () {
 
         var client = $("#client").val();
+        console.log(client);
+
+
 
         $("#typeAbonnement option:selected").each(function () {
 
-            var choice = $(this).attr('value');
-            $.get("/contrat/price/"+client+"/"+choice,
+            $.get("/contrat/countVehicles/"+client,
 
 
-                {
 
-                },
 
                 function (data, status) {
+
                     console.log(data);
-                   $('#price').val(data);
+                    $('#nbVehicles').val(data);
 
                 });
 
 
-
         });
 
+
     });
-
-
 });
