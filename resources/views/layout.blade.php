@@ -23,26 +23,6 @@
 
     }
 </style>
-
-
-<script>
-    var x=false;
-    function openNotif() {
-
-
-            if(x==false)
-            {
-                document.getElementById('notification').style.display="block";
-                x=true;
-            }
-            else
-            {
-                document.getElementById('notification').style.display="none";
-                x=false;
-            }
-
-    }
-</script>
     @show
 </head>
 <body>
@@ -54,25 +34,10 @@
 
 <header>
     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><img src="/img/settings-work-tool.png" id="setting">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><img src="/img/notifications-button.png" id="setting">
             </button>
-        <ul class="dropdown-menu dropdown-menu-right ">
-            <li><a href="/abonnement">Abonnement</a></li>
-        </ul>
     </div>
-    <div id="notif_icon">
-        <div type="button" onclick="openNotif()"><img src="/img/notifications-button.png" id="setting">
-        </div>
-       <div class="panel-default" id="notification" style="margin-left: -355%; display: none">
-           <div class="panel-heading" style="background-color: #3498DB;color: white; height: 68%; ">
-                <strong>ALERTES</strong>
-           </div>
-           <div class="panel-body" style="border: none; padding: 0px;">
-               <div id="alert" > <h4>NOM : </h4>CONTACT
-               </div>
-           </div>
-       </div>
-    </div>
+
     <div class="user">
         <i class="glyphicon glyphicon-user" style="    float: left;
     padding-right: 8px;   "></i>Bonjour : Admin

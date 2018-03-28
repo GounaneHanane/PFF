@@ -71,6 +71,8 @@ Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
 Route::post('/contrat/addcontrat','OMSContratController@addContrat');
 Route::post("/contrat/addDetail",'OMSContratController@addDetail');
+Route::view("/contrat/details",'contractInfo');
+//Route::post("/contrat/details/{idcontract}",'OMSContratController@addDetail');
 
 
 /*

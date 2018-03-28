@@ -7,6 +7,8 @@ function clear()
     $('#typeClient').val(0);
 }
 
+function 
+
 function disableContract(id)
 {
 
@@ -465,6 +467,7 @@ $(document).ready(function() {
         $('#imei').val('');
 
     });
+
 
     $("#typeAbonnement,#typeAbonnementMaj").change(function () {
 
