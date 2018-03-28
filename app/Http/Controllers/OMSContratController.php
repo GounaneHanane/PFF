@@ -30,10 +30,8 @@ class OMSContratController extends Controller
             ->join('count_price','count_price.id_contract','=','contracts.id')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'count_contract.*',
                  'count_price.*')
-            ->leftjoin('nbvehicle', 'contracts.id', '=', 'nbvehicle.id_contract')
-            ->join('count_price','count_price.id_contract','=','contracts.id')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer', 'nbvehicle.*',
-                 'count_price.*')->get();
+
+            ->get();
 
 
 
@@ -241,8 +239,7 @@ class OMSContratController extends Controller
 
 
         $price = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer','=',$idTypeCustomer)
-            ->where('type_customers_subscribes.id_type_subscribe','=',$idTypeSubscribe)->select('type_customers_subscribes.price')
-            ->pluck('price')->first();
+            ->where('type_customers_subscribes.id_type_subscribe','=',$idTypeSubscribe)->select('type_customers_subscribes.price')->first();
 
 
 
