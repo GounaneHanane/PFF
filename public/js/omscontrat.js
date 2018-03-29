@@ -7,7 +7,7 @@ function clear()
     $('#typeClient').val(0);
 }
 
-function 
+
 
 function disableContract(id)
 {
@@ -95,6 +95,7 @@ $(document).ready(function() {
         var client=$("#client").val();
         var  inputs = [ 'ncontrat','dated','client'];
 
+
         for(var j = 0;j<inputs.length;j++)
         {
 
@@ -130,6 +131,17 @@ $(document).ready(function() {
                 contrat.style.opacity = 0.2;
                 vehicle.style.opacity = 1;
                 window.location.href = '#vehicles';
+
+                $.get("/contrat/countVehicles/"+client,
+
+
+
+
+                    function (data, status) {
+
+                        $('#nbVehicles').val(data);
+
+                    });
 
                 var inputs = ['ncontrat', 'dated', 'client'];
 
@@ -475,7 +487,6 @@ $(document).ready(function() {
         console.log(client);
 
 
-
         $("#typeAbonnement option:selected").each(function () {
 
             $.get("/contrat/countVehicles/"+client,
@@ -485,14 +496,45 @@ $(document).ready(function() {
 
                 function (data, status) {
 
-                    console.log(data);
                     $('#nbVehicles').val(data);
 
                 });
 
 
+            typeS = $(this).val();
+            nb = $('#nbVehicles').val();
+/*
+
+            $.get("/contrat/priceDetail/"+client+"/"+typeS+"/"+nb,function(data,status){
+                $("#priceVehicles").val(data.total);
+               console.log(data)
+
+               */
+            });
+
+
         });
+
+    $("#ValidatePrice").click(function () {
+
+        alert("hola");
+
+        var typeAbonnement = $("#typeAbonnement").val();
+        var nbvehicles = $("#nbVehicles").val();
+
+        $.get("contrat/priceDetail/"+client +"/" + typeAbonnement + "/"+nbVehicles,
+
+
+
+
+            function (data, status) {
+
+                $('#nbVehicles').val(data);
+
+            });
 
 
     });
-});
+
+
+    });
