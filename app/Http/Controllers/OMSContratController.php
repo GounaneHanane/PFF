@@ -33,7 +33,11 @@ class OMSContratController extends Controller
             ->get();
 
 
-        $AllC = DB::table('customers')->select('customers.id', 'customers.name')->get();
+        $AllC = DB::table('customers')
+            ->whereNotIn('customers.id',function($q){
+                $q->select('contracts.id_customer')->from('contracts');
+            })
+            ->select('customers.id', 'customers.name')->get();
 
         $ClientType = DB::table('types_customers')
             ->select('types_customers.type as ClientType', 'types_customers.id as ClientTypeId')->get();
@@ -150,21 +154,21 @@ class OMSContratController extends Controller
     }
     public function update($id)
     {
-        $details = DB::table('details')->where('details.id_contract','=',$id)
-            ->where('details.isActive','=','1')
-            ->join('vehicles','vehicles.id','details.id_vehicle')
-            ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
-            ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
-            ->select('details.id as id_detail','details.*','vehicles.*','types_subscribes.*')->get();
-
-        return view('DetailsLines',['details' => $details]);
-
+             $contracts = DB::table('contracts')->where('contracts.id','=',$id)
+                 ->join('customers','customers.id','contracts.id_customer')
+                 ->select('customers.*','contracts.*')
+                 ->first();
+             return response()->json($contracts);
     }
 
     public function PriceVehicles($idCustomer,$type,$many)
     {
 
-        $vehciles = DB::table('vehicles')->where('vehicles.customer_id','=',$idCustomer)->get()->count();
+        $vehciles = DB::table('vehicles')->where('vehicles.customer_id','=',$idCustomer)
+            ->whereNotIn('vehicles.id',function($q){
+                $q->select('details.id_vehicle')->from('details');
+            })
+            ->get()->count();
 
         $typeCustomerId = DB::table('customers')->where('customers.id','=',$idCustomer)->select('customers.id_type_customer')->pluck('id_type_customer')->first();
 
@@ -321,7 +325,6 @@ class OMSContratController extends Controller
 
         return $price;
 
-        return response()->json($price);
     }
 
     public function addDetail(Request $request)
@@ -430,6 +433,72 @@ class OMSContratController extends Controller
 
         }
     }
+
+        public function AddDetailGammme(Request $request)
+        {
+
+            $typeAbonnement = $request->input('typeAbonnement');
+            $nbVehicles =  $request->input('nbVehicles');
+            $total =  $request->input('priceVehicles');
+            $price = $total / $nbVehicles;
+            $idCustomer = $request->input('client');
+            $idContrat = DB::table('contracts')->where('contracts.id_customer', '=', $idCustomer)->
+            select('contracts.id')->pluck('id')->first();
+
+
+            $vehicles = DB::table('vehicles')
+                ->where('vehicles.customer_id','=',$idCustomer)
+                ->whereNotIn('vehicles.id',function($q){
+                $q->select('details.id_vehicle')->from('details');
+            })->get();
+
+            $idTypeCustomer = DB::table('customers')->where('customers.id', '=', $idCustomer)->select('customers.id_type_customer')->
+            pluck('id_type_customer')->first();
+
+            $id_type_customer_subscribe = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+                ->where('type_customers_subscribes.id_type_subscribe', '=', $typeAbonnement)->select('type_customers_subscribes.id')
+                ->pluck('id')->first();
+
+            $countVehicles = $vehicles->count();
+
+            $Defaultprice = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+                ->where('type_customers_subscribes.id_type_subscribe', '=', $typeAbonnement)->select('type_customers_subscribes.price')
+                ->pluck('price')->first();
+            if ($price == $Defaultprice)
+                $offre = 0;
+            else
+                $offre = 1;
+
+            for($i = 0; $i < $nbVehicles;$i++)
+            {
+                $detail = new Detail();
+                $detail->id_contract = $idContrat;
+                $detail->id_vehicle = $vehicles[$i]->id;
+                $detail->typeSubsribe = $typeAbonnement;
+                $detail->price = $price;
+                $detail->id_type_customer_subscribe = $id_type_customer_subscribe;
+                $detail->offer = $offre;
+
+                $detail->save();
+
+
+
+            }
+
+
+
+
+
+            //$vehicles = DB::table('vehicles'),
+
+
+
+
+
+            // return response($typeAbonnement." ".$nbVehicles." ".$total." ".$price." ".$idCustomer." ".$idContrat);
+
+            return response()->json($vehicles);
+        }
 }
 
 

@@ -45,18 +45,18 @@ function DetailSelected(id)
 
         var details = data.details;
         var vehicles = data.vehicles;
-           $('#edit_dialog #imei').val(details.imei);
-           $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
-           $('#edit_dialog #price').val(details.price);
-           $('#edit_dialog #AddDetail').html('Modifier');
-           $('#edit_dialog #matricule *').remove();
-/*
-        for (var i = 0; i < vehicles.length; i++) {
-            $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-            //   console.log(data[i].imei);
-        }
+        $('#edit_dialog #imei').val(details.imei);
+        $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
+        $('#edit_dialog #price').val(details.price);
+        $('#edit_dialog #AddDetail').html('Modifier');
+        $('#edit_dialog #matricule *').remove();
+        /*
+                for (var i = 0; i < vehicles.length; i++) {
+                    $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
+                    //   console.log(data[i].imei);
+                }
 
-*/
+        */
         $('#edit_dialog #matricule').append($('<option id="added" value="' + details.id_vehicle + '">'  + details.imei + '</option>'));
         $('#edit_dialog #matricule').attr('disabled', 'disabled');
 
@@ -89,6 +89,8 @@ $(document).ready(function() {
 
 
     $('#addContratBtn').click(function(){
+
+        alert('hola');
 
         var ncontrat = $("#ncontrat").val();
         var dated=$("#dated").val();
@@ -165,7 +167,7 @@ $(document).ready(function() {
 
                 for (var i = 0; i < vehicles.length; i++) {
                     $('#matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-                 //   console.log(data[i].imei);
+                    //   console.log(data[i].imei);
                 }
 
 
@@ -367,13 +369,46 @@ $(document).ready(function() {
     });
 
     $('#refresh,#AddDetail,#btnCancel').click(function(){
-          $.get("/contrat/refresh/",{},function(data,status){
-              $('tbody *').remove();
-              $('tbody').prepend(data);
-          });
+        $.get("/contrat/refresh/",{},function(data,status){
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+        });
     });
 
 
+
+    $("#AddDetailGamme").click(function(){
+        var typeAbonnement = $('#typeAbonnement').val();
+        var nbVehicles = $('#nbVehicles').val();
+        var priceVehicles =  $('#priceVehicles').val();
+        var client = $('#client').val();
+
+
+        console.log(typeAbonnement + " "  +nbVehicles + " "+ priceVehicles + " " + client);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/addDetailGamme',
+            type: 'POST',
+            data: {
+                client: client,
+                typeAbonnement: typeAbonnement,
+                priceVehicles: priceVehicles,
+                nbVehicles: nbVehicles,
+                _token: $('#DetailToken').attr('value')
+            },
+
+            success: function (data, status) {
+                console.log(data);
+            }
+
+        });
+
+
+
+    });
 
 
 
@@ -422,7 +457,7 @@ $(document).ready(function() {
             },
 
             success: function (data, status) {
-                            console.log(data);
+                console.log(data);
             },
             error: function (jqXhr) {
 
@@ -503,33 +538,38 @@ $(document).ready(function() {
 
             typeS = $(this).val();
             nb = $('#nbVehicles').val();
-/*
+            /*
 
-            $.get("/contrat/priceDetail/"+client+"/"+typeS+"/"+nb,function(data,status){
-                $("#priceVehicles").val(data.total);
-               console.log(data)
+                        $.get("/contrat/priceDetail/"+client+"/"+typeS+"/"+nb,function(data,status){
+                            $("#priceVehicles").val(data.total);
+                           console.log(data)
 
-               */
-            });
-
-
+                           */
         });
+
+
+    });
 
     $("#ValidatePrice").click(function () {
 
-        alert("hola");
+        var client = $("#client").val();
+
+
 
         var typeAbonnement = $("#typeAbonnement").val();
         var nbvehicles = $("#nbVehicles").val();
 
-        $.get("contrat/priceDetail/"+client +"/" + typeAbonnement + "/"+nbVehicles,
+        $.get("contrat/priceDetail/"+client +"/" + typeAbonnement + "/"+nbvehicles,
 
 
 
 
             function (data, status) {
 
-                $('#nbVehicles').val(data);
+                //$('#nbVehicles').val(data);
+                $("#priceVehicles").val(data.total);
+
+                //console.log(data);
 
             });
 
@@ -537,4 +577,4 @@ $(document).ready(function() {
     });
 
 
-    });
+});

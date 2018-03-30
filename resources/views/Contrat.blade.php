@@ -148,7 +148,7 @@
                                                 <input type="hidden" id="ContratToken"   name="_token" value="{{ csrf_token() }}">
 
                                                 <div>
-                                                    <input type="date" class="form-control" id="dated" name="dated">
+                                                    <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                 </div>
                                                 <div class="form-group">
                                                     <select id="client" name="client" class="form-control">
@@ -164,7 +164,7 @@
                                             </form>
 
                                             <form id="vehicles" method="POST">
-
+                                                <input type="hidden" id="DetailToken"   name="_token" value="{{ csrf_token() }}">
                                                 <div class="panel" style="margin-bottom: 8%;">
 
                                                     <div class="form-group" style="    width: 31%;margin-bottom: -6%;">
@@ -178,17 +178,18 @@
                                                     </div>
 
                                                     <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                        <input type="text" class="form-control" id="nbVehicles" placeholder="Nombre des vehicules" onkeypress=";alert('hola')">
+                                                        <input type="text"  class="form-control" id="nbVehicles" placeholder="Nombre des vehicules" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
                                                         <input type="text" id="priceVehicles" class="form-control" placeholder="Prix" >
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                        <span class="btn btn-success glyphicon glyphicon-ok" ></span>
+                                                        <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                     </div>
                                                 </div>
-                                                <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Enregistrer</button></center>
+
+                                                <center><button class="btn btn-info" type="button" id="AddDetailGamme" onclick="addOrEdit();">Enregistrer</button></center>
                                             </form>
                                             <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                         </div>
