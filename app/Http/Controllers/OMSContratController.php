@@ -163,6 +163,11 @@ class OMSContratController extends Controller
 
     public function PriceVehicles($idCustomer,$type,$many)
     {
+/*
+ *
+ *
+ *
+*/
 
         $vehciles = DB::table('vehicles')->where('vehicles.customer_id','=',$idCustomer)
             ->whereNotIn('vehicles.id',function($q){
@@ -178,9 +183,28 @@ class OMSContratController extends Controller
 
 
 
+
         return response()->json(['vehicles'=>$vehciles , 'typeCustomerId'=>$typeCustomerId ,'price'=>$price,'typeSubscribe'=>$type , 'total'=>$total]);
 
-       // return response()->json(['price'=>$price , 'type'=>$type,'idCustomer'=>$idCustomer]);
+    }
+
+    public function PriceCalcul(Request $request)
+    {
+        $nbVehciles = $request->input("nbVehicles");
+        $type = $request->input("type");
+        $idTypeSubscribe = DB::table('types_subscribes')->where('type','=',$type)->select('types_subscribes.id')
+            ->pluck('id')->first();
+
+        $idCustomer = $request->input("idCustomer");
+        $typeCustomerId = DB::table('customers')->where('customers.id','=',$idCustomer)->select('customers.id_type_customer')->pluck('id_type_customer')->first();
+
+        $price = $this->getPrice($idCustomer,$idTypeSubscribe);
+
+        $total = $nbVehciles * $price;
+
+
+
+       return response($total);
     }
 
     public function CountVehicles($idCustomer)
@@ -263,8 +287,17 @@ class OMSContratController extends Controller
 
 
             $client = $request->input('client');
+            $nbSimple = $request->input('nbVehiclesSimple');
+            $nbAvance = $request->input('nbVehiclesAvance');
+            $priceSimple = $request->input('priceVehiclesSimple');
+            $priceAvance = $request->input('priceVehiclesAvance');
+
+            $total = $priceAvance + $priceSimple;
             $contract = new Contract();
             $contract->id_customer = $client;
+            $contract->nbSimple = $nbSimple;
+            $contract->nbAvance = $nbAvance;
+            $contract->price = $total;
 
 
             if ($request->input('dated') != null)
