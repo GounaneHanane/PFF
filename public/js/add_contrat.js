@@ -607,7 +607,7 @@ $(document).ready(function() {
                 contrat.style.opacity = 0.2;
                 vehicle.style.opacity = 1;
                 window.location.href = '#vehicles';
-
+/*
                 $.get("/contrat/countVehicles/"+client,
 
 
@@ -618,7 +618,7 @@ $(document).ready(function() {
                         $('#nbVehicles').val(data);
 
                     });
-
+*/
                 var inputs = ['ncontrat', 'dated', 'client'];
 
 
@@ -853,25 +853,30 @@ $(document).ready(function() {
 
     $("#AddDetailGamme").click(function(){
         var typeAbonnement = $('#typeAbonnement').val();
-        var nbVehicles = $('#nbVehicles').val();
-        var priceVehicles =  $('#priceVehicles').val();
+        var nbVehiclesSimple = $('#nbVehiclesSimple').val();
+        var nbVehiclesAvance = $('#nbVehiclesAdvanced').val();
+
+        var priceVehiclesSimple =  $('#priceVehiclesSimple').val();
+        var priceVehiclesAvance =  $('#priceVehiclesAdvanced').val();
         var client = $('#client').val();
 
 
-        console.log(typeAbonnement + " "  +nbVehicles + " "+ priceVehicles + " " + client);
+        console.log(nbVehiclesAvance);
 
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/contrat/addDetailGamme',
+            url: '/contrat/addcontrat',
             type: 'POST',
             data: {
                 client: client,
                 typeAbonnement: typeAbonnement,
-                priceVehicles: priceVehicles,
-                nbVehicles: nbVehicles,
-                _token: $('#DetailToken').attr('value')
+                nbVehiclesSimple: nbVehiclesSimple,
+                nbVehiclesAvance : nbVehiclesAvance,
+                priceVehiclesSimple : priceVehiclesSimple,
+                priceVehiclesAvance : priceVehiclesAvance,
+                _token: $('#ContratToken').attr('value')
             },
 
             success: function (data, status) {
@@ -997,7 +1002,7 @@ $(document).ready(function() {
 
 
         $("#typeAbonnement option:selected").each(function () {
-
+/*
             $.get("/contrat/countVehicles/"+client,
 
 
@@ -1008,7 +1013,7 @@ $(document).ready(function() {
                     $('#nbVehicles').val(data);
 
                 });
-
+*/
 
             typeS = $(this).val();
             nb = $('#nbVehicles').val();
@@ -1024,28 +1029,68 @@ $(document).ready(function() {
 
     });
 
-    $("#ValidatePrice").click(function () {
+    $("#ValidatePriceAdvanced").click(function () {
 
+        var typeAbonnement = $("#Advanced").val();
+        var nbvehicles = $("#nbVehiclesAdvanced").val();
         var client = $("#client").val();
 
 
 
-        var typeAbonnement = $("#typeAbonnement").val();
-        var nbvehicles = $("#nbVehicles").val();
-
-        $.get("/contrat/priceDetail/"+client +"/" + typeAbonnement + "/"+nbvehicles,
 
 
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/price/calcul',
+
+            type: 'POST',
+            data: {
+                nbVehicles : nbvehicles,
+                type: typeAbonnement,
+                idCustomer :client,
+                _token: $('#GammeToken').attr('value')
+            },
+
+            success: function (data, status) {
+                $("#priceVehiclesAdvanced").val(data);
+            }
+
+        });
 
 
-            function (data, status) {
+    });
 
-                //$('#nbVehicles').val(data);
-                $("#priceVehicles").val(data.total);
+    $("#ValidatePriceSimple").click(function () {
 
-                //console.log(data);
+        var typeAbonnement = $("#Simple").val();
+        var nbvehicles = $("#nbVehiclesSimple").val();
+        var client = $("#client").val();
 
-            });
+
+
+
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/price/calcul',
+
+            type: 'POST',
+            data: {
+                nbVehicles : nbvehicles,
+                type: typeAbonnement,
+                idCustomer :client,
+                _token: $('#GammeToken').attr('value')
+            },
+
+            success: function (data, status) {
+                $("#priceVehiclesSimple").val(data);
+            }
+
+        });
 
 
     });
