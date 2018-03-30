@@ -34,7 +34,7 @@
 
 <header>
     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><img src="/img/notifications-button.png" id="setting">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" onclick="window.open('/home','_self')"><img src="/img/notifications-button.png" id="setting">
             </button>
     </div>
 
@@ -55,15 +55,8 @@
 
                     <ul id="menu-content" class="menu-content collapse out">
 
-                        <div class="brand" style="color: #337ab7">  <a href="/home"><img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></a></div>
+                        <div class="brand" style="color: #337ab7">  <img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></div>
 
-                        <li >
-                            <a href="/clients"  class="submenu-toggle">
-                                <i class="glyphicon glyphicon-user"></i>
-                                <span>CLIENTS</span>
-                            </a>
-
-                        </li>
 
                         <li >
                             <a href="/dashboard"  class="submenu-toggle">

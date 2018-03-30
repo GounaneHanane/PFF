@@ -56,21 +56,28 @@ Route::get("/contrat/price/{idClient}/{idTypeSubscribe}",'OMSContratController@g
 Route::get('/detail/delete/{id}','OMSContratController@DisableDetail');
 Route::get('/contrat/detail/{id}','OMSContratController@DetailSelected');
 Route::get('/contrat/detailVehicles/{id}','OMSContratController@DetailVehicles');
+Route::get('/contrat/priceDetail/{idClient}/{idTypeSubscribe}/{many}','OMSContratController@PriceVehicles');
+Route::get('/contrat/countVehicles/{idVehicle}','OMSContratController@CountVehicles');
 
 
 
-Route::view('/home', 'home');
 Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');
 //Route::view('/layout', 'layout');
 
-
+Route::get('/home','AlertController@alert');
 Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
 Route::post('/contrat/addcontrat','OMSContratController@addContrat');
 Route::post("/contrat/addDetail",'OMSContratController@addDetail');
+
 Route::get("/contrat/showdetails/{idcontrat}",'ContratController@showInfo');
+
+Route::post("/contrat/addDetailGamme",'OMSContratController@AddDetailGammme');
+
+Route::view("/contrat/details",'contractInfo');
+
 //Route::post("/contrat/details/{idcontract}",'OMSContratController@addDetail');
 
 

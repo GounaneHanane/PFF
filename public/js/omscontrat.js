@@ -7,6 +7,8 @@ function clear()
     $('#typeClient').val(0);
 }
 
+
+
 function disableContract(id)
 {
 
@@ -43,18 +45,18 @@ function DetailSelected(id)
 
         var details = data.details;
         var vehicles = data.vehicles;
-           $('#edit_dialog #imei').val(details.imei);
-           $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
-           $('#edit_dialog #price').val(details.price);
-           $('#edit_dialog #AddDetail').html('Modifier');
-           $('#edit_dialog #matricule *').remove();
-/*
-        for (var i = 0; i < vehicles.length; i++) {
-            $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-            //   console.log(data[i].imei);
-        }
+        $('#edit_dialog #imei').val(details.imei);
+        $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
+        $('#edit_dialog #price').val(details.price);
+        $('#edit_dialog #AddDetail').html('Modifier');
+        $('#edit_dialog #matricule *').remove();
+        /*
+                for (var i = 0; i < vehicles.length; i++) {
+                    $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
+                    //   console.log(data[i].imei);
+                }
 
-*/
+        */
         $('#edit_dialog #matricule').append($('<option id="added" value="' + details.id_vehicle + '">'  + details.imei + '</option>'));
         $('#edit_dialog #matricule').attr('disabled', 'disabled');
 
@@ -88,10 +90,13 @@ $(document).ready(function() {
 
     $('#addContratBtn').click(function(){
 
+        alert('hola');
+
         var ncontrat = $("#ncontrat").val();
         var dated=$("#dated").val();
         var client=$("#client").val();
         var  inputs = [ 'ncontrat','dated','client'];
+
 
         for(var j = 0;j<inputs.length;j++)
         {
@@ -129,6 +134,17 @@ $(document).ready(function() {
                 vehicle.style.opacity = 1;
                 window.location.href = '#vehicles';
 
+                $.get("/contrat/countVehicles/"+client,
+
+
+
+
+                    function (data, status) {
+
+                        $('#nbVehicles').val(data);
+
+                    });
+
                 var inputs = ['ncontrat', 'dated', 'client'];
 
 
@@ -151,7 +167,7 @@ $(document).ready(function() {
 
                 for (var i = 0; i < vehicles.length; i++) {
                     $('#matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-                 //   console.log(data[i].imei);
+                    //   console.log(data[i].imei);
                 }
 
 
@@ -353,12 +369,46 @@ $(document).ready(function() {
     });
 
     $('#refresh,#AddDetail,#btnCancel').click(function(){
-          $.get("/contrat/refresh/",{},function(data,status){
-              $('tbody *').remove();
-              $('tbody').prepend(data);
-          });
+        $.get("/contrat/refresh/",{},function(data,status){
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+        });
     });
 
+
+
+    $("#AddDetailGamme").click(function(){
+        var typeAbonnement = $('#typeAbonnement').val();
+        var nbVehicles = $('#nbVehicles').val();
+        var priceVehicles =  $('#priceVehicles').val();
+        var client = $('#client').val();
+
+
+        console.log(typeAbonnement + " "  +nbVehicles + " "+ priceVehicles + " " + client);
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat/addDetailGamme',
+            type: 'POST',
+            data: {
+                client: client,
+                typeAbonnement: typeAbonnement,
+                priceVehicles: priceVehicles,
+                nbVehicles: nbVehicles,
+                _token: $('#DetailToken').attr('value')
+            },
+
+            success: function (data, status) {
+                console.log(data);
+            }
+
+        });
+
+
+
+    });
 
 
 
@@ -407,7 +457,7 @@ $(document).ready(function() {
             },
 
             success: function (data, status) {
-                            console.log(data);
+                console.log(data);
             },
             error: function (jqXhr) {
 
@@ -465,29 +515,66 @@ $(document).ready(function() {
 
     });
 
+
     $("#typeAbonnement,#typeAbonnementMaj").change(function () {
 
-        var client = $("#clientMaj").val();
+        var client = $("#client").val();
         console.log(client);
-        $("#typeAbonnementMaj option:selected").each(function () {
 
-            var choice = $(this).attr('value');
-            console.log(choice);
-            $.get("/contrat/price/" + client + "/" + choice,
+
+        $("#typeAbonnement option:selected").each(function () {
+
+            $.get("/contrat/countVehicles/"+client,
 
 
 
 
                 function (data, status) {
-                    console.log(choice);
-                    console.log(data);
-                    $('#priceMaj').val(data);
+
+                    $('#nbVehicles').val(data);
 
                 });
 
 
+            typeS = $(this).val();
+            nb = $('#nbVehicles').val();
+            /*
+
+                        $.get("/contrat/priceDetail/"+client+"/"+typeS+"/"+nb,function(data,status){
+                            $("#priceVehicles").val(data.total);
+                           console.log(data)
+
+                           */
         });
 
 
     });
+
+    $("#ValidatePrice").click(function () {
+
+        var client = $("#client").val();
+
+
+
+        var typeAbonnement = $("#typeAbonnement").val();
+        var nbvehicles = $("#nbVehicles").val();
+
+        $.get("contrat/priceDetail/"+client +"/" + typeAbonnement + "/"+nbvehicles,
+
+
+
+
+            function (data, status) {
+
+                //$('#nbVehicles').val(data);
+                $("#priceVehicles").val(data.total);
+
+                //console.log(data);
+
+            });
+
+
+    });
+
+
 });

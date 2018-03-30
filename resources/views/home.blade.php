@@ -31,7 +31,6 @@
                         <thead>
                         <tr>
                             <th class="text-center" style="width:12.5%">NOM</th>
-                            <th class="text-center" style="width:12.5%">TELEPHONE</th>
                             <th class="text-center" style="width:12.5%">CONTACT</th>
                             <th class="text-center" style="width:12.5%">TEL CONTACT</th>
                             <th class="text-center" style="width:12.5%">ADRESSE</th>
@@ -41,6 +40,17 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($alert as $a)
+                        <tr>
+                            <td class="text-center" style="width:12.5%">{{$a->name}}</th>
+                            <td class="text-center" style="width:12.5%">{{$a->contact}}</td>
+                            <td class="text-center" style="width:12.5%">{{$a->phone_number}}</td>
+                            <td class="text-center" style="width:12.5%">{{$a->adress}}</td>
+                            <td class="text-center" style="width:12.5%">{{$a->end_contract}}</td>
+                            <td class="text-center" style="width:12.5%">{{$a->price}}</td>
+                            <td class="text-center" style="width:12.5%">COCHER</td>
+                        </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
