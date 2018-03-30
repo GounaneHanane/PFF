@@ -37,7 +37,23 @@ class ContratController extends Controller
        return view('add_client',['types_subscribe'=>$typesSubscribes , 'id_contract'=>$contratId , 'details'=>$details]);
 
    }
+    public function showInfo($idContrat)
+    {
+        //$typesSubscribes = DB::table('types_subscribes')->get();
 
+
+
+
+        $details = DB::table('details')->where('id_contract','=',$idContrat)->
+        join('vehicles','vehicles.id','=','details.id_vehicle')->
+        join('type_customers_subscribes','types_customers_subscribes.id','details.id_type_customer_subscribe')->
+        join('types_subscribes','types_subscribes.id','types_customers_subscribes.id_subscribe')->
+        select('vehicles.*','types_subscribes.*','details.price')->get();
+
+
+        return view('contractInfo',['details'=>$details]);
+
+    }
    public function addVehicule(Request $request)
    {
 

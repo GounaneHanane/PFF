@@ -75,7 +75,7 @@
                                     <th class="text-center" style="width: 9.09%">IMEI</th>
                                     <th class="text-center" style="width: 9.09%">MARQUE</th>
                                     <th class="text-center" style="width: 9.09%">MODEL</th>
-                                    <th class="text-center" style="width: 9.09%">MAIL</th>
+                                    <th class="text-center" style="width: 9.09%">DATE D'AJOUT</th>
                                     <th class="text-center" style="width: 9.09%">TYPE D'ABONNEMENT</th>
                                     <th class="text-center" style="width: 9.09%">PRIX</th>
                                     <th class="text-center" style="width: 9.09%">ACTIONS</th>

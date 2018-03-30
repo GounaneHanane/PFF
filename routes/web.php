@@ -70,7 +70,7 @@ Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
 Route::post('/contrat/addcontrat','OMSContratController@addContrat');
 Route::post("/contrat/addDetail",'OMSContratController@addDetail');
-Route::view("/contrat/details",'contractInfo');
+Route::get("/contrat/showdetails/{idcontrat}",'ContratController@showInfo');
 //Route::post("/contrat/details/{idcontract}",'OMSContratController@addDetail');
 
 
