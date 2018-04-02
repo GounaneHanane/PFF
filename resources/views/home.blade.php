@@ -48,7 +48,7 @@
                             <td class="text-center" style="width:12.5%">{{$a->adress}}</td>
                             <td class="text-center" style="width:12.5%">{{$a->end_contract}}</td>
                             <td class="text-center" style="width:12.5%">{{$a->price}}</td>
-                            <td class="text-center" style="width:12.5%">COCHER</td>
+                            <td class="text-center" style="width:12.5%"><span class="btn btn-success glyphicon glyphicon-ok"    style=" float: inherit;"></span></td>
                         </tr>
                             @endforeach
                         </tbody>

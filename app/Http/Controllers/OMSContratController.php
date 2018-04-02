@@ -137,7 +137,6 @@ class OMSContratController extends Controller
 
     }
 
-
     public function refresh()
     {
         $c = DB::table('contracts')

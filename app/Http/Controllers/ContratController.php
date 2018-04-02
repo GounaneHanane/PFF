@@ -44,15 +44,34 @@ class ContratController extends Controller
 
 
 
-        $details = DB::table('details')->where('id_contract','=',$idContrat)->
+        $details = DB::table('details')->where([['id_contract','=',$idContrat],['details.isactive','=','1']])->
+        join('vehicles','vehicles.id','details.id_vehicle')->
+        join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')->
+        join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')->
+        select('vehicles.*','vehicles.id as idVehicle','types_subscribes.id as idtypeSub','types_subscribes.type as typeSub','details.*')->get();
+        $type=DB::table('types_subscribes')->
+            select('types_subscribes.*')->get();
+        $vehicle=DB::table('vehicles')->where([['vehicles.isActive','=','1'],['contracts.id','=',$idContrat]])->
+        join('customers','customers.id','vehicles.customer_id')->
+        join('contracts','customers.id','contracts.id_customer')->
+        select('vehicles.*')->get();
+        $client=DB::table('contracts')->where([['contracts.id','=',$idContrat],['contracts.isactive','=','1']])->
+            join('customers','customers.id','contracts.id_customer')->
+            select('customers.name','contracts.*')->get();
+
+        return view('contractInfo',['details'=>$details,'cli'=>$client,'types'=>$type,'vehicles'=>$vehicle]);
+       // return response()->json($client);
+    }
+    public  function refreshDetail($idContrat)
+    {
+        $details = DB::table('details')->where([['id_contract','=',$idContrat],['details.isactive','=','1']])->
         join('vehicles','vehicles.id','=','details.id_vehicle')->
-        join('type_customers_subscribes','types_customers_subscribes.id','details.id_type_customer_subscribe')->
-        join('types_subscribes','types_subscribes.id','types_customers_subscribes.id_subscribe')->
-        select('vehicles.*','types_subscribes.*','details.price')->get();
+        join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')->
+        join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')->
+        select('vehicles.*','vehicles.id as idVehicle','types_subscribes.*','details.*')->get();
 
 
-        return view('contractInfo',['details'=>$details]);
-
+        return view('DetailsLines',['details'=>$details]);
     }
    public function addVehicule(Request $request)
    {
@@ -68,12 +87,8 @@ class ContratController extends Controller
 
 
        $validator = Validator::make($request->all(), [
-           'matricule' => 'required|unique:vehicles,car_number',
-           'mark' => 'required',
-           'modele' => 'required',
-           'reference_boitier' => 'required',
-           'type_boitier' => 'required',
-           'type_abonnement' => 'required',
+           'vehicule' => 'required|unique:vehicles,car_number',
+           'types' => 'required',
 
 
 
@@ -95,10 +110,10 @@ class ContratController extends Controller
 
 
            $idContract = $request->input('idContract');
-           $vehicle = new Vehicle();
-           $vehicle->car_number = $request->input('matricule');
-           $vehicle->mark = $request->input('mark');
-           $vehicle->model = $request->input('modele');
+           $detail = new detail();
+           $detail->id_contract = $request->input('matricule');
+           $detail->id_vehicle = $request->input('types');
+           $detail->id_type_customer_subscribe = $request->input('modele');
            $vehicle->add_date = date("Y-m-d H:i:s");
 
            $vehicle->save();
@@ -119,7 +134,7 @@ class ContratController extends Controller
            select('boxes.id')->pluck('id')->first();
 
 
-           $idTypeSubscribe = DB::table('types_subscribes')->where('type', '=', $request->input('type_abonnement'))->select('types_subscribes.id')->pluck('id')->first();
+           $idTypeSubscribe = DB::table('types_subscribes')->where('type', '=', $request->input('types'))->select('types_subscribes.id')->pluck('id')->first();
 
            $idTypeCustomer = DB::table('contracts')->where('contracts.id', '=', $idContract)->
            join('customers', 'customers.id', 'contracts.id_customer')->
@@ -139,7 +154,7 @@ class ContratController extends Controller
 
            $detail = new Detail();
            $detail->id_contract = $idContract;
-           $detail->id_vehicle = $VehicleId;
+           $detail->id_vehicle = $request->input('vehicule');
            $detail->id_type_customer_subscribe = $idTypeCustomerSubscribe;
            $detail->id_boxe = $BoxId;
            $detail->price = $price;

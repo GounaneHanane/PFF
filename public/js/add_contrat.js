@@ -329,26 +329,8 @@ function saveContrat() {
 $('#vehicles :input').attr('disabled', true);
 function addContratDialog()
 {
-   /* var tabClient=document.getElementById("client");
-    var tabClienttLength=tabClient.length;
-    var tabAbonnement=document.getElementById("typeAbonnement");
-    var tabAbonnementLength=tabAbonnement.length;
-    document.getElementById("price").value="";
-    document.getElementById("newVehicleCombo").checked=false;
-    document.getElementById("newVehicle").style.display="none";
-    document.getElementById("selectVehicle").style.display="inline";*/
     document.getElementById('add_dialog').showModal();
-   /* for(var i=0;i<tabClienttLength;i++)
-    {
 
-        if(tabClient[i].id=="defaultCli")
-            tabClient[i].selected=true;
-    }
-    for(var i=0;i<tabAbonnementLength;i++)
-    {
-        if(tabAbonnement[i].id=="defaultAbo")
-            tabAbonnement[i].selected=true;
-    }*/
 }
 function editContratDialog(id)
 {
@@ -411,22 +393,6 @@ function ShowType(typeClientId,typeAbonnmenetId,price) {
             tabClient[i].selected=true;
     }
     document.getElementById("price").value=price;
-}
-function addOrEdit() {
-    if(document.getElementById("addOrEditButton").firstChild.data=="Modifier")
-    {
-
-        document.getElementById("addOrEdit").action="updateAbonnement/";
-
-
-    }
-    else if(document.getElementById("addOrEditButton").firstChild.data=="Ajouter")
-    {
-
-        document.getElementById("addOrEdit").action="/add_type";
-    }
-
-
 }
 
 function addContrat(){
@@ -499,13 +465,18 @@ function disableContract(id)
 }
 
 
-function disableDetail(id)
+function disableDetail(idDet,idCon)
 {
 
-    $.get("/detail/delete/"+id,{},function(data, status){
+    $.get("/detail/delete/"+idDet,{},function(data, status){
 
 
-        $("#Detail"+id).remove();
+        $("#Detail"+idDet).remove();
+       /* $.get("/contrat/detail/refresh/"+idCon, {}, function (data, status) {
+            console.log(data);
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+        });*/
     });
 }
 
@@ -880,9 +851,9 @@ $(document).ready(function() {
             },
 
             success: function (data, status) {
-                console.log(data);
+                alert("Contrat ajouté avec succés");
+                document.getElementById('add_dialog').close();
             }
-
         });
 
 

@@ -53,7 +53,7 @@ Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
 Route::get('/contrat/refresh/','OMSContratController@refresh');
 Route::get("/contrat/price/{idClient}/{idTypeSubscribe}",'OMSContratController@getPrice');
 Route::post("/contrat/price/calcul","OMSContratController@PriceCalcul");
-
+Route::get("/contrat/detail/refresh/{id}","ContratController@refreshDetail");
 Route::get('/detail/delete/{id}','OMSContratController@DisableDetail');
 Route::get('/contrat/detail/{id}','OMSContratController@DetailSelected');
 Route::get('/contrat/detailVehicles/{id}','OMSContratController@DetailVehicles');
