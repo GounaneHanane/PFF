@@ -59,6 +59,7 @@ Route::get('/contrat/detail/{id}','OMSContratController@DetailSelected');
 Route::get('/contrat/detailVehicles/{id}','OMSContratController@DetailVehicles');
 Route::get('/contrat/priceDetail/{idClient}/{idTypeSubscribe}/{many}','OMSContratController@PriceVehicles');
 Route::get('/contrat/countVehicles/{idVehicle}','OMSContratController@CountVehicles');
+Route::post("/contrat//detail/price/calcul","ContratController@getPrice");
 
 
 
@@ -72,6 +73,7 @@ Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
 Route::post('/contrat/addcontrat','OMSContratController@addContrat');
 Route::post("/contrat/addDetail",'OMSContratController@addDetail');
+
 
 Route::get("/contrat/showdetails/{idcontrat}",'ContratController@showInfo');
 
@@ -87,10 +89,11 @@ Route::post('/add','ClientsController@saveCustomer');
 Route::get('deleteAbonnement/{id}','AbonnementsController@deleteAbonnement');
 Route::post('/updateAbonnement','AbonnementsController@updateAbonnement');
 Route::post("/add_type",'AbonnementsController@saveAbonnement');
-Route::post('/contract/addVehicule/','ContratController@addVehicule');
+
 */
 
-
+Route::post('/contract/addVehicule/','ContratController@addVehicule');
+Route::post('/contract/Modify','OMSContratController@UpdateContract');
 
 
 

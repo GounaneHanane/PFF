@@ -36,17 +36,18 @@ class Detail extends Eloquent
 		'id_vehicle' => 'int',
 		'id_type_customer_subscribe' => 'int',
 		'price' => 'float',
-		'offer' => 'bool'
+		'offer' => 'bool',
+        'AddingDate' => 'date'
 	];
 
 	protected $fillable = [
 		'id_contract',
 		'id_vehicle',
 		'id_type_customer_subscribe',
-
 		'price',
-		'offer'
-	];
+		'offer',
+        'AddingDate'
+    ];
 
 
 

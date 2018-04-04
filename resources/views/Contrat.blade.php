@@ -98,6 +98,9 @@
                                     <th class="text-center" style="width: 9.09%">CONTACT</th>
                                     <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
                                     <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULE</th>
+                                    <th class="text-center" style="width: 9.09%">NOMBRE DE SIMPLE</th>
+                                    <th class="text-center" style="width: 9.09%">NOMBRE D'AVANCE</th>
+
                                     <th class="text-center" style="width: 9.09%">PRICE</th>
                                     <th class="text-center" style="width:9.09%">ETAT</th>
                                     <th class="text-center" style="width: 9.09%">ACTIONS</th>
@@ -113,15 +116,17 @@
                                         <td class="text-center" style="width:9.09%">{{ $c->type_customer}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->contact}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->numberVehicles }}</td>
-                                        <td class="text-center" style="width:9.09%">{{$c->total}}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbVehicles }}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbSimple }}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbAvance }}</td>
+                                        <td class="text-center" style="width:9.09%">{{$c->price}}</td>
                                         <td class="text-center" style="width:9.09%" class="etat">
-                                            <?php if($c->numberVehicles == 0)  { echo "<h2 class='btn btn-warning'>En Cours</h2>";}
+                                            <?php if($c->nbVehicles == 0)  { echo "<h2 class='btn btn-warning'>En Cours</h2>";}
                                             else {echo "<h2 class='btn btn-info' style='width: 90%;'>Terminé</h2>"; }?>
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_contract}}','_self')" style="    width: 51%;
 "  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
-                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                            <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
 
 
 
@@ -238,37 +243,34 @@
 
                                                     <div class="form-group">
 
-                                                        <select id="clientMaj" name="client" class="form-control">
+                                                        <select id="clientMaj" name="client" class="form-control" disabled>
                                                             <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
-                                                            @foreach($Customers as $customer)
-                                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                                            @endforeach
+
                                                         </select>
                                                     </div>
 
                                                 </form>
                                             <form id="addOrEdit" method="POST">
-                                                <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" id="ModifyGammeToken"   name="_token" value="{{ csrf_token() }}">
 
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <div >
 
                                                     <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
-                                                        <input type="Text" value="Avancé" disabled class="form-control">
+                                                        <input type="Text"   value="Avancé" disabled class="form-control">
                                                     </div>
                                                     <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                        <input type="text"  class="form-control" id="nbVehicles" placeholder="Nombre des vehicules" >
+                                                        <input type="text"  class="form-control" id="ModifynbAdvancedVehicles" placeholder="Nombre des vehicules" >
 
                                                     </div>
 
                                                     <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
 
-                                                        <input type="text" class="form-control"  placeholder="Prix" >
-                                                        <input type="text" id="priceVehicles" class="form-control" placeholder="Prix" >
+                                                        <input type="text" id="ModifyPriceAdvanced" class="form-control"  placeholder="Prix" >
+                                                        <input type="text" id="reduceAdvanced" class="form-control" placeholder="Prix" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                        <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
+                                                        <a id="ModifyValidateAdvancedPrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                     </div>
                                                 </div>
                                                 <div  style="margin-top: 10%;margin-bottom: 11%;">
@@ -278,19 +280,21 @@
 
                                                     </div>
                                                     <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                        <input type="text"  class="form-control" id="nbVehicles" placeholder="Nombre des vehicules" >
+                                                        <input type="text"  class="form-control" id="ModifynbSimpleVehicles" placeholder="Nombre des vehicules" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
-                                                        <input type="text" id="priceVehicles" class="form-control" placeholder="Prix" >
+                                                        <input type="text" id="ModifyPriceSimple" class="form-control"  placeholder="Prix" >
+                                                        <input type="text" id="reduceSimple" class="form-control" placeholder="Prix" >
+
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                        <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
+                                                        <a id="ModifyValidateSimplePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                     </div>
                                                 </div>
-                                                <center><button class="btn btn-info" type="button" id="AddDetail" onclick="addOrEdit();">Enregistrer</button></center>
+                                                <center><button class="btn btn-info" type="button" id="ModfiyContract">Modifier</button></center>
                                                 </form>
-                                                <center> <button class="btn btn-info" onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
+                                                <center> <button class="btn btn-info" id="CancelContract"onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
                                             </div>
 
 

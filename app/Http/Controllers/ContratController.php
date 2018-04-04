@@ -73,6 +73,49 @@ class ContratController extends Controller
 
         return view('DetailsLines',['details'=>$details]);
     }
+    public function getPrice(Request $request)
+    {
+        $date=$request->input('AddingDate');
+        if ($request->input('AddingDate'))
+            $AddingDate = $request->input('AddingDate');
+        else
+            $AddingDate = date("Y-m-d");
+
+
+        $date = explode('-', $AddingDate);
+
+        if ($date[2] > 1 and $date[2] < 15) {
+            $date[2] = '15';
+        }
+        if ($date[2] > 15) {
+            $time = strtotime($AddingDate);
+            $date = date("Y-m-d", strtotime("+1 month", $time));
+            $date = explode('-', $date);
+            $date[2] = '1';
+
+
+        }
+
+        $date = implode('-', $date);
+
+        $AddingDate=$date;
+        $idTypeCustomer = DB::table('vehicles')->where('vehicles.id', '=', $request->input('vehicules'))->
+        join('customers', 'customers.id', 'vehicles.customer_id')->
+        join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
+        select('types_customers.id')->pluck('id')->first();
+
+        $Price1 = DB::table('type_customers_subscribes')->where([['id_type_subscribe', '=', $request->input('types')],['id_type_customer', '=', $idTypeCustomer]])
+        ->select('type_customers_subscribes.id');
+        $idContract = DB::table('vehicles')->where('vehicles.id', '=',$request->input('vehicules') )->
+        join('customers', 'customers.id', 'vehicles.customer_id')->
+        join('contracts','contracts.id_customer','customers.id')->
+        select('contracts.id')->pluck('id')->first();
+
+        $price=DB::table('contracts')->where('id','=',$idContract)
+            ->select('contracts.id')->get();
+
+        return response($Price1);
+    }
    public function addVehicule(Request $request)
    {
 
@@ -87,8 +130,10 @@ class ContratController extends Controller
 
 
        $validator = Validator::make($request->all(), [
-           'vehicule' => 'required|unique:vehicles,car_number',
+           'vehicules' => 'required|unique:details,id_vehicle',
            'types' => 'required',
+           'priceVehicles'=>'required',
+
 
 
 
@@ -109,60 +154,63 @@ class ContratController extends Controller
        else {
 
 
-           $idContract = $request->input('idContract');
-           $detail = new detail();
-           $detail->id_contract = $request->input('matricule');
-           $detail->id_vehicle = $request->input('types');
-           $detail->id_type_customer_subscribe = $request->input('modele');
-           $vehicle->add_date = date("Y-m-d H:i:s");
-
-           $vehicle->save();
-
-           $box = new Box();
-           $box->reference = $request->input('reference_boitier');
-           $box->type_box = $request->input('type_boitier');
-           $box->numero_operetor = "0645209199";
-
-           $box->save();
 
 
-           $VehicleId = DB::table('vehicles')->where('car_number', '=', $request->input('matricule'))->
-           select('vehicles.id')->pluck('id')->first();
+
+           if ($request->input('AddingDate'))
+               $AddingDate = $request->input('AddingDate');
+           else
+               $AddingDate = date("Y-m-d");
 
 
-           $BoxId = DB::table('boxes')->where('reference', '=', $request->input('reference_boitier'))->
-           select('boxes.id')->pluck('id')->first();
+           $date = explode('-', $AddingDate);
+
+           if ($date[2] > 1 and $date[2] < 15) {
+               $date[2] = '15';
+           }
+           if ($date[2] > 15) {
+               $time = strtotime($AddingDate);
+               $date = date("Y-m-d", strtotime("+1 month", $time));
+               $date = explode('-', $date);
+               $date[2] = '1';
 
 
-           $idTypeSubscribe = DB::table('types_subscribes')->where('type', '=', $request->input('types'))->select('types_subscribes.id')->pluck('id')->first();
+           }
 
-           $idTypeCustomer = DB::table('contracts')->where('contracts.id', '=', $idContract)->
-           join('customers', 'customers.id', 'contracts.id_customer')->
+           $date = implode('-', $date);
+
+            $AddingDate=$date;
+          /* $VehicleId = DB::table('vehicles')->where('imei', '=', $request->input('vehicule'))->
+           select('vehicles.id')->pluck('id')->first();*/
+
+
+           $idTypeCustomer = DB::table('vehicles')->where('vehicles.id', '=', $request->input('vehicules'))->
+           join('customers', 'customers.id', 'vehicles.customer_id')->
            join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
            select('types_customers.id')->pluck('id')->first();
 
-           $TypeCustomerSubscribe = DB::table('types_customers_subscribes')->where('id_subscribe', '=', $idTypeSubscribe)
-               ->where('id_type_customer', '=', $idTypeCustomer)->select('types_customers_subscribes.*');
+           $TypeCustomerSubscribe = DB::table('type_customers_subscribes')->where('id_type_subscribe', '=', $request->input('types'))
+               ->where('id_type_customer', '=', $idTypeCustomer)->select('type_customers_subscribes.*');
 
            $idTypeCustomerSubscribe = $TypeCustomerSubscribe->pluck('id')->first();
            $price = $TypeCustomerSubscribe->pluck('price')->first();
 
-           $CustomerName = DB::table('contracts')->where('contracts.id', '=', $idContract)->
-           join('customers', 'customers.id', 'contracts.id_customer')->
-           select('customers.name')->pluck('name')->first();
+           $idContract = DB::table('vehicles')->where('vehicles.id', '=',$request->input('vehicules') )->
+           join('customers', 'customers.id', 'vehicles.customer_id')->
+           join('contracts','contracts.id_customer','customers.id')->
+           select('contracts.id')->pluck('id')->first();
 
+    $detail = new Detail();
+    $detail->id_contract = $idContract;
+    $detail->id_vehicle = $request->input('vehicules');
+    $detail->id_type_customer_subscribe = $idTypeCustomerSubscribe ;
+    $detail->price = $price;
+    $detail->offer = 0;
+    $detail->AddingDate=$AddingDate;
 
-           $detail = new Detail();
-           $detail->id_contract = $idContract;
-           $detail->id_vehicle = $request->input('vehicule');
-           $detail->id_type_customer_subscribe = $idTypeCustomerSubscribe;
-           $detail->id_boxe = $BoxId;
-           $detail->price = $price;
-           $detail->offer = 0;
-
-           $detail->save();
-
-           return response($VehicleId . $BoxId . $idTypeSubscribe . $idTypeCustomer . $idTypeCustomerSubscribe . $price . $CustomerName);
+    $detail->save();
+$dated=$request->input('AddingDate');
+           return response(    $idTypeCustomer . $idTypeCustomerSubscribe . $price.$dated );
 
 
        }
