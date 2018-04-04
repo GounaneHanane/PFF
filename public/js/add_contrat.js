@@ -1054,6 +1054,38 @@ $(document).ready(function() {
 
 
     });
+    $("#ValidatePriceEdit").click(function () {
+
+        var date = $("#AddingDateEdit").val();
+        var imei = $("#imeiId").val();
+
+        var type = $("#typesEdit").val();
+
+
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat//detail/price/calculEdit',
+
+            type: 'POST',
+            data: {
+                AddingDateEdit : date,
+                typesEdit: type,
+                imeiId :imei,
+                _token: $('#EditVehicleToken').attr('value')
+            },
+
+            success: function (data, status) {
+                console.log(data);
+                $("#priceVehiclesEdit").val(data);
+            }
+
+        });
+
+
+    });
 
     $("#ValidatePriceSimple").click(function () {
 
@@ -1186,4 +1218,46 @@ $(document).ready(function() {
     });
 
 
+    $("#editVehicleBtn").click(function(){
+        var date = $("#AddingDateEdit").val();
+        var imei = $("#imeiId").val();
+        var price=$('#priceVehiclesEdit').val();
+        var type = $("#typesEdit").val();
+
+
+
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contract/detail/Modify',
+            data : {
+                AddingDateEdit : date,
+                imeiId : imei,
+                typesEdit : type,
+                priceVehiclesEdit : price,
+                _token : $("#EditVehicleToken").attr('value')
+            },
+            type: 'POST',
+
+            success: function (data, status) {
+                alert('Vehicule modifié avec succée');
+            }
+
+        });
+
+    });
+
+
 });
+function editVehicleModel(idDetail) {
+    document.getElementById('edit_dialog').showModal();
+    $('#edit_dialog #imeiId').val($(' #'+idDetail+'imei').text());
+    $('#edit_dialog #AddingDateEdit').val($(' #'+idDetail+'date').text());
+    $('#edit_dialog #typesEdit option').each(function () {
+        if($(this).text()==$(' #'+idDetail+'type').text())
+            $(this).attr('selected','true');
+    })
+    $('#edit_dialog #priceVehiclesEdit').val($(' #'+idDetail+'price').text());
+}

@@ -58,13 +58,6 @@
                         <div class="brand" style="color: #337ab7">  <img src="http://opentech.ma/wp-content/uploads/2017/06/logo-website_new.png"></div>
 
 
-                        <li >
-                            <a href="/dashboard"  class="submenu-toggle">
-                                <i class="glyphicon glyphicon-signal"></i>
-                                <span>DASHBOARD</span>
-                            </a>
-
-                        </li>
 
 
                         <li >

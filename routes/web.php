@@ -60,7 +60,7 @@ Route::get('/contrat/detailVehicles/{id}','OMSContratController@DetailVehicles')
 Route::get('/contrat/priceDetail/{idClient}/{idTypeSubscribe}/{many}','OMSContratController@PriceVehicles');
 Route::get('/contrat/countVehicles/{idVehicle}','OMSContratController@CountVehicles');
 Route::post("/contrat//detail/price/calcul","ContratController@getPrice");
-
+Route::post("/contrat//detail/price/calculEdit","ContratController@getPriceEdit");
 
 
 Route::post('/contract','ClientsController@json');
@@ -94,7 +94,7 @@ Route::post("/add_type",'AbonnementsController@saveAbonnement');
 
 Route::post('/contract/addVehicule/','ContratController@addVehicule');
 Route::post('/contract/Modify','OMSContratController@UpdateContract');
-
+Route::post('/contract/detail/Modify','ContratController@updateVehicule');
 
 
 /*

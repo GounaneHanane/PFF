@@ -55,7 +55,6 @@
                                         <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
                                             <button type="button" id="search" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
@@ -87,16 +86,14 @@
                                 <thead>
                                 @foreach($details as $details)
                                 <tr style="color: #2a4f7d;" id="Detail{{$details->id}}">
-                                    <td class="text-center" style="width: 9.09%">{{$details -> imei}}</td>
+                                    <td id="Detail{{$details->id}}imei" class="text-center" style="width: 9.09%">{{$details -> imei}}</td>
                                     <td class="text-center" style="width: 9.09%">{{$details -> marque}}</td>
                                     <td class="text-center" style="width: 9.09%">{{$details -> model}}</td>
-                                    <td class="text-center" style="width: 9.09%">{{$details -> AddingDate}}</td>
-                                    <td class="text-center" style="width: 9.09%">{{$details -> typeSub}}</td>
-                                    <td class="text-center" style="width: 9.09%">{{$details -> price}}</td>
+                                    <td id="Detail{{$details->id}}date" class="text-center" style="width: 9.09%">{{$details -> AddingDate}}</td>
+                                    <td id="Detail{{$details->id}}type" class="text-center" style="width: 9.09%">{{$details -> typeSub}}</td>
+                                    <td id="Detail{{$details->id}}price" class="text-center" style="width: 9.09%">{{$details -> price}}</td>
                                     <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableDetail({{$details->id}})" > <span class="glyphicon glyphicon-trash edit trash "  ></span></a>
-                                        <a class=" btn btn-primary" id="edit_abonnement" onclick="document.getElementById('edit_dialog').show();" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
-
-
+                                        <a class=" btn btn-primary" id="edit_abonnement" onclick="editVehicleModel('Detail{{$details->id}}')" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -107,7 +104,6 @@
 
 
                             <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
-
                                             <div class="container-fluid body">
                                                 <div class="panel">
                                                     <div id="add_title">
@@ -156,77 +152,54 @@
                                                             </form>
                                                             <center> <button class="btn btn-info" id="" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                         </div>
-
-
                                                     </div>
-                                    </div>
-                                </div>
-
-
-                            </dialog>
-                            <dialog id="edit_dialog"  class="abonnement_dialog add_dialog ">
-
-                                <div class="container-fluid body">
-                                    <div class="panel">
-                                        <div id="add_title">
-                                            <h4>Modifier un vehicule</h4>
-                                        </div>
-
-
-
-                                        <div class="panel-body">
-                                            <div class="form" >
-
-                                                <form id="contrat" method="POST" >
-                                                    <input type="hidden" id="VehicleToken"   name="_token" value="{{ csrf_token() }}">
-
-
-                                                    <div class="form-group">
-                                                        <select id="vehicules" name="vehicules" class="form-control">
-                                                            <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un vehicule</option>
-                                                            @foreach($vehicles as $vehicle)
-                                                                <option value="{{$vehicle->id}}">{{$vehicle->imei}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="date" class="form-control" name="AddingDate" id="AddingDate" >
-                                                    </div>
-                                                    <div class="form-group"  style=" margin-bottom: -49px;">
-                                                        <select id="types" name="types" class="form-control">
-                                                            <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
-                                                            @foreach($types as $type)
-                                                                <option value="{{$type->id}}">{{$type->type}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group" style="  width: 91%;margin-top: 64px;">
-
-                                                        <input type="text" id="priceVehicles" class="form-control" value="0" placeholder="Prix" >
-
-                                                    </div>
-                                                    <div class="form-group" style="      width: 39%;margin-left: 55%;margin-top: -48px;">
-                                                        <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                    </div>
-                                                </form>
-                                                <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
-                                                </form>
-                                                <center> <button class="btn btn-info" id="" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                                                </div>
                                             </div>
+                                        </dialog>
+                                        <dialog id="edit_dialog"  class="abonnement_dialog add_dialog ">
 
-
+                                            <div class="container-fluid body">
+                                                <div class="panel">
+                                                    <div id="add_title">
+                                                        <h4>Modifier un vehicule</h4>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="form" >
+                                                            <form id="contrat" method="POST" >
+                                                                <input type="hidden" id="EditVehicleToken"   name="_token" value="{{ csrf_token() }}">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" id="imeiId" disabled >
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="date" class="form-control" name="AddingDateEdit" id="AddingDateEdit" >
+                                                                </div>
+                                                                <div class="form-group"  style=" margin-bottom: -49px;">
+                                                                    <select id="typesEdit" name="typesEdit" class="form-control">
+                                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
+                                                                        @foreach($types as $type)
+                                                                            <option value="{{$type->id}}">{{$type->type}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group" style="  width: 91%;margin-top: 64px;">
+                                                                    <input type="text" id="priceVehiclesEdit" class="form-control" value="0" placeholder="Prix" >
+                                                                </div>
+                                                                <div class="form-group" style="      width: 39%;margin-left: 55%;margin-top: -48px;">
+                                                                    <a id="ValidatePriceEdit"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
+                                                                </div>
+                                                            </form>
+                                                            <center style="      margin-top: 6%;"><button id="editVehicleBtn" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                        </form>
+                                                        <center> <button class="btn btn-info" id="" onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-
-
-                            </dialog>
+                                </dialog>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
 @endsection

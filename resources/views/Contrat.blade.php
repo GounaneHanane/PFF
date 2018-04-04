@@ -8,8 +8,7 @@
     <script  src="/js/delete.js"></script>
     <script  src="/js/add_contrat.js"></script>
     <script  src="/js/chosen.js"></script>
-    <script src='jquery-paginate.min.js'></script>
-    <script src='js/omscontrat.js'></script>
+   
 
     <style>
         #search_input
