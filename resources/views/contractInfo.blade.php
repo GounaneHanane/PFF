@@ -40,7 +40,6 @@
                             <div class="row">
                                 <form>
                                     <div class="col-md-12">
-
                                         <div class="form-group col-md-3">
                                             <label class="control-label">IMEI</label>
                                             <input id="ville" type="text" class="form-control" name="matricule_searsh" placeholder="IMEI" value="">
@@ -95,7 +94,7 @@
                                     <td class="text-center" style="width: 9.09%">{{$details -> typeSub}}</td>
                                     <td class="text-center" style="width: 9.09%">{{$details -> price}}</td>
                                     <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableDetail({{$details->id}})" > <span class="glyphicon glyphicon-trash edit trash "  ></span></a>
-                                        <a class=" btn btn-primary" id="edit_abonnement" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                        <a class=" btn btn-primary" id="edit_abonnement" onclick="document.getElementById('edit_dialog').show();" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
 
 
                                     </td>
@@ -103,12 +102,74 @@
                                 @endforeach
                                 </tbody>
                             </table>
+
+
+
+
                             <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
+
+                                            <div class="container-fluid body">
+                                                <div class="panel">
+                                                    <div id="add_title">
+                                                        <h4>Ajouter un vehicule</h4>
+                                                    </div>
+
+
+
+                                                    <div class="panel-body">
+                                                        <div class="form" >
+
+                                                            <form id="contrat" method="POST" >
+                                                                <input type="hidden" id="VehicleToken"   name="_token" value="{{ csrf_token() }}">
+
+
+                                                                <div class="form-group">
+                                                                    <select id="vehicules" name="vehicules" class="form-control">
+                                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un vehicule</option>
+                                                                        @foreach($vehicles as $vehicle)
+                                                                            <option value="{{$vehicle->id}}">{{$vehicle->imei}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="date" class="form-control" name="AddingDate" id="AddingDate" >
+                                                                </div>
+                                                                <div class="form-group"  style=" margin-bottom: -49px;">
+                                                                    <select id="types" name="types" class="form-control">
+                                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
+                                                                        @foreach($types as $type)
+                                                                            <option value="{{$type->id}}">{{$type->type}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group" style="  width: 91%;margin-top: 64px;">
+
+                                                                    <input type="text" id="priceVehicles" class="form-control" value="0" placeholder="Prix" >
+
+                                                                </div>
+                                                                <div class="form-group" style="      width: 39%;margin-left: 55%;margin-top: -48px;">
+                                                                    <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
+                                                                </div>
+                                                            </form>
+                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            </form>
+                                                            <center> <button class="btn btn-info" id="" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                                                        </div>
+
+
+                                                    </div>
+                                    </div>
+                                </div>
+
+
+                            </dialog>
+                            <dialog id="edit_dialog"  class="abonnement_dialog add_dialog ">
 
                                 <div class="container-fluid body">
                                     <div class="panel">
                                         <div id="add_title">
-                                            <h4>Ajouter un vehicule</h4>
+                                            <h4>Modifier un vehicule</h4>
                                         </div>
 
 
@@ -136,7 +197,7 @@
                                                             <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
                                                             @foreach($types as $type)
                                                                 <option value="{{$type->id}}">{{$type->type}}</option>
-                                                                @endforeach
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
@@ -149,57 +210,13 @@
                                                         <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                     </div>
                                                 </form>
-
-                                                <!--<form id="vehicles" method="POST">
-                                                    <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
-                                                    <div >
-
-                                                        <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
-                                                            <input type="Text" value="avance"  id="Advanced"disabled class="form-control">
-                                                        </div>
-                                                        <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                            <input type="text"  class="form-control" id="nbVehiclesAdvanced" value="0" placeholder="Nombre des vehicules" >
-
-                                                        </div>
-
-                                                        <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
-
-                                                            <input type="text" id="priceVehiclesAdvanced" class="form-control" value="0" placeholder="Prix" >
-
-                                                        </div>
-                                                        <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                            <a id="ValidatePriceAdvanced"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                        </div>
-                                                    </div>
-                                                    <div  style="margin-top: 10%;margin-bottom: 11%;">
-
-                                                        <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
-                                                            <input type="Text" value="simple" id="Simple" disabled class="form-control">
-
-                                                        </div>
-                                                        <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                            <input type="text"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
-
-                                                        </div>
-                                                        <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
-                                                            <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
-                                                        </div>
-                                                        <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                            <a id="ValidatePriceSimple"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                        </div>
-                                                    </div>-->
-
-                                                    <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
                                                 </form>
                                                 <center> <button class="btn btn-info" id="" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                             </div>
 
 
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
 

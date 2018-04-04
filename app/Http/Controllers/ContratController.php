@@ -75,7 +75,6 @@ class ContratController extends Controller
     }
     public function getPrice(Request $request)
     {
-        $date=$request->input('AddingDate');
         if ($request->input('AddingDate'))
             $AddingDate = $request->input('AddingDate');
         else
@@ -104,17 +103,17 @@ class ContratController extends Controller
         join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
         select('types_customers.id')->pluck('id')->first();
 
-        $Price1 = DB::table('type_customers_subscribes')->where([['id_type_subscribe', '=', $request->input('types')],['id_type_customer', '=', $idTypeCustomer]])
-        ->select('type_customers_subscribes.id');
+        $PriceTypeCustomerSubscribe = DB::table('type_customers_subscribes')->where('id_type_subscribe', '=', $request->input('types'))
+            ->where('id_type_customer', '=', $idTypeCustomer)->select('type_customers_subscribes.price')->pluck("price")->first();
         $idContract = DB::table('vehicles')->where('vehicles.id', '=',$request->input('vehicules') )->
         join('customers', 'customers.id', 'vehicles.customer_id')->
         join('contracts','contracts.id_customer','customers.id')->
         select('contracts.id')->pluck('id')->first();
 
         $price=DB::table('contracts')->where('id','=',$idContract)
-            ->select('contracts.id')->get();
-
-        return response($Price1);
+            ->select(DB::raw($PriceTypeCustomerSubscribe."*datediff(end_contract,'".$AddingDate."')/datediff(end_contract,start_Contract) as thirdPrice"))
+            ->pluck('thirdPrice')->first();
+        return response($price);
     }
    public function addVehicule(Request $request)
    {
@@ -204,7 +203,7 @@ class ContratController extends Controller
     $detail->id_contract = $idContract;
     $detail->id_vehicle = $request->input('vehicules');
     $detail->id_type_customer_subscribe = $idTypeCustomerSubscribe ;
-    $detail->price = $price;
+    $detail->price = $request->input('priceVehicles');
     $detail->offer = 0;
     $detail->AddingDate=$AddingDate;
 
