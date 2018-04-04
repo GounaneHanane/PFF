@@ -28,7 +28,7 @@ class OMSContratController extends Controller
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
 
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
-                DB::raw('(contracts.nbAvance + contracts.nbSimple) as nbVehicles'))
+                DB::raw('( ifnull(contracts.nbAvance,0) + ifnull(contracts.nbSimple,0)) as nbVehicles'))
             ->get();
 
 
