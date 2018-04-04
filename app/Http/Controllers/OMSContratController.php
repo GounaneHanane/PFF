@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Redirect;
 use function PHPSTORM_META\type;
 use Response;
 use Validator;
+
+
+
 use Illuminate\Support\Facades\DB;
 class OMSContratController extends Controller
 {
 
+    private $idContract = 1;
 
     public function contrat()
     {
@@ -166,6 +170,10 @@ class OMSContratController extends Controller
         $priceSimple = $defaultPriceSimple - $contracts->reduceSimple;
 
 
+        $reduceSimple = round((100 * $contracts->reduceSimple) / $defaultPriceSimple);
+        $reduceAvance = round((100 * $contracts->reduceAvance) / $defaultPriceAvance);
+
+
 
 
         $customers = DB::table('customers')
@@ -174,7 +182,7 @@ class OMSContratController extends Controller
 
 
              return response()->json(["contracts" => $contracts , "customer"=>$customers, "priceSimple"=>$priceSimple ,
-                 "priceAvance"=>$priceAvance ]);
+                 "priceAvance"=>$priceAvance , "reduceSimple"=>$reduceSimple , "reduceAvance"=>$reduceAvance]);
     }
 
     public function PriceVehicles($idCustomer,$type,$many)
@@ -607,6 +615,65 @@ class OMSContratController extends Controller
                "priceAvance"=>$priceAvance , 'ds'=>$defaultPriceSimple , 'da'=>$defaultPriceAvance,
                 "nba"=>$nbAvance , "nbs"=>$nbSimple ,'dps'=>$defaultSimple , 'dpa'=>$defaultAvance
            ]);
+       }
+
+       public function searchDetail(Request $request)
+       {
+            $vehicle_id = ($request->input('vehicle_id') == null) ? null : $request->input('vehicle_id');
+           $type_abonnement = ($request->input('type_abonnement') == null) ? null : $request->input('type_abonnement');
+           $dateAjout = ($request->input('dataeAjout') == null) ? null : $request->input('dateAjout');
+           $marque = ($request->input('marque') == null) ? null : $request->input('marque');
+           $modele = ($request->input('modele') == null) ? null : $request->input('modele');
+           $critiere = [];
+           $i = 0;
+
+           $details = DB::table('details')->where('details.isActive', '=', '1');
+
+
+
+
+
+           if ($vehicle_id != null) {
+               $critiere[$i] = ['details.id_vehicle', '=', $vehicle_id];
+               $i++;
+
+           }
+           if ($type_abonnement != null) {
+               $idcustomer = DB::table('contracts')->where('contracts.id','=',$this->idContract)->select('contracts.id_customer')->pluck('id_customer')->first();
+
+               $id_type_customer = DB::table('customers')->where('customers.id','=',$idcustomer)
+                   ->select('customers.id_type_customer')->pluck('id_type_customer')->first();
+
+               $id = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_customer)
+                   ->where('id_type_subscribe','=',$type_abonnement)->select('type_customers_subscribes.id')->pluck('id')->first();
+
+               $critiere[$i] = ['details.id_type_customer_subscribe', '=', $id];
+               $i++;
+
+           }
+           if ($dateAjout != null) {
+               $critiere[$i] = ['details.AddingDate', '=', $dateAjout];
+               $i++;
+
+           }
+
+           $critiere[$i] = ['details.id_contract','=',$this->idContract];
+           $i++;
+
+           $QueryDetails = $details
+               ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+               ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+               ->join('vehicles','vehicles.id','details.id_vehicle')
+
+               ->where($critiere)
+              ->select('details.*','types_subscribes.type' ,'vehicles.*')
+               ->get();
+
+
+           return response()->json([ 'critiere'=>$critiere , 'details'=>$QueryDetails ]);
+
+           //return view('DetailsLines',[ 'details'=>$QueryDetails]);
+
        }
 
 

@@ -8,7 +8,7 @@
     <script  src="/js/delete.js"></script>
     <script  src="/js/add_contrat.js"></script>
     <script  src="/js/chosen.js"></script>
-   
+
 
     <style>
         #search_input

@@ -330,9 +330,9 @@ function editContratDialog(id)
         $('#edit_dialog #dated').val(date);
         $('#ModifynbAdvancedVehicles').val(contracts.nbAvance);
         $('#ModifyPriceAdvanced').val(data["priceAvance"]);
-        $("#reduceAdvanced").val(contracts.reduceAvance);
+        $("#reduceAdvanced").val(data["reduceAvance"] + " %");
         $('#ModifynbSimpleVehicles').val(contracts.nbSimple);
-        $("#reduceSimple").val(contracts.reduceSimple);
+        $("#reduceSimple").val(data["reduceSimple"] + " %");
         $("#ModifyPriceSimple").val(data["priceSimple"]);
 
         $('#edit_dialog #clientMaj').append($('<option id="added"  value="' + data["customer"].id + '">'  +  data["customer"].name + '</option>'));
