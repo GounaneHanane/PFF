@@ -307,43 +307,8 @@ function saveContrat() {
     $("#savecontact").text($("#contact").val());
     $("#savenumero").text($("#NContact").val());
 }
-$('#vehicles :input').attr('disabled', true);
-function addContratDialog()
-{
-    document.getElementById('add_dialog').showModal();
-
-}
-function editContratDialog(id)
-{
-    document.getElementById('edit_dialog').showModal();
 
 
-
-
-
-    $.get("/contrat/update/"+id,{},function(data, status){
-
-
-        var contracts = data["contracts"];
-        var date = contracts.start_contract;
-        var id = contracts.id_customer;
-        $('#edit_dialog #dated').val(date);
-        $('#ModifynbAdvancedVehicles').val(contracts.nbAvance);
-        $('#ModifyPriceAdvanced').val(data["priceAvance"]);
-        $("#reduceAdvanced").val(data["reduceAvance"] + " %");
-        $('#ModifynbSimpleVehicles').val(contracts.nbSimple);
-        $("#reduceSimple").val(data["reduceSimple"] + " %");
-        $("#ModifyPriceSimple").val(data["priceSimple"]);
-
-        $('#edit_dialog #clientMaj').append($('<option id="added"  value="' + data["customer"].id + '">'  +  data["customer"].name + '</option>'));
-        $("#edit_dialog #clientMaj").val(id);
-
-
-
-
-
-
-    });
 /*
     $.get("/contrat/detailVehicles/"+id,{},function(data, status){
 
@@ -356,7 +321,7 @@ function editContratDialog(id)
         }
     });
 */
-}
+
 function ShowType(typeClientId,typeAbonnmenetId,price) {
 
     document.getElementById('add_dialog').showModal();
@@ -432,9 +397,6 @@ function clear()
     $('#fin_contrat').val('');
     $('#typeClient').val(0);
 }
-
-
-
 function disableContract(id)
 {
 
@@ -449,8 +411,6 @@ function disableContract(id)
     });
 
 }
-
-
 function disableDetail(idDet,idCon)
 {
 
@@ -465,8 +425,6 @@ function disableDetail(idDet,idCon)
         });*/
     });
 }
-
-
 function DetailSelected(id)
 {
 
@@ -505,7 +463,6 @@ function DetailSelected(id)
     });
 
 }
-
 function ModifyDetail()
 {
 
@@ -1256,7 +1213,7 @@ $(document).ready(function() {
            var imei = $("#imei").val();
            var date = $("#dateAjout").val();
 
-        $.get("/contrat/update/"+,{},function(data, status){
+        $.get("/detail/search/imei="+imei+"&marque="+marque,{},function(data, status){
 
         });
 
@@ -1272,3 +1229,28 @@ function editVehicleModel(idDetail) {
     })
     $('#edit_dialog #priceVehiclesEdit').val($(' #'+idDetail+'price').text());
 }
+
+    });
+function editContratDialog(id) {
+    document.getElementById('edit_dialog').showModal();
+
+
+    $.get("/contrat/update/" + id, {}, function (data, status) {
+
+
+        var contracts = data["contracts"];
+        var date = contracts.start_contract;
+        var id = contracts.id_customer;
+        $('#edit_dialog #dated').val(date);
+        $('#ModifynbAdvancedVehicles').val(contracts.nbAvance);
+        $('#ModifyPriceAdvanced').val(data["priceAvance"]);
+        $("#reduceAdvanced").val(data["reduceAvance"] + " %");
+        $('#ModifynbSimpleVehicles').val(contracts.nbSimple);
+        $("#reduceSimple").val(data["reduceSimple"] + " %");
+        $("#ModifyPriceSimple").val(data["priceSimple"]);
+
+        $('#edit_dialog #clientMaj').append($('<option id="added"  value="' + data["customer"].id + '">' + data["customer"].name + '</option>'));
+        $("#edit_dialog #clientMaj").val(id);
+
+
+    })}

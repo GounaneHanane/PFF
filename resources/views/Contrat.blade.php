@@ -82,7 +82,7 @@
                         </div>
                         <div class="panel-heading clearfix">
                             <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a onclick="addContratDialog();" id="showmodal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
+                                <a onclick="document.getElementById('add_dialog').showModal();" id="showmodal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -174,15 +174,10 @@
                                                     <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                        <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
                                                     </div>
-                                             <div class="form-group" style="    width: 21%;    margin-left: 31%;">
-                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced"  placeholder="Nombre des vehicules" >
 
-                                                    </div>
-                                                    <input type="number"  min="0" step="1" class="form-control"/>
-                                                    <div class="form-group" style="    width: 21%;    margin-left: 31%;">
-                                                        <input type="text"  class="form-control" id="priceUnitAdvanced"  placeholder="Nombre des vehicules" >
                                              <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                         <input type="number"  class="form-control" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
+
 
                                                     </div>
 
@@ -205,16 +200,7 @@
                                                     <input type="Text" value="simple" id="Simple" disabled class="form-control">
 
                                                 </div>
-                                                <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                    <input type="text"  class="form-control" id="nbVehiclesSimple"   placeholder="Nombre des vehicules" >
 
-                                                </div>
-                                                <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
-                                                    <input type="text" id="priceVehiclesSimple" class="form-control"  placeholder="Prix" >
-                                                </div>
-
-                                                    <div class="form-group" style="    width: 21%;    margin-left: 31%;">
-                                                        <input type="text"  class="form-control" id="priceUnitAdvanced"  placeholder="Nombre des vehicules" >
                                                     <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                     <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
 
