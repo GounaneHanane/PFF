@@ -100,7 +100,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <thead>
                                 @foreach($details as $details)
                                 <tr style="color: #2a4f7d;" id="Detail{{$details->id}}">
                                     <td id="Detail{{$details->id}}imei" class="text-center" style="width: 9.09%">{{$details -> imei}}</td>

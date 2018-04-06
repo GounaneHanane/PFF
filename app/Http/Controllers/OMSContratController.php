@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 class OMSContratController extends Controller
 {
 
-    private $idContract = 1;
+    private $idContract = 4;
 
     public function contrat()
     {
@@ -619,7 +619,7 @@ class OMSContratController extends Controller
 
        public function searchDetail(Request $request)
        {
-            $vehicle_id = ($request->input('vehicle_id') == null) ? null : $request->input('vehicle_id');
+            $imei = ($request->input('imei') == null) ? null : $request->input('imei');
            $type_abonnement = ($request->input('type_abonnement') == null) ? null : $request->input('type_abonnement');
            $dateAjout = ($request->input('dataeAjout') == null) ? null : $request->input('dateAjout');
            $marque = ($request->input('marque') == null) ? null : $request->input('marque');
@@ -633,8 +633,8 @@ class OMSContratController extends Controller
 
 
 
-           if ($vehicle_id != null) {
-               $critiere[$i] = ['details.id_vehicle', '=', $vehicle_id];
+           if ($imei != null) {
+               $critiere[$i] = ['vehicles.imei', '', $imei];
                $i++;
 
            }
