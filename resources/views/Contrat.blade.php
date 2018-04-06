@@ -169,17 +169,21 @@
                                                 <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
                                                 <div >
 
-                                                    <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
-                                                       <input type="Text" value="avance"  id="Advanced"disabled class="form-control">
+                                                    <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
+                                                       <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
                                                     </div>
-                                             <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced" value="0" placeholder="Nombre des vehicules" >
+                                             <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                        <input type="number"  class="form-control" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
 
                                                     </div>
 
-                                                    <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
+                                                    <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
                                                         <input type="text" id="priceVehiclesAdvanced" class="form-control" value="0" placeholder="Prix" >
+
+                                                    </div>
+                                                    <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced" value="0" placeholder="Nombre des vehicules" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
@@ -188,17 +192,22 @@
                                                 </div>
                                                 <div  style="margin-top: 10%;margin-bottom: 11%;">
 
-                                                <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
+                                                    <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                     <input type="Text" value="simple" id="Simple" disabled class="form-control">
 
                                                 </div>
-                                                <div class="form-group" style="    width: 31%;    margin-left: 31%;">
-                                                    <input type="text"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
+                                                    <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                    <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
 
                                                 </div>
-                                                <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
+                                                    <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
+
                                                     <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
                                                 </div>
+                                                    <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced" value="0" placeholder="Nombre des vehicules" >
+
+                                                    </div>
                                                 <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                     <a id="ValidatePriceSimple"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                 </div>
@@ -254,19 +263,22 @@
 
                                                 <div >
 
-                                                    <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
+                                                    <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                         <input type="Text"   value="Avancé" disabled class="form-control">
                                                     </div>
-                                                    <div class="form-group" style="    width: 31%;    margin-left: 31%;">
+                                                    <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                         <input type="text"  class="form-control" id="ModifynbAdvancedVehicles" placeholder="Nombre des vehicules" >
 
                                                     </div>
 
-                                                    <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
-
+                                                    <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
                                                         <input type="text" id="ModifyPriceAdvanced" class="form-control"  placeholder="Prix" >
-                                                        <input type="text" id="reduceAdvanced" class="form-control" placeholder="Prix" >
 
+                                                    </div>
+
+                                                    <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+
+                                                        <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                         <a id="ModifyValidateAdvancedPrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
@@ -274,18 +286,20 @@
                                                 </div>
                                                 <div  style="margin-top: 10%;margin-bottom: 11%;">
 
-                                                    <div class="form-group" style="    width: 31%;    margin-bottom: -6%;">
+                                                    <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                         <input type="Text" value="Simple" disabled class="form-control">
 
                                                     </div>
-                                                    <div class="form-group" style="    width: 31%;    margin-left: 31%;">
+                                                    <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                         <input type="text"  class="form-control" id="ModifynbSimpleVehicles" placeholder="Nombre des vehicules" >
 
                                                     </div>
-                                                    <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
+                                                    <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
                                                         <input type="text" id="ModifyPriceSimple" class="form-control"  placeholder="Prix" >
-                                                        <input type="text" id="reduceSimple" class="form-control" placeholder="Prix" >
+                                                    </div>
+                                                    <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
 
+                                                        <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                         <a id="ModifyValidateSimplePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
