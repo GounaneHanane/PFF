@@ -1249,6 +1249,17 @@ $(document).ready(function() {
 
     });
 
+    $("#ContratInfosearch").click(function(){
+           var model = $("#model").val();
+           var marque = $("#marque").val();
+           var type_abonnement = $("#type_abonnement").val();
+           var imei = $("#imei").val();
+           var date = $("#dateAjout").val();
+
+        $.get("/contrat/update/"+,{},function(data, status){
+
+        });
+
 
 });
 function editVehicleModel(idDetail) {

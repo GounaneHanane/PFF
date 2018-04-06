@@ -161,6 +161,8 @@
                                                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                         @endforeach
                                                     </select>
+
+
                                                 </div>
 
                                             </form>
@@ -172,6 +174,13 @@
                                                     <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                        <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
                                                     </div>
+                                             <div class="form-group" style="    width: 21%;    margin-left: 31%;">
+                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced"  placeholder="Nombre des vehicules" >
+
+                                                    </div>
+                                                    <input type="number"  min="0" step="1" class="form-control"/>
+                                                    <div class="form-group" style="    width: 21%;    margin-left: 31%;">
+                                                        <input type="text"  class="form-control" id="priceUnitAdvanced"  placeholder="Nombre des vehicules" >
                                              <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                         <input type="number"  class="form-control" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
 
@@ -179,7 +188,7 @@
 
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                        <input type="text" id="priceVehiclesAdvanced" class="form-control" value="0" placeholder="Prix" >
+                                                        <input type="text" id="priceVehiclesAdvanced" class="form-control"  placeholder="Prix" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
@@ -196,6 +205,16 @@
                                                     <input type="Text" value="simple" id="Simple" disabled class="form-control">
 
                                                 </div>
+                                                <div class="form-group" style="    width: 31%;    margin-left: 31%;">
+                                                    <input type="text"  class="form-control" id="nbVehiclesSimple"   placeholder="Nombre des vehicules" >
+
+                                                </div>
+                                                <div class="form-group" style="    width: 31%;margin-left: 61%;margin-top: -49px;">
+                                                    <input type="text" id="priceVehiclesSimple" class="form-control"  placeholder="Prix" >
+                                                </div>
+
+                                                    <div class="form-group" style="    width: 21%;    margin-left: 31%;">
+                                                        <input type="text"  class="form-control" id="priceUnitAdvanced"  placeholder="Nombre des vehicules" >
                                                     <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                     <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
 
