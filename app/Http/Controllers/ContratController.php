@@ -110,9 +110,18 @@ class ContratController extends Controller
         join('contracts','contracts.id_customer','customers.id')->
         select('contracts.id')->pluck('id')->first();
 
+        $end_contract=DB::table('contracts')->where('id','=',$idContract)
+            ->select(DB::raw('day(end_contract) as date'))->pluck('date')->first();
         $price=DB::table('contracts')->where('id','=',$idContract)
-            ->select(DB::raw($PriceTypeCustomerSubscribe."*datediff(end_contract,'".$AddingDate."')/datediff(end_contract,start_Contract) as thirdPrice"))
+            ->select(DB::raw($PriceTypeCustomerSubscribe."*timestampdiff(month,'".$AddingDate."',end_contract)/timestampdiff(month,start_Contract,end_contract) as thirdPrice"))
             ->pluck('thirdPrice')->first();
+        $AddingDate = explode('-', $AddingDate);
+
+        if($end_contract!=$AddingDate[2])
+        {
+            $price+=($PriceTypeCustomerSubscribe/12)*(1/2);
+        }
+
         return response($price);
     }
     public function getPriceEdit(Request $request)
