@@ -42,18 +42,35 @@
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">IMEI</label>
-                                            <input id="ville" type="text" class="form-control" name="matricule_searsh" placeholder="IMEI" value="">
+                                            <input id="imei" type="text" class="form-control" name="matricule_searsh" placeholder="IMEI" value="">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">TYPE D'ABONNEMENT</label>
-                                            <select id="type_client" name="costumer_search" class="form-control chosen-select" style="">
+                                            <select id="type_abonnement" name="costumer_search" class="form-control chosen-select" style="">
                                                 <option value="" disabled selected>Veuillez selectionner un type</option>
+                                                @foreach($types_subscribes as $type)
+                                                    <option value="{{ $type->id }}">{{ $type->type }}</option>
+                                                @endforeach
+
                                             </select>
                                         </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">Marque</label>
+                                            <input id="marque" type="text" class="form-control" name="" placeholder="Marque" value="">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">Model</label>
+                                            <input id="model" type="text" class="form-control" name="" placeholder="Model" value="">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">DateAjout</label>
+                                            <input id="dateAjout" type="date" class="form-control" name="matricule_searsh" placeholder="Date d'ajout" value="">
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
-                                            <button type="button" id="search" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
+                                            <button type="button" id="ContratInfosearch" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
                                         </div>
                                     </div>
                                 </form>

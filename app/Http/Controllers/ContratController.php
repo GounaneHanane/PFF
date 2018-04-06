@@ -42,6 +42,10 @@ class ContratController extends Controller
         //$typesSubscribes = DB::table('types_subscribes')->get();
 
 
+        $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
+
+
+
 
 
         $details = DB::table('details')->where([['id_contract','=',$idContrat],['details.isactive','=','1']])->
@@ -59,7 +63,7 @@ class ContratController extends Controller
             join('customers','customers.id','contracts.id_customer')->
             select('customers.name','contracts.*')->get();
 
-        return view('contractInfo',['details'=>$details,'cli'=>$client,'types'=>$type,'vehicles'=>$vehicle]);
+        return view('contractInfo',['details'=>$details,'cli'=>$client,'types'=>$type,'vehicles'=>$vehicle , "types_subscribes"=>$types_subscribes]);
        // return response()->json($client);
     }
     public  function refreshDetail($idContrat)
