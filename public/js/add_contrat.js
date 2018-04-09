@@ -377,6 +377,7 @@ function addContratDialog()
     document.getElementById("dated").value="";
     checkVehicle=true;*/
     document.getElementById('add_dialog').showModal();
+    alert('hola');
    /* for(var i=0;i<tabClienttLength;i++)
     {
 
@@ -427,189 +428,13 @@ function disableDetail(idDet,idCon)
         });*/
     });
 }
-function DetailSelected(id)
-{
 
 
-
-    $.get("/contrat/detail/"+id,{},function(data, status){
-
-        var details = data.details;
-        var vehicles = data.vehicles;
-        $('#edit_dialog #imei').val(details.imei);
-        $('#edit_dialog #typeAbonnement').val(details.types_subscribe_id);
-        $('#edit_dialog #price').val(details.price);
-        $('#edit_dialog #AddDetail').html('Modifier');
-        $('#edit_dialog #matricule *').remove();
-        /*
-                for (var i = 0; i < vehicles.length; i++) {
-                    $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-                    //   console.log(data[i].imei);
-                }
-
-        */
-        $('#edit_dialog #matricule').append($('<option id="added" value="' + details.id_vehicle + '">'  + details.imei + '</option>'));
-        $('#edit_dialog #matricule').attr('disabled', 'disabled');
-
-
-        $('#newVehicleCombo').parent().hide();
-
-
-
-
-
-        console.log(vehicles);
-
-
-
-    });
-
-}
-function ModifyDetail()
-{
-
-}
-
-
-
-
-var checkVehicle=true;
 
 $(document).ready(function() {
 
 
-    $('#addContratBtn').click(function(){
 
-        alert('hola');
-
-        var ncontrat = $("#ncontrat").val();
-        var dated=$("#dated").val();
-        var client=$("#client").val();
-
-        var  inputs = [ 'ncontrat','dated','client'];
-
-
-        for(var j = 0;j<inputs.length;j++)
-        {
-
-
-            if ($('#Err' + inputs[j]).length) {
-
-
-                $('#Err' + inputs[j]).remove();
-
-            }
-
-
-
-
-
-        }
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/addcontrat',
-            type: 'POST',
-            data: {
-                ncontrat: ncontrat,
-                dated: dated,
-                client: client,
-                _token: $('#ContratToken').attr('value')
-            },
-            success: function (data, status) {
-                var contrat = document.getElementById('contrat');
-                var vehicle = document.getElementById('vehicles');
-                contrat.style.opacity = 0.2;
-                vehicle.style.opacity = 1;
-                window.location.href = '#vehicles';
-/*
-                $.get("/contrat/countVehicles/"+client,
-
-
-
-
-                    function (data, status) {
-
-                        $('#nbVehicles').val(data);
-
-                    });
-*/
-                var inputs = ['ncontrat', 'dated', 'client'];
-
-
-                for (var j = 0; j < inputs.length; j++) {
-
-
-                    if ($('#Err' + inputs[j]).length) {
-
-
-                        $('#Err' + inputs[j]).remove();
-
-                    }
-
-                }
-
-                var vehicles = null;
-                if (data['vehicles'] != null) {
-                    vehicles = data['vehicles'];
-                }
-
-                for (var i = 0; i < vehicles.length; i++) {
-                    $('#matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-                    //   console.log(data[i].imei);
-                }
-
-
-
-            }
-
-
-            ,
-            error: function (jqXhr) {
-                console.log(jqXhr);
-
-                if (jqXhr.status === 422) {
-                    var errors = jqXhr.responseJSON;
-                    $.each(errors.message, function (key, value) {
-                        console.log(errors);
-
-                        var l = 0;
-                        $.each(errors.message, function (key, value) {
-                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-
-                            if ($('#Err' + key).length) {
-                                //$('#Err' + key).html(value);
-
-                                $('#Err' + key).text(value);
-                            }
-                            else {
-                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
-                                l++;
-
-                            }
-                        });
-
-
-                        // $( '#form-errors' ).html( errorsHtml );
-
-                    });
-
-                }
-
-            }
-
-
-        });
-
-
-
-
-
-
-
-    });
     $('#recheche').click(function(){
 
 
@@ -662,102 +487,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#addContratBtn').click(function () {
-        var dated = $("#dated").val();
-        var client = $("#client").val();
-        var inputs = ['ncontrat', 'dated', 'clients'];
 
-        for (var j = 0; j < inputs.length; j++) {
-
-
-            if ($('#Err' + inputs[j]).length) {
-
-
-                $('#Err' + inputs[j]).remove();
-
-            }
-
-
-        }
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/addcontrat',
-            type: 'POST',
-            data: {
-                dated: dated,
-                client: client,
-                _token: $('#ContratToken').attr('value')
-            },
-            success: function (data, status) {
-
-                var contrat = document.getElementById('contrat');
-                var vehicles = document.getElementById('vehicles');
-                contrat.style.opacity = 0.2;
-                vehicles.style.opacity = 1;
-                window.location.href = '#vehicles';
-
-                var inputs = ['ncontrat', 'dated', 'client'];
-
-                for (var j = 0; j < inputs.length; j++) {
-
-
-                    if ($('#Err' + inputs[j]).length) {
-
-
-                        $('#Err' + inputs[j]).remove();
-
-                    }
-
-
-                }
-
-                var vehicles = null;
-                if (data['vehicles'] != null)
-                    vehicles = data['vehicles'];
-
-
-                if (vehicles.length > 0 && vehicles != null) {
-                    for (var x = 0; x < vehicles.length; x++) {
-                        $('#matricule').append($('<option value=' + vehicles[x].id + '>' + vehicles[x].imei + '</option>'));
-                    }
-                }
-
-            },
-            error: function (jqXhr) {
-                console.log(jqXhr);
-
-                if (jqXhr.status === 422) {
-                    var errors = jqXhr.responseJSON;
-                    $.each(errors.message, function (key, value) {
-                        $.each(errors.message, function (key, value) {
-                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-
-                            if ($('#Err' + key).length) {
-                                //$('#Err' + key).html(value);
-
-                                $('#Err' + key).text(value);
-
-                            }
-                            else
-                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
-
-
-                        });
-
-
-                    });
-
-                    // $( '#form-errors' ).html( errorsHtml );
-
-                }
-            }
-
-        })
-
-
-    });
 
     $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModifyContract').click(function(){
         $.get("/contrat/refresh/",{},function(data,status){
@@ -775,10 +505,14 @@ $(document).ready(function() {
         var date = $('#dated').val();
         var priceVehiclesSimple =  $('#priceVehiclesSimple').val();
         var priceVehiclesAvance =  $('#priceVehiclesAdvanced').val();
+        var defaultSimple = $("#defaultSimple").val();
+        var defaultAvance = $("#defaultAdvanced").val();
+
         var client = $('#client').val();
 
 
-        console.log(nbVehiclesAvance);
+
+
 
         $.ajax({
             headers: {
@@ -788,9 +522,10 @@ $(document).ready(function() {
             type: 'POST',
             data: {
                 client: client,
-                typeAbonnement: typeAbonnement,
                 nbVehiclesSimple: nbVehiclesSimple,
                 nbVehiclesAvance : nbVehiclesAvance,
+                defaultSimple : defaultSimple,
+                defaultAvance : defaultAvance,
                 priceVehiclesSimple : priceVehiclesSimple,
                 priceVehiclesAvance : priceVehiclesAvance,
                 dated :date,
@@ -799,356 +534,40 @@ $(document).ready(function() {
 
             success: function (data, status) {
                 alert("Contrat ajouté avec succés");
-               console.log(data.date);
+                console.log(data);
                 document.getElementById('add_dialog').close();
-            }
-        });
 
-
-
-    });
-
-
-
-    $('#AddDetail').click(function () {
-
-        var matricule = $('#matricule').val();
-        var typeAbonnement = $('#typeAbonnement').val();
-        var price = $('#price').val();
-        var newVehicle = 0;
-        var client = $('#client').val();
-
-        var marque = $('#marque').val();
-        var model = $('#model').val();
-        var imei = $('#imei').val();
-
-
-
-        if (!checkVehicle) {
-            newVehicle = 1;
-
-
-        }
-        else
-            newVehicle = 0;
-
-
-
-        console.log(matricule + " " + typeAbonnement + " " + price);
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/addDetail',
-            type: 'POST',
-            data: {
-                client: client,
-
-                matricule:matricule,
-                typeAbonnement: typeAbonnement,
-                price: price,
-                newvehicle: newVehicle,
-                model: model,
-                imei: imei,
-                marque: marque,
-                _token: $('#DetailToken').attr('value')
-            },
-
-            success: function (data, status) {
-                console.log(data);
-            },
-            error: function (jqXhr) {
-
-                if (jqXhr.status === 422) {
-                    var errors = jqXhr.responseJSON;
-                    $.each( errors.message , function( key, value ) {
-                        $.each(errors.message, function (key, value) {
-                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-
-                            if ($('#Err' + key).length) {
-                                //$('#Err' + key).html(value);
-
-                                $('#Err' + key).text(value);
-
-                            }
-                            else {
-                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
-
-                            }
-                        });
-
-
-                    });
-
-                    // $( '#form-errors' ).html( errorsHtml );
-
-                }
-            }
-
-        });
-
-
-        inputs = ['typeAbonnement', 'price', 'marque', 'imei', 'model', 'matricule'];
-        for (var j = 0; j < inputs.length; j++) {
-
-
-            if ($('#Err' + inputs[j]).length) {
-
-
-                $('#Err' + inputs[j]).remove();
-
-            }
-
-
-        }
-
-
-        $('#matricule').val(0);
-        $('#typeAbonnement').val(0);
-        $('#price').val('');
-
-        $('#marque').val('');
-        $('#model').val('');
-        $('#imei').val('');
-
-    });
-
-
-    $("#typeAbonnement,#typeAbonnementMaj").change(function () {
-
-        var client = $("#client").val();
-        console.log(client);
-
-
-        $("#typeAbonnement option:selected").each(function () {
-/*
-            $.get("/contrat/countVehicles/"+client,
-
-
-
-
-                function (data, status) {
-
-                    $('#nbVehicles').val(data);
-
+                $.get("/contrat/refresh/", {}, function (data, status) {
+                    $('tbody *').remove();
+                    $('tbody').prepend(data);
                 });
-*/
-
-            typeS = $(this).val();
-            nb = $('#nbVehicles').val();
-            /*
-
-                        $.get("/contrat/priceDetail/"+client+"/"+typeS+"/"+nb,function(data,status){
-                            $("#priceVehicles").val(data.total);
-                           console.log(data)
-
-                           */
-        });
-
-
-    });
-
-    $("#ValidatePriceAdvanced").click(function () {
-
-        var typeAbonnement = $("#Advanced").val();
-        var nbvehicles = $("#nbVehiclesAdvanced").val();
-        var client = $("#client").val();
-
-
-
-
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/price/calcul',
-
-            type: 'POST',
-            data: {
-                nbVehicles : nbvehicles,
-                type: typeAbonnement,
-                idCustomer :client,
-                _token: $('#GammeToken').attr('value')
-            },
-
-            success: function (data, status) {
-                $("#priceVehiclesAdvanced").val(data);
             }
-
         });
 
-
-    });
-    $("#ValidatePrice").click(function () {
-
-        var date = $("#AddingDate").val();
-        var imei = $("#vehicules").val();
-        var types = $("#types").val();
-
-
-
-
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat//detail/price/calcul',
-
-            type: 'POST',
-            data: {
-                AddingDate : date,
-                types: types,
-                vehicules :imei,
-                _token: $('#VehicleToken').attr('value')
-            },
-
-            success: function (data, status) {
-                console.log(data);
-                $("#priceVehicles").val(data);
-            }
-
-        });
-
-
-    });
-    $("#ValidatePriceEdit").click(function () {
-
-        var date = $("#AddingDateEdit").val();
-        var imei = $("#imeiId").val();
-
-        var type = $("#typesEdit").val();
-
-
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat//detail/price/calculEdit',
-
-            type: 'POST',
-            data: {
-                AddingDateEdit : date,
-                typesEdit: type,
-                imeiId :imei,
-                _token: $('#EditVehicleToken').attr('value')
-            },
-
-            success: function (data, status) {
-                console.log(data);
-                $("#priceVehiclesEdit").val(data);
-            }
-
-        });
 
 
     });
 
-    $("#ValidatePriceSimple").click(function () {
-
-        var typeAbonnement = $("#Simple").val();
-        var nbvehicles = $("#nbVehiclesSimple").val();
-        var client = $("#client").val();
 
 
 
 
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/price/calcul',
-
-            type: 'POST',
-            data: {
-                nbVehicles : nbvehicles,
-                type: typeAbonnement,
-                idCustomer :client,
-                _token: $('#GammeToken').attr('value')
-            },
-
-            success: function (data, status) {
-                $("#priceVehiclesSimple").val(data);
-            }
-
-        });
-
-
-    });
-
-    $("#ModifyValidateAdvancedPrice").click(function(){
-        var typeAbonnement = "Avancé";
-        var nbvehicles = $("#ModifynbAdvancedVehicles").val();
-        var client = $("#clientMaj").val();
 
 
 
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/price/calcul',
-
-            type: 'POST',
-            data: {
-                nbVehicles : nbvehicles,
-                type: typeAbonnement,
-                idCustomer :client,
-                _token: $('#ModifyGammeToken').attr('value')
-            },
-
-            success: function (data, status) {
-
-                $("#ModifyPriceAdvanced").val(data);
-                $("#reduceAdvanced").val("-");
-
-            }
-
-        });
-    });
-
-    $("#ModifyValidateSimplePrice").click(function(){
-        var typeAbonnement = "Simple";
-        var nbvehicles = $("#ModifynbSimpleVehicles").val();
-        var client = $("#clientMaj").val();
-
-
-
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/price/calcul',
-
-            type: 'POST',
-            data: {
-                nbVehicles : nbvehicles,
-                type: typeAbonnement,
-                idCustomer :client,
-                _token: $('#ModifyGammeToken').attr('value')
-            },
-
-            success: function (data, status) {
-                $("#ModifyPriceSimple").val("");
-                $("#ModifyPriceSimple").val(data);
-                $("#reduceSimple").val("-");
-            }
-
-        });
-    });
 
 
     $("#ModfiyContract").click(function(){
-        var nbvehiclesSimple = $("#ModifynbSimpleVehicles").val();
-        var nbvehiclesAvance = $("#ModifynbAdvancedVehicles").val();
+        var nbvehiclesSimple = $("#ModifynbVehiclesSimple").val();
+        var nbvehiclesAvance = $("#ModifynbVehiclesAdvanced").val();
 
         var priceAvance = $("#ModifyPriceAdvanced").val();
         var priceSimple = $("#ModifyPriceSimple").val();
+
+        var defaultAvance = $("#ModifyDefaultAdvanced").val();
+        var defaultSimple = $("#ModifyDefaultSimple").val();
+
 
         var client = $("#clientMaj").val();
 
@@ -1165,6 +584,8 @@ $(document).ready(function() {
                nbSimple : nbvehiclesSimple,
                priceAvance : priceAvance,
                priceSimple : priceSimple,
+               defaultAvance : defaultAvance,
+               defaultSimple : defaultSimple,
                _token : $("#ContratToken").attr('value')
             },
             type: 'POST',
@@ -1214,24 +635,189 @@ $(document).ready(function() {
            var type_abonnement = $("#type_abonnement").val();
            var imei = $("#imei").val();
            var date = $("#dateAjout").val();
+           var idContract = $(".body").attr('alt');
 
-        $.get("/detail/search/imei="+imei+"&marque="+marque,{},function(data, status){
+        critiere = {};
 
+        critiere['idContract'] = idContract;
+
+        if (imei != "" &&  imei != null)
+            critiere['imei'] = imei;
+
+        if (type_abonnement != "" && type_abonnement != '0')
+            critiere['type_abonnement'] = type_abonnement;
+
+        if (marque != "" && marque != null)
+            critiere['marque'] = marque;
+
+        if (model != "" && model != null)
+            critiere['model'] = model;
+
+        if (dateAjout != "" && dateAjout != null)
+            critiere['dateAjout'] = date;
+
+        console.log(critiere);
+
+        $.get("/detail/search/",critiere,function(data, status){
+
+            console.log(data);
+            $('tbody *').remove();
+            $('tbody').prepend(data);
         });
 
 
+         $("#model").val('');
+           $("#marque").val('');
+           $("#type_abonnement").val("0");
+           $("#imei").val('');
+           $("#dateAjout").val();
+
+
 });
+
+
+    //var id = $("#client").val();
+    /*
+
+
+
+     */
+
+    $("#client").change(function () {
+
+        var client = $("#client").val();
+        $.get("/contrat/price/" + client, {}, function (data, status) {
+            $("#defaultAdvanced").val(data.priceAvance);
+            $("#defaultSimple").val(data.priceSimple);
+            $("#NbVehicles").text(data.nbVehicles);
+            $("#NbVehicles").attr('alt',data.nbVehicles);
+
+        });
+    });
+
+
+    $("#showModal").click(function(){
+
+
+        document.getElementById('add_dialog').showModal();
+
+
+
+
+    });
+
+
+
 function editVehicleModel(idDetail) {
     document.getElementById('edit_dialog').showModal();
-    $('#edit_dialog #imeiId').val($(' #'+idDetail+'imei').text());
-    $('#edit_dialog #AddingDateEdit').val($(' #'+idDetail+'date').text());
+    $('#edit_dialog #imeiId').val($(' #' + idDetail + 'imei').text());
+    $('#edit_dialog #AddingDateEdit').val($(' #' + idDetail + 'date').text());
     $('#edit_dialog #typesEdit option').each(function () {
-        if($(this).text()==$(' #'+idDetail+'type').text())
-            $(this).attr('selected','true');
+        if ($(this).text() == $(' #' + idDetail + 'type').text())
+            $(this).attr('selected', 'true');
     })
-    $('#edit_dialog #priceVehiclesEdit').val($(' #'+idDetail+'price').text());
+    $('#edit_dialog #priceVehiclesEdit').val($(' #' + idDetail + 'price').text());
+
+
 }
-    $('#nbVehiclesAdvanced').change(function () {
+
+    $('#nbVehiclesAdvanced,#defaultAdvanced').change(function () {
+           var defaultAvance = $("#defaultAdvanced").val();
+           var nbVAd = $("#nbVehiclesAdvanced").val();
+           var baseVehicles =  $("#NbVehicles").text();
+
+
+
+
+               var result = defaultAvance * nbVAd;
+
+
+
+           $("#priceVehiclesAdvanced").val(result);
+
+    });
+    $('#nbVehiclesSimple,#defaultSimple').change(function () {
+        var defaultSimple = $("#defaultSimple").val();
+        var nbVS = $("#nbVehiclesSimple").val();
+
+
+
+
+        var result = defaultSimple * nbVS;
+
+       $("#priceVehiclesSimple").val(result);
+        console.log(defaultSimple + " "+ nbVS + " " + result);
+
+    });
+
+    $('#ModifynbVehiclesAdvanced,#ModifyDefaultAdvanced').change(function () {
+        var defaultAvance = $("#ModifyDefaultAdvanced").val();
+        var nbVAd = $("#ModifynbVehiclesAdvanced").val();
+
+        alert(defaultAvance + " " + nbVAd);
+
+        var result = defaultAvance * nbVAd;
+
+        $("#ModifyPriceAdvanced").val(result);
+
+    });
+    $('#ModifynbVehiclesSimple,#ModifydefaultSimple').change(function () {
+
+        var defaultSimple = $("#ModifyDefaultSimple").val();
+        var nbVS = $("#ModifynbVehiclesSimple").val();
+
+        var result = defaultSimple * nbVS;
+
+        //alert(defaultSimple+ " " + nbVS + " " + result);
+
+        $("#ModifyPriceSimple").val(result);
+        //  console.log(defaultSimple + " "+ nbVS + " " + result);
+
+    });
+
+    $("#refreshDetail").click(function(){
+
+        var id = $('.body').attr('alt');
+
+        $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+
+        });
+
+    });
+
+    $("#ValidatePrice").click(function () {
+
+        var date = $("#AddingDate").val();
+        var imei = $("#vehicules").val();
+        var types = $("#types").val();
+
+
+
+
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/contrat//detail/price/calcul',
+
+            type: 'POST',
+            data: {
+                AddingDate : date,
+                types: types,
+                vehicules :imei,
+                _token: $('#VehicleToken').attr('value')
+            },
+
+            success: function (data, status) {
+                console.log(data);
+                $("#priceVehicles").val(data);
+            }
+
+        });
+
 
     });
 
@@ -1246,17 +832,24 @@ function editContratDialog(id) {
 
         var contracts = data["contracts"];
         var date = contracts.start_contract;
-        var id = contracts.id_customer;
+        var customer = data["customer"];
         $('#edit_dialog #dated').val(date);
-        $('#ModifynbAdvancedVehicles').val(contracts.nbAvance);
-        $('#ModifyPriceAdvanced').val(data["priceAvance"]);
-        $("#reduceAdvanced").val(data["reduceAvance"] + " %");
-        $('#ModifynbSimpleVehicles').val(contracts.nbSimple);
-        $("#reduceSimple").val(data["reduceSimple"] + " %");
-        $("#ModifyPriceSimple").val(data["priceSimple"]);
+        $('#ModifynbVehiclesAdvanced').val(contracts.nbAvance);
+        $('#ModifyPriceAdvanced').val(contracts.priceAvance);
+        $('#ModifynbVehiclesSimple').val(contracts.nbSimple);
+        $("#ModifyPriceSimple").val(contracts.priceSimple);
+        $("#ModifyDefaultAdvanced").val(contracts.defaultAvance);
+        $("#ModifyDefaultSimple").val(contracts.defaultSimple);
+         $("#ModifyNbVehicles").text(contracts.nbVehicles);
 
-        $('#edit_dialog #clientMaj').append($('<option id="added"  value="' + data["customer"].id + '">' + data["customer"].name + '</option>'));
-        $("#edit_dialog #clientMaj").val(id);
+
+        console.log(contracts.nbVehicles);
+
+
+
+
+       $('#clientMaj').append($('<option id="added"  value="' + customer.id + '">' + customer.name + '</option>'));
+
 
 
     })}

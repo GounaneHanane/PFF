@@ -82,7 +82,7 @@
                         </div>
                         <div class="panel-heading clearfix">
                             <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a onclick="document.getElementById('add_dialog').showModal();" id="showmodal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
+                                <a  id="showModal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -165,6 +165,9 @@
 
                                                 </div>
 
+                                                <span >Nombre de Vehicules :</span>
+                                                <span id="NbVehicles" alt=""></span>
+
                                             </form>
 
                                             <form id="vehicles" method="POST">
@@ -210,7 +213,7 @@
                                                     <input type="text" id="defaultSimple" class="form-control"  placeholder="" >
                                                 </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                        <input type="text"  class="form-control" id="priceVehiclesAdvanced"  placeholder="Prix" >
+                                                        <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >
 
                                                     </div>
                                                 <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
@@ -257,10 +260,12 @@
                                                     <div class="form-group">
 
                                                         <select id="clientMaj" name="client" class="form-control" disabled>
-                                                            <option  disabled selected id="defaultAbo" value="0">Veuillez selectionner un client</option>
 
                                                         </select>
                                                     </div>
+
+                                                    <span >Nombre de Vehicules :</span>
+                                                    <span id="ModifyNbVehicles" alt=""></span>
 
                                                 </form>
                                             <form id="addOrEdit" method="POST">
@@ -272,18 +277,18 @@
                                                         <input type="Text"   value="Avancé" disabled class="form-control">
                                                     </div>
                                                     <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                        <input type="text"  class="form-control" id="ModifynbAdvancedVehicles" placeholder="Nombre des vehicules" >
+                                                        <input type="number"  class="form-control" id="ModifynbVehiclesAdvanced" value="0" min="0" step="1" >
 
                                                     </div>
 
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
-                                                        <input type="text" id="ModifyPriceAdvanced" class="form-control"  placeholder="Prix" >
+                                                        <input type="text" id="ModifyDefaultAdvanced" class="form-control"  placeholder="Prix" >
 
                                                     </div>
 
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
 
-                                                        <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
+                                                        <input type="text" id="ModifyPriceAdvanced" class="form-control" value="0" placeholder="Prix" >
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                         <a id="ModifyValidateAdvancedPrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
@@ -296,15 +301,14 @@
 
                                                     </div>
                                                     <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                        <input type="text"  class="form-control" id="ModifynbSimpleVehicles" placeholder="Nombre des vehicules" >
-
+                                                        <input type="number" min="0" step="1"  class="form-control" id="ModifynbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
                                                     </div>
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
-                                                        <input type="text" id="ModifyPriceSimple" class="form-control"  placeholder="Prix" >
+                                                        <input type="text" id="ModifyDefaultSimple" class="form-control"  placeholder="Prix" >
                                                     </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
 
-                                                        <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
+                                                        <input type="text" id="ModifyPriceSimple" class="form-control" value="0" placeholder="Prix" >
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
                                                         <a id="ModifyValidateSimplePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>

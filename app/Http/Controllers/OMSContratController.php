@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\DB;
 class OMSContratController extends Controller
 {
 
-    private $idContract = 4;
 
     public function contrat()
     {
@@ -98,6 +97,7 @@ class OMSContratController extends Controller
         $QueryContracts = $contracts
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
+
             ->where($critiere)
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
                 DB::raw('(contracts.nbAvance + contracts.nbSimple) as nbVehicles'))
@@ -149,40 +149,18 @@ class OMSContratController extends Controller
 
              $contracts = DB::table('contracts')->where('contracts.id','=',$id)
                  ->join('customers','customers.id','contracts.id_customer')
-                 ->select('contracts.*')
+                 ->select('contracts.*', DB::raw('(contracts.nbAvance + contracts.nbSimple) as nbVehicles'))
                  ->first();
 
 
-        $id_type_client = DB::table('customers')->where('customers.id','=',$contracts->id_customer)
-            ->select('customers.id_type_customer')->pluck('id_type_customer')->first();
-
-        $defaultSimple = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_client)
-            ->where('id_type_subscribe','=','1')->select('type_customers_subscribes.price')->pluck('price')->first();
-
-        $defaultAvance = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_client)
-            ->where('id_type_subscribe','=','2')->select('type_customers_subscribes.price')->pluck('price')->first();
-
-        $defaultPriceAvance = $defaultAvance  * $contracts->nbAvance;
-        $defaultPriceSimple = $defaultSimple  * $contracts->nbSimple;
-
-
-        $priceAvance = $defaultPriceAvance - $contracts->reduceAvance;
-        $priceSimple = $defaultPriceSimple - $contracts->reduceSimple;
-
-
-        $reduceSimple = round((100 * $contracts->reduceSimple) / $defaultPriceSimple);
-        $reduceAvance = round((100 * $contracts->reduceAvance) / $defaultPriceAvance);
 
 
 
-
-        $customers = DB::table('customers')
-            ->where('customers.id','=',$contracts->id_customer)
-            ->select("customers.*")->first();
+             $customer = DB::table('customers')->where('customers.id','=',$contracts->id_customer)->select('customers.*')->first();
 
 
-             return response()->json(["contracts" => $contracts , "customer"=>$customers, "priceSimple"=>$priceSimple ,
-                 "priceAvance"=>$priceAvance , "reduceSimple"=>$reduceSimple , "reduceAvance"=>$reduceAvance]);
+
+             return response()->json(['contracts'=>$contracts ,  'customer'=>$customer]);
     }
 
     public function PriceVehicles($idCustomer,$type,$many)
@@ -315,27 +293,28 @@ class OMSContratController extends Controller
             $nbAvance = $request->input('nbVehiclesAvance');
             $priceSimple = $request->input('priceVehiclesSimple');
             $priceAvance = $request->input('priceVehiclesAvance');
+            $defaultSimple = $request->input('defaultSimple');
+            $defaultAvance = $request->input('defaultAvance');
 
             $id_type_client = DB::table('customers')->where('customers.id','=',$client)
                 ->select('customers.id_type_customer')->pluck('id_type_customer')->first();
 
 
-            $defaultSimple = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_client)
-                ->where('id_type_subscribe','=','1')->select('type_customers_subscribes.price')->pluck('price')->first();
 
-            $defaultAvance = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_client)
-                ->where('id_type_subscribe','=','2')->select('type_customers_subscribes.price')->pluck('price')->first();
 
-            $defaultPriceAvance = $defaultAvance  * $nbAvance;
-            $defaultPriceSimple = $defaultSimple  * $nbSimple;
+
 
             $total = $priceAvance + $priceSimple;
             $contract = new Contract();
             $contract->id_customer = $client;
             $contract->nbSimple = $nbSimple;
             $contract->nbAvance = $nbAvance;
-            $contract->reduceSimple = $defaultPriceSimple - $priceSimple;
-            $contract->reduceAvance = $defaultPriceAvance - $priceAvance;
+            $contract->defaultSimple = $defaultSimple;
+            $contract->defaultAvance = $defaultAvance;
+            $contract->priceAvance = $priceAvance;
+            $contract->priceSimple = $priceSimple;
+
+
             $contract->price = $total;
 
 
@@ -377,32 +356,33 @@ class OMSContratController extends Controller
            // $vehicles = DB::table('vehicles')->where('customer_id', '=', $client)->get();
 
 
-            return response()->json(['simple' => ($defaultPriceSimple - $priceSimple),
-                'avance'=>  ($defaultPriceAvance - $priceAvance),
-                'priceAvance'=> $priceAvance,
-                'priceSimple'=> $priceSimple,
-                'defaultAvance'=>$defaultPriceAvance,
-                'defaultSimple'=>$defaultPriceSimple
-
-            ]);
+            return response("Ajouté");
         }
 
 
     }
 
-    public function getPrice($idClient, $idTypeSubscribe)
+    public function getPrice($idClient)
     {
         $idTypeCustomer = DB::table('customers')->where('customers.id', '=', $idClient)->select('customers.id_type_customer')->
         pluck('id_type_customer')->first();
 
 
 
-        $price = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
-            ->where('type_customers_subscribes.id_type_subscribe', '=', $idTypeSubscribe)->select('type_customers_subscribes.price')
+        $priceSimple = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+            ->where('type_customers_subscribes.id_type_subscribe', '=', '1')->select('type_customers_subscribes.price')
+            ->pluck('price')->first();
+        $priceAvance = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+            ->where('type_customers_subscribes.id_type_subscribe', '=', '2')->select('type_customers_subscribes.price')
             ->pluck('price')->first();
 
 
-        return $price;
+        $nbVehicles = DB::table('vehicles')->where('vehicles.customer_id','=',$idClient)
+            ->count();
+
+
+        return response()->json(['priceSimple' => $priceSimple , 'priceAvance'=>$priceAvance,'nbVehicles'=>$nbVehicles]);
+      //  return response()->json(['idtc'=>$idClient]);
 
     }
 
@@ -586,39 +566,30 @@ class OMSContratController extends Controller
            $nbSimple = $request->input("nbSimple");
            $priceAvance = $request->input("priceAvance");
            $priceSimple = $request->input("priceSimple");
+           $defaultAvance  = $request->input("defaultAvance");
+           $defaultSimple  = $request->input("defaultSimple");
 
-           $id_type_client = DB::table('customers')->where('customers.id','=',$client)
-               ->select('customers.id_type_customer')->pluck('id_type_customer')->first();
 
 
-           $defaultSimple = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_client)
-               ->where('id_type_subscribe','=','1')->select('type_customers_subscribes.price')->pluck('price')->first();
 
-           $defaultAvance = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_client)
-               ->where('id_type_subscribe','=','2')->select('type_customers_subscribes.price')->pluck('price')->first();
 
-           $defaultPriceAvance = $defaultAvance  * $nbAvance;
-           $defaultPriceSimple = $defaultSimple  * $nbSimple;
-           $reduceSimple = $defaultPriceSimple - $priceSimple;
-           $reduceAvance = $defaultPriceAvance - $priceAvance;
 
            $total = $priceAvance + $priceSimple;
 
 
            $contract = DB::table('contracts')->where('contracts.id_customer','=',$client)
                ->update(['nbSimple'=>$nbSimple , 'nbAvance'=>$nbAvance , 'price'=>$total ,
-                     'reduceSimple'=>$reduceSimple , 'reduceAvance'=>$reduceAvance
+                     'priceSimple'=>$priceSimple , 'priceAvance'=>$priceAvance
+                     ,'defaultSimple'=>$defaultSimple , 'defaultAvance'=>$defaultAvance
                    ]);
 
 
-           return response()->json([ "priceSimple"=>$priceSimple ,
-               "priceAvance"=>$priceAvance , 'ds'=>$defaultPriceSimple , 'da'=>$defaultPriceAvance,
-                "nba"=>$nbAvance , "nbs"=>$nbSimple ,'dps'=>$defaultSimple , 'dpa'=>$defaultAvance
-           ]);
+           return response()->json(['dA'=>$defaultAvance,'dS'=>$defaultSimple]);
        }
 
        public function searchDetail(Request $request)
        {
+           $idContract = $request->input('idContract');
             $imei = ($request->input('imei') == null) ? null : $request->input('imei');
            $type_abonnement = ($request->input('type_abonnement') == null) ? null : $request->input('type_abonnement');
            $dateAjout = ($request->input('dataeAjout') == null) ? null : $request->input('dateAjout');
@@ -633,21 +604,44 @@ class OMSContratController extends Controller
 
 
 
+
            if ($imei != null) {
-               $critiere[$i] = ['vehicles.imei', '', $imei];
+               $critiere[$i] = ['vehicles.imei', 'like', '%'.$imei.'%'];
                $i++;
 
            }
+
+           if($marque != null)
+           {
+               $critiere[$i] = ['vehicles.marque', 'like', '%'.$marque.'%'];
+               $i++;
+           }
+           if($modele != null)
+           {
+               $critiere[$i] = ['vehicles.model', 'like', '%'.$modele.'%'];
+               $i++;
+           }
+
            if ($type_abonnement != null) {
-               $idcustomer = DB::table('contracts')->where('contracts.id','=',$this->idContract)->select('contracts.id_customer')->pluck('id_customer')->first();
+               /*
 
-               $id_type_customer = DB::table('customers')->where('customers.id','=',$idcustomer)
-                   ->select('customers.id_type_customer')->pluck('id_type_customer')->first();
+               $idCustomer = DB::table('contracts')
+                   ->where('contracts.id','=',$idContract)
+                   ->select('contracts.id_customer')
+                   ->pluck('id_customer')->first();
 
-               $id = DB::table('type_customers_subscribes')->where('id_type_customer','=',$id_type_customer)
-                   ->where('id_type_subscribe','=',$type_abonnement)->select('type_customers_subscribes.id')->pluck('id')->first();
 
-               $critiere[$i] = ['details.id_type_customer_subscribe', '=', $id];
+               $id_type_customer = DB::table('customers')
+                   ->where('customers.id','=',$idCustomer)
+                   ->select('customers.id_type_customer')
+                   ->pluck('id_type_customer')->first();
+
+               $matrice = DB::table('type_customers_subscribes')
+                   ->where('type_customers_subscribes.id_type_customer','=',$id_type_customer)
+                   ->where('type_customers_subscribes.id_type_subscribe','=',$type_abonnement)
+                   ->select('type_customers_subscribes.id')->pluck('id')->first();
+*/
+               $critiere[$i] = ['types_subscribes.id','=',$type_abonnement];
                $i++;
 
            }
@@ -657,23 +651,28 @@ class OMSContratController extends Controller
 
            }
 
-           $critiere[$i] = ['details.id_contract','=',$this->idContract];
+           $critiere[$i] = ['details.id_contract','=',$idContract];
            $i++;
 
+
            $QueryDetails = $details
+
+               ->join('vehicles','vehicles.id','details.id_vehicle')
                ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
                ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
-               ->join('vehicles','vehicles.id','details.id_vehicle')
+
 
                ->where($critiere)
-              ->select('details.*','types_subscribes.type' ,'vehicles.*')
+              ->select('details.*','vehicles.*','types_subscribes.type')
                ->get();
 
 
-           return response()->json([ 'critiere'=>$critiere , 'details'=>$QueryDetails ]);
 
-           //return view('DetailsLines',[ 'details'=>$QueryDetails]);
 
+        // $vehilces = DB::table('vehicles')->where($critiere)->select('vehicles.*')->get();
+
+           //return response()->json([ 'critiere'=>$critiere , 'details'=>$QueryDetails , 'matrice'=>$matrice , 'typeC'=>$id_type_customer]);
+           return view('DetailsLines',[ 'details'=>$QueryDetails ]);
        }
 
 

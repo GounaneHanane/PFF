@@ -26,12 +26,12 @@
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
 @section('content')
-    <div class="body">
+    <div class="body" alt="{{ $contract->idContract }}">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="pull-left">Vehicules</h3>
-                    <a  class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
+                    <a  class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refreshDetail"></span></a>
                 </div>
 
                 <div class="col-md-12">
@@ -47,7 +47,7 @@
                                         <div class="form-group col-md-3">
                                             <label class="control-label">TYPE D'ABONNEMENT</label>
                                             <select id="type_abonnement" name="costumer_search" class="form-control chosen-select" style="">
-                                                <option value="" disabled selected>Veuillez selectionner un type</option>
+                                                <option value="0" disabled selected>Veuillez selectionner un type</option>
                                                 @foreach($types_subscribes as $type)
                                                     <option value="{{ $type->id }}">{{ $type->type }}</option>
                                                 @endforeach
@@ -82,6 +82,7 @@
                             <b>{{$client->start_contract}}</b>
                             <b>{{$client->end_contract}}</b>
                             @endforeach
+                            <b>NombredeVehicules : {{ $contract->nbVehicles }}</b>
                             <div class="pull-right col-md-2 col-lg-3"><br>
                                 <a id="showmodal" onclick="document.getElementById('add_dialog').showModal();" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU VEHICULE</a>
                             </div>
