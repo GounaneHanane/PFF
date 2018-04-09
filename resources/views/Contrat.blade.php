@@ -183,11 +183,11 @@
 
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                        <input type="text" id="priceVehiclesAdvanced" class="form-control"  placeholder="Prix" >
+                                                        <input type="text" id="defaultAdvanced" class="form-control"  placeholder="" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced" value="0" placeholder="Nombre des vehicules" >
+                                                        <input type="text"  class="form-control" id="priceVehiclesAdvanced"  placeholder="Prix" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
@@ -207,10 +207,10 @@
                                                 </div>
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                    <input type="text" id="priceVehiclesSimple" class="form-control" value="0" placeholder="Prix" >
+                                                    <input type="text" id="defaultSimple" class="form-control"  placeholder="" >
                                                 </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                        <input type="text"  class="form-control" id="nbVehiclesAdvanced" value="0" placeholder="Nombre des vehicules" >
+                                                        <input type="text"  class="form-control" id="priceVehiclesAdvanced"  placeholder="Prix" >
 
                                                     </div>
                                                 <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">

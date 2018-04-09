@@ -365,6 +365,8 @@ function addContratDialog()
     $('#date').val('');
     $('#matricule * ').remove();
 
+    alert('hola');
+
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
    /* var tabAbonnement=document.getElementById("typeAbonnement");
@@ -1229,6 +1231,10 @@ function editVehicleModel(idDetail) {
     })
     $('#edit_dialog #priceVehiclesEdit').val($(' #'+idDetail+'price').text());
 }
+    $('#nbVehiclesAdvanced').change(function () {
+
+    });
+
 
     });
 function editContratDialog(id) {
