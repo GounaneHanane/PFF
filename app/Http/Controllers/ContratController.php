@@ -46,7 +46,7 @@ class ContratController extends Controller
 
 
       $contract = DB::table('contracts')->
-             select(DB::raw('(contracts.nbAvance + contracts.nbSimple) as nbVehicles'),"contracts.id as idContract")
+             select("contracts.*",DB::raw('(contracts.nbAvance + contracts.nbSimple) as nbVehicles'),"contracts.id as idContract")
                  ->where('contracts.id','=',$idContrat)
                  ->first();
 
@@ -70,7 +70,7 @@ class ContratController extends Controller
             select('customers.name','contracts.*')->get();
 
         return view('contractInfo',['details'=>$details,'cli'=>$client,'types'=>$type,'vehicles'=>$vehicle ,
-             "types_subscribes"=>$types_subscribes , "contract"=>$contract]);
+             "types_subscribes"=>$types_subscribes , "contract"=>$contract ]);
        // return response()->json($client);
     }
     public  function refreshDetail($idContract)
@@ -164,22 +164,22 @@ class ContratController extends Controller
         $date = implode('-', $date);
 
         $AddingDate=$date;
-        $idTypeCustomer = DB::table('vehicles')->where('vehicles.imei', '=', $request->input('imeiId'))->
-        join('customers', 'customers.id', 'vehicles.customer_id')->
-        join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
-        select('types_customers.id')->pluck('id')->first();
+        $idContract = $request->input('idContract');
 
-        $PriceTypeCustomerSubscribe = DB::table('type_customers_subscribes')->where('id_type_subscribe', '=', $request->input('typesEdit'))
+        $idTypeCustomer = DB::table('contracts')->where('contracts.id','=',$idContract)
+            ->join('customers','customers.id','contracts.id_customer')
+            ->select('customers.id_type_customer')->pluck('id_type_customer')->first();
+
+
+        $PriceTypeCustomerSubscribe = DB::table('type_customers_subscribes')->where('id_type_subscribe', '=', $request->input('types'))
             ->where('id_type_customer', '=', $idTypeCustomer)->select('type_customers_subscribes.price')->pluck("price")->first();
-        $idContract = DB::table('vehicles')->where('vehicles.imei', '=',$request->input('imeiId') )->
-        join('customers', 'customers.id', 'vehicles.customer_id')->
-        join('contracts','contracts.id_customer','customers.id')->
-        select('contracts.id')->pluck('id')->first();
 
-        $price=DB::table('contracts')->where('id','=',$idContract)
+
+        $price=DB::table('contracts')->where('contracts.id','=',$idContract)
             ->select(DB::raw($PriceTypeCustomerSubscribe."*datediff(end_contract,'".$AddingDate."')/datediff(end_contract,start_Contract) as thirdPrice"))
             ->pluck('thirdPrice')->first();
-        return response($price);
+
+       return response($price);
     }
     public function updateVehicule(Request $request)
     {
@@ -321,6 +321,17 @@ class ContratController extends Controller
        }
 
 
+   }
+
+   public function detailsInfo($id)
+   {
+       $detail = DB::table('details')->where('details.id','=',$id)
+            ->join('vehicles','vehicles.id','details.id_vehicle')
+           ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+           ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+
+       ->select('details.*','vehicles.*','types_subscribes.id as id_subscribe')->first();
+       return response()->json(["detail"=>$detail]);
    }
 
 

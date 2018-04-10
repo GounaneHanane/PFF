@@ -172,10 +172,7 @@ class OMSContratController extends Controller
 */
 
         $vehciles = DB::table('vehicles')->where('vehicles.customer_id','=',$idCustomer)
-            ->whereNotIn('vehicles.id',function($q){
-                $q->select('details.id_vehicle')->from('details');
-            })
-            ->get()->count();
+        ->get()->count();
 
         $typeCustomerId = DB::table('customers')->where('customers.id','=',$idCustomer)->select('customers.id_type_customer')->pluck('id_type_customer')->first();
 
@@ -594,7 +591,7 @@ class OMSContratController extends Controller
            $type_abonnement = ($request->input('type_abonnement') == null) ? null : $request->input('type_abonnement');
            $dateAjout = ($request->input('dataeAjout') == null) ? null : $request->input('dateAjout');
            $marque = ($request->input('marque') == null) ? null : $request->input('marque');
-           $modele = ($request->input('modele') == null) ? null : $request->input('modele');
+           $modele = ($request->input('model') == null) ? null : $request->input('model');
            $critiere = [];
            $i = 0;
 

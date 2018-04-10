@@ -8,6 +8,7 @@
     <script  src="/js/delete.js"></script>
     <script  src="/js/abonnement.js"></script>
     <script  src="/js/add_contrat.js"></script>
+    <script src="/js/detail.js"></script>
     <style>
         b{
             font-size: 25px;
@@ -31,7 +32,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="pull-left">Vehicules</h3>
-                    <a  class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refreshDetail"></span></a>
+                    <a  class="btn btn-primary pull-right" id="refreshDetail"><span class="glyphicon glyphicon-refresh" ></span></a>
                 </div>
 
                 <div class="col-md-12">
@@ -81,10 +82,17 @@
                             <b>{{$client->name}}</b>
                             <b>{{$client->start_contract}}</b>
                             <b>{{$client->end_contract}}</b>
+
                             @endforeach
-                            <b>NombredeVehicules : {{ $contract->nbVehicles }}</b>
-                            <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a id="showmodal" onclick="document.getElementById('add_dialog').showModal();" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU VEHICULE</a>
+
+
+                                <a href="#">NombreVehicule<span class="badge">{{ $contract->nbVehicles }}</span></a>
+                                <a href="#">NombreAvance<span class="badge">{{ $contract->nbAvance }}</span></a>
+                                <a href="#">NombreSimple<span class="badge">{{ $contract->nbSimple }}</span></a>
+
+
+                                <div class="pull-right col-md-2 col-lg-3"><br>
+                                <a id="AddDetailModal"  class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU VEHICULE</a>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -102,7 +110,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($details as $details)
-                                <tr style="color: #2a4f7d;" id="Detail{{$details->id}}">
+                                <tr style="color: #2a4f7d;" id="{{$details->id}}">
                                     <td id="Detail{{$details->id}}imei" class="text-center" style="width: 9.09%">{{$details -> imei}}</td>
                                     <td class="text-center" style="width: 9.09%">{{$details -> marque}}</td>
                                     <td class="text-center" style="width: 9.09%">{{$details -> model}}</td>
@@ -110,7 +118,7 @@
                                     <td id="Detail{{$details->id}}type" class="text-center" style="width: 9.09%">{{$details -> typeSub}}</td>
                                     <td id="Detail{{$details->id}}price" class="text-center" style="width: 9.09%">{{$details -> price}}</td>
                                     <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableDetail({{$details->id}})" > <span class="glyphicon glyphicon-trash edit trash "  ></span></a>
-                                        <a class=" btn btn-primary" id="edit_abonnement" onclick="editVehicleModel('Detail{{$details->id}}')" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
+                                        <a class=" btn btn-primary" id="edit_detail" onclick="editDetail({{$details->id}})" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -145,7 +153,7 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <input type="date" class="form-control" name="AddingDate" id="AddingDate" >
+                                                                    <input type="date" class="form-control" name="AddingDate" value="{{ $date =  date('Y-m-d') }}" id="AddingDate" >
                                                                 </div>
                                                                 <div class="form-group"  style=" margin-bottom: -49px;">
                                                                     <select id="types" name="types" class="form-control">
@@ -167,7 +175,7 @@
                                                             </form>
                                                             <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
                                                             </form>
-                                                            <center> <button class="btn btn-info" id="" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                                                            <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                         </div>
                                                     </div>
                                                 </div>

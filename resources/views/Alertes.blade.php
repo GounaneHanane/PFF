@@ -21,6 +21,8 @@
         <div class="panel">
             <div class="panel-heading">
                 <div class="form" style="margin-top: 0%;">
+
+
                     <h3><strong>Alerts d'expiration</strong></h3>
                 </div>
             </div>
@@ -36,6 +38,8 @@
                             <th class="text-center" style="width:12.5%">ADRESSE</th>
                             <th class="text-center" style="width:12.5%">DATE DE FIN</th>
                             <th class="text-center" style="width:12.5%">PRIX</th>
+                            <th class="text-center" style="width:12.5%">Taille De Parc</th>
+
                             <th class="text-center" style="width:12.5%">COCHER</th>
                         </tr>
                         </thead>

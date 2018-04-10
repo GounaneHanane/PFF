@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/form.css" />
     <script  src="/js/search.js"></script>
     <script  src="/js/delete.js"></script>
+    <script src="/js/alert.js"></script>
     <link rel="stylesheet" href="/css/alerte.css"/>
     <script  src="/js/chart.js"></script>
 @endsection
@@ -23,8 +24,21 @@
             <div class="panel-heading">
                 <div class="form" style="margin-top: 0%;">
                     <h3><strong>Alerts d'expiration</strong></h3>
+                    <div class="form-group col-md-3">
+
+                    <select id="alert" class="selectpicker">
+                        <option value="7">Semaine</option>
+                        <option value="15">15 jours</option>
+                        <option value="30">1 mois</option>
+                        <option value="90">3 mois</option>
+                    </select>
+
+                    </div>
+
                 </div>
             </div>
+
+
             <div class="panel-body">
                 <div class="table-div">
                     <table class="table table-bordered" id="vehicles_table">
@@ -36,6 +50,7 @@
                             <th class="text-center" style="width:12.5%">ADRESSE</th>
                             <th class="text-center" style="width:12.5%">DATE DE FIN</th>
                             <th class="text-center" style="width:12.5%">PRIX</th>
+                            <th class="text-center" style="width:12.5%">TailleDeParc</th>
                             <th class="text-center" style="width:12.5%">COCHER</th>
                         </tr>
                         </thead>
@@ -48,6 +63,8 @@
                             <td class="text-center" style="width:12.5%">{{$a->adress}}</td>
                             <td class="text-center" style="width:12.5%">{{$a->end_contract}}</td>
                             <td class="text-center" style="width:12.5%">{{$a->price}}</td>
+                            <td class="text-center" style="width:12.5%">{{$a->park}}</td>
+
                             <td class="text-center" style="width:12.5%"><span class="btn btn-success glyphicon glyphicon-ok"    style=" float: inherit;"></span></td>
                         </tr>
                             @endforeach

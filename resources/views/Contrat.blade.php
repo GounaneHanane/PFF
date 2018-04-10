@@ -82,7 +82,7 @@
                         </div>
                         <div class="panel-heading clearfix">
                             <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a  id="showModal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
+                                <a  id="addContractModal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
                             </div>
                         </div>
                         <div class="panel-body">
@@ -179,14 +179,14 @@
                                                     </div>
 
                                              <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                        <input type="number"  class="form-control" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
+                                                        <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
 
 
                                                     </div>
 
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                        <input type="text" id="defaultAdvanced" class="form-control"  placeholder="" >
+                                                        <input type="text" id="defaultAdvanced"  class="form-control"  placeholder="Defaut" >
 
                                                     </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
@@ -210,7 +210,7 @@
                                                 </div>
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                    <input type="text" id="defaultSimple" class="form-control"  placeholder="" >
+                                                    <input type="text" id="defaultSimple" class="form-control"  placeholder="Defaut" >
                                                 </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
                                                         <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >

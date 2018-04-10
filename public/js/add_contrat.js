@@ -1,140 +1,4 @@
 $(document).ready(function(){
-    var vehicles={"tab_num_contart":null,"tab_matricule":null,"tab_model":null,"tab_marque":null,"tab_type_abonnement":null,"tab_reference_boitier":null,"tab_type_boitier":null};
-    var v = { vehicle : [] };
-    var car;
-    var obj;
-    var i=0;
-    $(".addcar").click(function () {
-        var matricule = $('#matricule').val();
-        var mark = $('#mark').val();
-        var model = $('#modele').val();
-        var reference_boitier = $('#reference_boitier').val();
-        var type_boitier = $('#type_boitier').val();
-        var type_abonnement = $('#type_abonnement').val();
-
-
-        var  inputs = [ 'matricule','modele','mark','reference_boitier','type_abonnement','type_boitier'];
-
-        for(var j = 0;j<inputs.length;j++)
-        {
-
-
-            if ($('#Err' + inputs[j]).length) {
-
-                //t();
-
-                $('#Err' + inputs[j]).remove();
-
-            }
-
-
-
-
-
-        }
-
-
-
-        //obj=JSON.parse(vehicles);
-        vehicles.tab_matricule = matricule;
-        vehicles.tab_marque = mark;
-        vehicles.tab_model = model;
-        vehicles.tab_type_abonnement = type_abonnement;
-        vehicles.tab_reference_boitier = reference_boitier;
-        vehicles.tab_type_boitier = type_boitier;
-        v.vehicle.push(vehicles);
-        console.log(vehicles);
-
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',
-            url: 'http://127.0.0.1:8000/contract/addVehicule/',
-            data: {
-                matricule: matricule,
-                mark: mark,
-                modele:model,
-                reference_boitier: reference_boitier,
-                type_boitier: type_boitier,
-                type_abonnement: type_abonnement,
-                idContract : $('#contrat_save').val(),
-                _token: $('meta[name="csrf-token"]').attr('content')
-
-            },
-            success: function (data) {
-                console.log(data);
-                $("#matricule").val('');
-                $("#mark").val('');
-                $("#reference_boitier").val('');
-                $('#modele').val('');
-                $('#type_boitier').val(1);
-                $('#type_abonnement').val(1);
-
-                $("#detail").prepend("<tr class=\"vehicle_line\"><td class=\"liste_matricule\">"+matricule+"</td><td class=\"liste_marque\">"+mark+"</td><td class=\"liste_model\">"+model+"</td></td><td class=\"liste_reference_boitier\">"+reference_boitier+"</td><td class=\"liste_type_boitier\">"+type_boitier+"</td><td class=\"liste_type_abonnement\">"+type_abonnement+"</td>" +
-                    "<td class='text-center'><a id='deleteDetail' alt='"+matricule+ "' class='btn btn-danger' ><span class='glyphicon glyphicon-trash edit trash'></span></a>"+
-                    "<a class='btn btn-info' id='"+i+"' onclick='editDetail("+i+")'><span class='glyphicon glyphicon-pencil edit edit_pencil' ></span></a></td>" +
-                    "</tr>");
-
-                i++;
-                var  inputs = [ 'matricule','modele','mark','reference_boitier','type_abonnement','type_boitier'];
-
-                for(var j = 0;j<inputs.length;j++)
-                {
-
-
-                    if ($('#Err' + inputs[j]).length) {
-
-                        //alert();
-
-                        $('#Err' + inputs[j]).remove();
-
-                    }
-
-
-
-
-
-                }
-
-
-            },
-            error: function (jqXhr) {
-                if (jqXhr.status === 422) {
-                    var errors = jqXhr.responseJSON;
-
-                    console.log(errors);
-
-                    var l = 0;
-                    $.each(errors.message, function (key, value) {
-                        // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
-
-                        if ($('#Err' + key).length) {
-                            //$('#Err' + key).html(value);
-
-                            $('#Err' + key).text(value);
-                        }
-                        else {
-                            $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
-                            l++;
-
-                        }
-                    });
-
-                }}})
-
-    });
-    $(".trash").click(function(){
-
-        $('#vehicles_table').find('input[type="checkbox"]:checked').each(function () {
-            $( this ).parent().parent().remove();
-        });
-    });
-
-
-
-
 
 
 
@@ -185,7 +49,6 @@ $(document).ready(function(){
             },
             success: function (data, status) {
 
-                alert("Vehicule ajouté avec succés");
                 var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
 console.log(data.dated);
                 for(var j = 0;j<inputs.length;j++)
@@ -244,83 +107,15 @@ console.log(data.dated);
 
 
 
-    $("vehicles").find('input').prop('disabled', true);
 });
 
-function editDetail(id)
-{
-    var lines=$("#"+id).parent().parent();
-
-    $("#matricule").val(lines.children('.liste_matricule').text());
-    $("#type_vehicule").val(lines.children('.liste_type_vehicule').text());
-    $("#mark").val(lines.children('.liste_marque').text());
-    $("#modele").val(lines.children('.liste_model').text());
-    $("#reference_boitier").val(lines.children('.liste_reference_boitier').text());
-    $("#type_boitier").val(lines.children('.liste_type_boitier').text());
-    $("#type_abonnement").val(lines.children('.liste_type_abonnement').text());
-
-}
-var checkVehicle=true;
-var checkVehicleEdit=true;
-function addVehicle1() {
-    if(checkVehicleEdit==true)
-    {
-        checkVehicleEdit=false;
-
-        document.getElementById('newVehicle1').style.display='block';
-        document.getElementById('selectVehicle1').style.display='none';
-        console.log("hole");
-    }
-    else
-    {
-        checkVehicleEdit=true;
-        document.getElementById('newVehicle1').style.display='none';
-        document.getElementById('selectVehicle1').style.display='inline';
-    }
-}
-function addVehicle() {
-    if(checkVehicle==true)
-    {
-
-        checkVehicle=false;
-        document.getElementById('newVehicle').style.display='inline';
-        document.getElementById('selectVehicle').style.display='none';
-    }
-    else
-    {
-        checkVehicle=true;
-        document.getElementById('newVehicle').style.display='none';
-        document.getElementById('selectVehicle').style.display='inline';
-    }
-}
 
 
-function saveContrat() {
-
-    $('#saveContrat :input').attr('disabled', false);
-    document.getElementById("saveContrat").style.opacity = "1";
-    window.location.href = '#saveContrat';
-    document.getElementById("contrat").style.opacity = "0.2";
-    $('#contrat :input').attr('disabled', true);
-    $("#savenom").text($("#nom").val());
-    $("#contrat_show").text($("#contrat_save").val());
-    $("#savecontact").text($("#contact").val());
-    $("#savenumero").text($("#NContact").val());
-}
 
 
-/*
-    $.get("/contrat/detailVehicles/"+id,{},function(data, status){
-
-      var vehicles = data.vehicles;
 
 
-      console.log(vehicles);
-        for (var i = 0; i < vehicles.length; i++) {
-            $('#edit_dialog #matricule').append($('<option id="added" value="' + vehicles[i].id + '">'  + vehicles[i].imei + '</option>'));
-        }
-    });
-*/
+
 
 function ShowType(typeClientId,typeAbonnmenetId,price) {
 
@@ -365,7 +160,6 @@ function addContratDialog()
     $('#date').val('');
     $('#matricule * ').remove();
 
-    alert('hola');
 
     var tabClient=document.getElementById("client");
     var tabClienttLength=tabClient.length;
@@ -377,7 +171,6 @@ function addContratDialog()
     document.getElementById("dated").value="";
     checkVehicle=true;*/
     document.getElementById('add_dialog').showModal();
-    alert('hola');
    /* for(var i=0;i<tabClienttLength;i++)
     {
 
@@ -480,12 +273,24 @@ $(document).ready(function() {
         clear();
     });
 
-    $('#refresh').click(function () {
-        $.get("/contrat/refresh/", {}, function (data, status) {
-            $('tbody *').remove();
-            $('tbody').prepend(data);
-        });
+    $("#addContractModal").click(function()
+    {
+        var today = new Date();
+        $("#client").val("0");
+        $("#dated").val(today.getFullYear()+"-"+today.getMonth()+"-"+today.getDay());
+        $("#defaultAdvanced").val("");
+        $("#defaultSimple").val("");
+        $("#nbVehiclesAdvanced").val("");
+        $("#nbVehiclesSimple").val("");
+        $("#priceVehiclesAdvanced").val("");
+        $("#priceVehiclesSimple").val("");
+        $("#NbVehicles").text("");
+
+        document.getElementById('add_dialog').showModal();
+
     });
+
+
 
 
 
@@ -533,7 +338,6 @@ $(document).ready(function() {
             },
 
             success: function (data, status) {
-                alert("Contrat ajouté avec succés");
                 console.log(data);
                 document.getElementById('add_dialog').close();
 
@@ -547,16 +351,6 @@ $(document).ready(function() {
 
 
     });
-
-
-
-
-
-
-
-
-
-
 
     $("#ModfiyContract").click(function(){
         var nbvehiclesSimple = $("#ModifynbVehiclesSimple").val();
@@ -598,90 +392,12 @@ $(document).ready(function() {
     });
 
 
-    $("#editVehicleBtn").click(function(){
-        var date = $("#AddingDateEdit").val();
-        var imei = $("#imeiId").val();
-        var price=$('#priceVehiclesEdit').val();
-        var type = $("#typesEdit").val();
 
 
 
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contract/detail/Modify',
-            data : {
-                AddingDateEdit : date,
-                imeiId : imei,
-                typesEdit : type,
-                priceVehiclesEdit : price,
-                _token : $("#EditVehicleToken").attr('value')
-            },
-            type: 'POST',
-
-            success: function (data, status) {
-                alert('Vehicule modifié avec succée');
-            }
-
-        });
-
-    });
-
-    $("#ContratInfosearch").click(function(){
-           var model = $("#model").val();
-           var marque = $("#marque").val();
-           var type_abonnement = $("#type_abonnement").val();
-           var imei = $("#imei").val();
-           var date = $("#dateAjout").val();
-           var idContract = $(".body").attr('alt');
-
-        critiere = {};
-
-        critiere['idContract'] = idContract;
-
-        if (imei != "" &&  imei != null)
-            critiere['imei'] = imei;
-
-        if (type_abonnement != "" && type_abonnement != '0')
-            critiere['type_abonnement'] = type_abonnement;
-
-        if (marque != "" && marque != null)
-            critiere['marque'] = marque;
-
-        if (model != "" && model != null)
-            critiere['model'] = model;
-
-        if (dateAjout != "" && dateAjout != null)
-            critiere['dateAjout'] = date;
-
-        console.log(critiere);
-
-        $.get("/detail/search/",critiere,function(data, status){
-
-            console.log(data);
-            $('tbody *').remove();
-            $('tbody').prepend(data);
-        });
 
 
-         $("#model").val('');
-           $("#marque").val('');
-           $("#type_abonnement").val("0");
-           $("#imei").val('');
-           $("#dateAjout").val();
-
-
-});
-
-
-    //var id = $("#client").val();
-    /*
-
-
-
-     */
 
     $("#client").change(function () {
 
@@ -696,30 +412,15 @@ $(document).ready(function() {
     });
 
 
-    $("#showModal").click(function(){
-
-
-        document.getElementById('add_dialog').showModal();
 
 
 
 
-    });
 
 
 
-function editVehicleModel(idDetail) {
-    document.getElementById('edit_dialog').showModal();
-    $('#edit_dialog #imeiId').val($(' #' + idDetail + 'imei').text());
-    $('#edit_dialog #AddingDateEdit').val($(' #' + idDetail + 'date').text());
-    $('#edit_dialog #typesEdit option').each(function () {
-        if ($(this).text() == $(' #' + idDetail + 'type').text())
-            $(this).attr('selected', 'true');
-    })
-    $('#edit_dialog #priceVehiclesEdit').val($(' #' + idDetail + 'price').text());
 
 
-}
 
     $('#nbVehiclesAdvanced,#defaultAdvanced').change(function () {
            var defaultAvance = $("#defaultAdvanced").val();
@@ -754,7 +455,6 @@ function editVehicleModel(idDetail) {
         var defaultAvance = $("#ModifyDefaultAdvanced").val();
         var nbVAd = $("#ModifynbVehiclesAdvanced").val();
 
-        alert(defaultAvance + " " + nbVAd);
 
         var result = defaultAvance * nbVAd;
 
@@ -768,58 +468,15 @@ function editVehicleModel(idDetail) {
 
         var result = defaultSimple * nbVS;
 
-        //alert(defaultSimple+ " " + nbVS + " " + result);
 
         $("#ModifyPriceSimple").val(result);
         //  console.log(defaultSimple + " "+ nbVS + " " + result);
 
     });
 
-    $("#refreshDetail").click(function(){
-
-        var id = $('.body').attr('alt');
-
-        $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
-            $('tbody *').remove();
-            $('tbody').prepend(data);
-
-        });
-
-    });
-
-    $("#ValidatePrice").click(function () {
-
-        var date = $("#AddingDate").val();
-        var imei = $("#vehicules").val();
-        var types = $("#types").val();
 
 
 
-
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat//detail/price/calcul',
-
-            type: 'POST',
-            data: {
-                AddingDate : date,
-                types: types,
-                vehicules :imei,
-                _token: $('#VehicleToken').attr('value')
-            },
-
-            success: function (data, status) {
-                console.log(data);
-                $("#priceVehicles").val(data);
-            }
-
-        });
-
-
-    });
 
 
     });
@@ -852,4 +509,7 @@ function editContratDialog(id) {
 
 
 
-    })}
+    })
+
+}
+

@@ -38,6 +38,8 @@ Route::view('/addclient','ClientController@AddingInfo');
 Route::get('/clientinfo/{name}', 'ClientsController@CustomerInfo');
 */
 
+Route::get("/details/info/{id}","ContratController@detailsInfo");
+
 Route::get('/abonnement', 'AbonnementsController@idAbonnement');
 Route::view('/editclient', 'EditClient');
 Route::view('/savecontrat', 'SaveContrat');
@@ -85,6 +87,13 @@ Route::get("/contrat/showdetails/{idcontrat}",'ContratController@showInfo');
 Route::post("/contrat/addDetailGamme",'OMSContratController@AddDetailGammme');
 
 Route::view("/contrat/details",'contractInfo');
+
+Route::view("/contratFacture","contratCopie");
+Route::get("/pdf","GenerateController@test");
+
+
+
+Route::get("/alert/{amount}","OMSAlertsController@alert");
 
 //Route::post("/contrat/details/{idcontract}",'OMSContratController@addDetail');
 
