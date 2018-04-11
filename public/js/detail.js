@@ -85,7 +85,7 @@ $(document).ready(function(){
         document.getElementById('add_dialog').showModal();
         var today = new Date();
         $("#vehicules").val("0");
-        $("#AddingDate").val(today.getFullYear()+"-"+today.getMonth()+"-"+today.getDay());
+        $("#AddingDate").val();
         $("#types").val("0");
         $("#priceVehicles").val("");
 

@@ -9,7 +9,7 @@ use Response;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-class ClientsController extends Controller
+class RenouvelementController extends Controller
 {
     /**
      * Display a listing of the resource.

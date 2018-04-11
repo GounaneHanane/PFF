@@ -11,7 +11,7 @@
     <script src="/js/detail.js"></script>
     <style>
         b{
-            font-size: 25px;
+            font-size: 20px;
             margin-right: 57px;
         }
     </style>
@@ -78,18 +78,21 @@
                             </div>
                         </div>
                         <div class="panel-heading clearfix">
-                            @foreach($cli as $client )
-                            <b>{{$client->name}}</b>
-                            <b>{{$client->start_contract}}</b>
-                            <b>{{$client->end_contract}}</b>
+                            <table>
+                                @foreach($cli as $client )
+                                    <tr>
+                                    <td><b>{{$client->name}}</b></td>
+                                    <td><b>{{$client->start_contract}}</b></td>
+                                    <td><b>{{$client->end_contract}}</b><br></td>
+                                    </tr>
+                                @endforeach
 
-                            @endforeach
-
-
-                                <a href="#">NombreVehicule<span class="badge">{{ $contract->nbVehicles }}</span></a>
-                                <a href="#">NombreAvance<span class="badge">{{ $contract->nbAvance }}</span></a>
-                                <a href="#">NombreSimple<span class="badge">{{ $contract->nbSimple }}</span></a>
-
+                                <tr>
+                                    <td><B>NombreVehicule : <span>{{ $contract->nbVehicles }}</span></b></td>
+                                    <td><b>NombreAvance : <span>{{ $contract->nbAvance }}</span></b></td>
+                                    <td><b>NombreSimple : <span>{{ $contract->nbSimple }}</span></b></td>
+                                </tr>
+                            </table>
 
                                 <div class="pull-right col-md-2 col-lg-3"><br>
                                 <a id="AddDetailModal"  class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU VEHICULE</a>

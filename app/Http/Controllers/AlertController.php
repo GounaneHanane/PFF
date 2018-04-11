@@ -17,8 +17,15 @@ class AlertController extends Controller
         $a=DB::table('alerte')
             ->join('contracts','contracts.id','alerte.id')
             ->select('alerte.*',DB::raw('(contracts.nbAvance + contracts.nbSimple) as park'))->get();
-        return view('home',['alert'=>$a]);
+        $nb=DB::table('alerte')
+            ->select(DB::raw('count(*) as nb'))->get();
+        return view('home',['alert'=>$a,'nb'=>$nb]);
     }
-
+    public function AlertNotification()
+    {
+        $nb=DB::table('alerte')
+            ->select(DB::raw('count(*) as nb'))->get();
+        return view('layout',['nb'=>$nb]);
+    }
 
 }

@@ -47,16 +47,16 @@
                                 </thead>
                                 <tbody>
 
-                                    <tr value="" style="cursor: pointer;" >
+                                <tr value="" style="cursor: pointer;" >
 
 
-                                        <td class="text-center"></td>
-                                        <td class="text-center">}</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"><a class="btn btn-danger" href=""> <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                            <a class=" btn btn-primary"  id="edit_abonnement" onclick=""><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
-                                    </tr>
+                                    <td class="text-center"></td>
+                                    <td class="text-center">}</td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"></td>
+                                    <td class="text-center"><a class="btn btn-danger" href=""> <span class="glyphicon glyphicon-trash edit trash " ></span></a>
+                                        <a class=" btn btn-primary"  id="edit_abonnement" onclick=""><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                </tr>
 
                                 </tbody>
                             </table>
@@ -99,29 +99,29 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="price" placeholder="Prix" name="price">
                             </div>
-                                <center><button class="btn btn-info" id="addOrEditButton" onclick="addOrEdit();">Ajouter</button>
+                            <center><button class="btn btn-info" id="addOrEditButton" onclick="addOrEdit();">Ajouter</button>
 
                             </center>
                         </form>
-                    <center> <button class="btn btn-info" onclick="closeDialog()">Cancel</button></center>
+                        <center> <button class="btn btn-info" onclick="closeDialog()">Cancel</button></center>
 
                     </div>
                 </div>
-                </div>
             </div>
+        </div>
 
     </dialog>
 
-<script>
+    <script>
 
-    var x = document.getElementById("add_dialog");
+        var x = document.getElementById("add_dialog");
 
-    function showDialog() {
-        x.show();
-    }
+        function showDialog() {
+            x.show();
+        }
 
-    function closeDialog() {
-        x.close();
-    }
-</script>
-  	@endsection
+        function closeDialog() {
+            x.close();
+        }
+    </script>
+@endsection

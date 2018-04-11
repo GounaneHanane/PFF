@@ -28,7 +28,8 @@ use Reliese\Database\Eloquent\Model as Eloquent;
 class Contract extends Eloquent
 {
 	protected $casts = [
-		'id_customer' => 'int'
+		'id_customer' => 'int',
+        'id' => 'varchar'
 	];
 
 	protected $dates = [
@@ -37,6 +38,7 @@ class Contract extends Eloquent
 	];
 
 	protected $fillable = [
+        'id',
 		'id_customer',
 		'start_contract',
 		'end_contract',
@@ -49,7 +51,7 @@ class Contract extends Eloquent
 		return $this->belongsTo(\App\Models\Customer::class, 'id_customer');
 	}
 
-	public function details()
+	public function renouvelement()
 	{
 		return $this->hasMany(\App\Models\Detail::class, 'id_contract');
 	}

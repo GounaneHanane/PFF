@@ -29,8 +29,8 @@ class OMSContratController extends Controller
             ->where('contracts.isActive', '=', '1')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+            ->join('contract_warning','contract_warning.id','=','contracts.id')
+            ->select('contracts.*','count', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
                 DB::raw('( ifnull(contracts.nbAvance,0) + ifnull(contracts.nbSimple,0)) as nbVehicles'))
             ->get();
 
@@ -43,14 +43,16 @@ class OMSContratController extends Controller
 
 
 
-
+        $nb=DB::table('alerte')
+            ->select(DB::raw('count(*) as nb'))->get();
+        
         $ClientType = DB::table('types_customers')
             ->select('types_customers.type as ClientType', 'types_customers.id as ClientTypeId')->get();
 
         $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
 
         return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $AllC,
-            'typeSubscribes' => $types_subscribes]);
+            'typeSubscribes' => $types_subscribes,'nb'=>$nb]);
     }
 
 
@@ -257,7 +259,7 @@ class OMSContratController extends Controller
         ], $messages);
 
     }
-
+    static $i=0;
     public function addContrat(Request $request)
     {
         $messages = [
@@ -303,6 +305,7 @@ class OMSContratController extends Controller
 
             $total = $priceAvance + $priceSimple;
             $contract = new Contract();
+            $contract->id="CR-".(i+1);
             $contract->id_customer = $client;
             $contract->nbSimple = $nbSimple;
             $contract->nbAvance = $nbAvance;

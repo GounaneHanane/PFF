@@ -39,7 +39,7 @@ Route::get('/clientinfo/{name}', 'ClientsController@CustomerInfo');
 */
 
 Route::get("/details/info/{id}","ContratController@detailsInfo");
-
+Route::view("/renouv","renouvelement");
 Route::get('/abonnement', 'AbonnementsController@idAbonnement');
 Route::view('/editclient', 'EditClient');
 Route::view('/savecontrat', 'SaveContrat');
@@ -74,7 +74,7 @@ Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');
 //Route::view('/layout', 'layout');
-
+Route::get('/layout','AlertController@AlertNotification');
 Route::get('/home','AlertController@alert');
 Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');

@@ -2,7 +2,9 @@ $(document).ready(function(){
 
 
 
-
+    $('.submenu-toggle').click(function () {
+        $(this).parent().children('ul.submenu').toggle(200);
+    });
 
    /* $('#contratTable').paginate({
 
@@ -49,6 +51,7 @@ $(document).ready(function(){
             },
             success: function (data, status) {
 
+                document.getElementById('add_dialog').close();
                 var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
 console.log(data.dated);
                 for(var j = 0;j<inputs.length;j++)

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="http://oms.opentech.codes/dist/img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+        <link  src="/js/add_contrat.js" />
         <link rel="stylesheet" href="/css/menu.css" />
         <link rel="stylesheet" href="/css/mobile.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -34,8 +34,16 @@
 
 <header>
     <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" onclick="window.open('/home','_self')"><img src="/img/notifications-button.png" id="setting">
-            </button>
+
+
+        @foreach($nb as $nb)
+        <?php
+        if($nb->nb > 0)
+               { echo " <button class='btn btn-warning dropdown-toggle' type='button' data-toggle='dropdown' onclick=\"window.open('/home/','_self/')\"><img src='/img/notifications-button.png' id='setting'> </button>";}
+            else
+           { echo "<button class='btn btn-default dropdown-toggle' type='button' data-toggle='dropdown' onclick=\"window.open('/home','_self')\"><img src='/img/notifications-button.png' id='setting'></button>";}
+            ?>
+     @endforeach
     </div>
 
     <div class="user">
@@ -61,11 +69,16 @@
 
 
                         <li >
-                            <a href="/contrat"  class="submenu-toggle">
+                            <a   class="submenu-toggle">
                                 <i class="glyphicon glyphicon-file"></i>
-                                <span>CONTRATS</span>
+                                <span>ABONNEMENTS</span>
                             </a>
+                            <ul class="nav submenu" STYLE="display: none">
+                        <li><a href="/contrat">Contrats </a> </li>
+                        <li><a href="/renouv">Renouvelements<span id="carte_link"></span></a> </li>
+                        <li><a href="/home">Alertes <span id="carte_link"></span></a> </li>
 
+                            </ul>
                         </li>
                     </ul>
                 </div>

@@ -68,9 +68,11 @@ class ContratController extends Controller
         $client=DB::table('contracts')->where([['contracts.id','=',$idContrat],['contracts.isactive','=','1']])->
             join('customers','customers.id','contracts.id_customer')->
             select('customers.name','contracts.*')->get();
+        $nb=DB::table('alerte')
+            ->select(DB::raw('count(*) as nb'))->get();
 
         return view('contractInfo',['details'=>$details,'cli'=>$client,'types'=>$type,'vehicles'=>$vehicle ,
-             "types_subscribes"=>$types_subscribes , "contract"=>$contract ]);
+             "types_subscribes"=>$types_subscribes , "contract"=>$contract ,"nb"=>$nb]);
        // return response()->json($client);
     }
     public  function refreshDetail($idContract)
@@ -118,23 +120,26 @@ class ContratController extends Controller
         join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
         select('types_customers.id')->pluck('id')->first();
 
-        $PriceTypeCustomerSubscribe = DB::table('type_customers_subscribes')->where('id_type_subscribe', '=', $request->input('types'))
-            ->where('id_type_customer', '=', $idTypeCustomer)->select('type_customers_subscribes.price')->pluck("price")->first();
         $idContract = DB::table('vehicles')->where('vehicles.id', '=',$request->input('vehicules') )->
         join('customers', 'customers.id', 'vehicles.customer_id')->
         join('contracts','contracts.id_customer','customers.id')->
         select('contracts.id')->pluck('id')->first();
-
+        if($request->input('types')==1)
+            $PriceContract = DB::table('contracts')->where('id', '=', $idContract)
+                ->select('defaultSimple')->pluck("defaultSimple")->first();
+        else
+            $PriceContract = DB::table('contracts')->where('id', '=', $idContract)
+                ->select('defaultAvance')->pluck("defaultAvance")->first();
         $end_contract=DB::table('contracts')->where('id','=',$idContract)
             ->select(DB::raw('day(end_contract) as date'))->pluck('date')->first();
         $price=DB::table('contracts')->where('id','=',$idContract)
-            ->select(DB::raw($PriceTypeCustomerSubscribe."*timestampdiff(month,'".$AddingDate."',end_contract)/timestampdiff(month,start_Contract,end_contract) as thirdPrice"))
+            ->select(DB::raw($PriceContract."*timestampdiff(month,'".$AddingDate."',end_contract)/timestampdiff(month,start_Contract,end_contract) as thirdPrice"))
             ->pluck('thirdPrice')->first();
         $AddingDate = explode('-', $AddingDate);
 
         if($end_contract!=$AddingDate[2])
         {
-            $price+=($PriceTypeCustomerSubscribe/12)*(1/2);
+            $price+=($PriceContract/12)*(1/2);
         }
 
         return response($price);
