@@ -35,7 +35,13 @@ class OMSContratController extends Controller
             ->get();
 
 
-        $AllC = DB::table('customers')
+        $hasContrat = DB::table('customers')
+            ->whereIn('customers.id',function($q){
+                $q->select('contracts.id_customer')->from('contracts');
+            })
+            ->select('customers.id', 'customers.name')->get();
+
+        $hasnotContrat = DB::table('customers')
             ->whereNotIn('customers.id',function($q){
                 $q->select('contracts.id_customer')->from('contracts');
             })
@@ -49,8 +55,8 @@ class OMSContratController extends Controller
 
         $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
 
-        return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $AllC,
-            'typeSubscribes' => $types_subscribes]);
+        return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $hasContrat,
+            'typeSubscribes' => $types_subscribes , 'clients' => $hasnotContrat]);
     }
 
 

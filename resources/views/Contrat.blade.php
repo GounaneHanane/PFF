@@ -160,10 +160,10 @@
                                                     <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <select id="client" name="client" class="form-control">
+                                                    <select id="client" name="client" data-live-search="true" class="selectpicker">
                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un client</option>
-                                                        @foreach($Customers as $customer)
-                                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                        @foreach($clients as $c)
+                                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
                                                         @endforeach
                                                     </select>
 
