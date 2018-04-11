@@ -660,7 +660,7 @@ class OMSContratController extends Controller
 
 
                ->where($critiere)
-              ->select('details.*','vehicles.*','types_subscribes.type')
+              ->select('details.*','vehicles.*','types_subscribes.type','details.id as id_detail')
                ->get();
 
 
