@@ -4,9 +4,14 @@
 
 @section('import')
     @parent
+
+
+
     <link rel="stylesheet" href="/css/form.css" />
+    <link rel="stylesheet" href="/css/select.css" />
     <script  src="/js/delete.js"></script>
     <script  src="/js/add_contrat.js"></script>
+    <script  src="/js/select.js"></script>
     <script  src="/js/chosen.js"></script>
 
 
@@ -47,8 +52,8 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">CLIENT</label>
-                                            <select id="customer" name="costumer_search" class="form-control chosen-select" style="">
-                                                <option value="0">Veuillez selectionner un client</option>
+                                            <select id="customer" name="costumer_search" data-live-search="true" class="selectpicker" style="">
+                                                <option class="bs-title-option" value="">Veuillez selectionner un client</option>
                                                     @foreach($Customers as $customer)
                                                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                         @endforeach
