@@ -19,6 +19,6 @@ class GenerateController extends Controller
     {
        // $html2pdf = new Html2Pdf('P', 'A4', 'fr', true, 'UTF-8', array(0, 0, 0, 0));
 
-       
+
     }
 }
