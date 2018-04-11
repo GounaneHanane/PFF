@@ -9,6 +9,10 @@
     <script  src="/js/abonnement.js"></script>
     <script  src="/js/add_contrat.js"></script>
     <script src="/js/detail.js"></script>
+    <script  src="/js/select.js"></script>
+
+    <link rel="stylesheet" href="/css/select.css" />
+
     <style>
         b{
             font-size: 25px;
@@ -145,7 +149,7 @@
 
 
                                                                 <div class="form-group">
-                                                                    <select id="vehicules" name="vehicules" class="form-control">
+                                                                    <select id="vehicules" name="vehicules" data-live-search="true" class="selectpicker">
                                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un vehicule</option>
                                                                         @foreach($vehicles as $vehicle)
                                                                             <option value="{{$vehicle->id}}">{{$vehicle->imei}}</option>

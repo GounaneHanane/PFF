@@ -48,13 +48,23 @@ Route::view('/alertes', 'Alertes');
 Route::view('/dashboard', 'Dashboard');
 
 //Route::view('/contrat', 'Contrat');
-Route::get('/contrat/', 'OMSContratController@contrat');
+//Route::get('/contrat/', 'OMSContratController@contrat');
+Route::get('/contrat/', 'ContractController@contrat');
+
+
+
+
 Route::get('/contrat/search/', 'OMSContratController@searchContrat');
 
 Route::get("/detail/search/","OMSContratController@searchDetail");
 
 
-Route::get('/contrat/update/{id}', 'OMSContratController@update');
+//Route::get('/contrat/update/{id}', 'OMSContratController@update');
+Route::get('/contrat/update/{id}', 'ContractController@update');
+
+
+
+
 Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
 Route::get('/contrat/refresh/','OMSContratController@refresh');
 Route::get("/contrat/detail/refresh/{idContract}","ContratController@refreshDetail");
@@ -67,13 +77,16 @@ Route::post("/contrat//detail/price/calcul","ContratController@getPrice");
 Route::post("/contrat//detail/price/calculEdit","ContratController@getPriceEdit");
 
 
+Route::get('/renewal/{id}','ContratController@renewal');
+
+
 Route::get("/contrat/price/{idClient}/",'OMSContratController@getPrice');
 
 
 Route::post('/contract','ClientsController@json');
 
 //Route::view('/contrat', 'contrat');
-//Route::view('/layout', 'layout');
+Route::view('/layout', 'layout');
 
 Route::get('/home','AlertController@alert');
 Route::get('/addClient', 'ClientsController@AddCustomerView');
@@ -107,7 +120,12 @@ Route::post("/add_type",'AbonnementsController@saveAbonnement');
 */
 
 Route::post('/contract/addVehicule/','ContratController@addVehicule');
-Route::post('/contract/Modify','OMSContratController@UpdateContract');
+
+//Route::post('/contract/Modify','OMSContratController@UpdateContract');
+Route::post('/contract/Modify','ContractController@UpdateContract');
+
+
+
 Route::post('/contract/detail/Modify','ContratController@updateVehicule');
 
 

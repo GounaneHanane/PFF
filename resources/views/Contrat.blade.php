@@ -130,7 +130,7 @@
                                         </td>
                                         <td class="text-center" style="width: 15%"><a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_contract}}','_self')" style="    width: 51%;
 "  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
-                                            <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
+                                            <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
 
 
 
@@ -160,7 +160,7 @@
                                                     <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <select id="client" name="client" data-live-search="true" class="selectpicker">
+                                                    <select id="client" name="client" data-live-search="true" tabindex="-98" class="selectpicker">
                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un client</option>
                                                         @foreach($clients as $c)
                                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -259,7 +259,7 @@
                                                     <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
 
                                                     <div>
-                                                        <input type="date" class="form-control" id="dated" name="dated">
+                                                        <input type="date" class="form-control" id="datedModify" name="dated">
                                                     </div>
 
                                                     <div class="form-group">

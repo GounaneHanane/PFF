@@ -14,4 +14,16 @@ $(document).ready(function() {
     });
 })
 
+function renewal(id)
+{
+    alert(id);
+    /*
+    $.get("/renewal/" + id, {}, function (data, status) {
+
+        console.log(data);
+
+    });
+*/
+}
+
 

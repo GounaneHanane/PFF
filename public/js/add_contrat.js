@@ -362,6 +362,10 @@ $(document).ready(function() {
         var defaultAvance = $("#ModifyDefaultAdvanced").val();
         var defaultSimple = $("#ModifyDefaultSimple").val();
 
+        var datedModify = $("#datedModify").val();
+
+        alert
+
 
         var client = $("#clientMaj").val();
 
@@ -380,6 +384,7 @@ $(document).ready(function() {
                priceSimple : priceSimple,
                defaultAvance : defaultAvance,
                defaultSimple : defaultSimple,
+                date :datedModify,
                _token : $("#ContratToken").attr('value')
             },
             type: 'POST',
@@ -490,11 +495,15 @@ function editContratDialog(id) {
         var contracts = data["contracts"];
         var date = contracts.start_contract;
         var customer = data["customer"];
+        var priceAdvanced = contracts.defaultAvance * contracts.nbAvance;
+        var priceSimple = contracts.defaultSimple * contracts.nbSimple;
+
+        $("#datedModify").val(contracts.start_contract);
         $('#edit_dialog #dated').val(date);
         $('#ModifynbVehiclesAdvanced').val(contracts.nbAvance);
-        $('#ModifyPriceAdvanced').val(contracts.priceAvance);
+        $('#ModifyPriceAdvanced').val(priceAdvanced);
         $('#ModifynbVehiclesSimple').val(contracts.nbSimple);
-        $("#ModifyPriceSimple").val(contracts.priceSimple);
+        $("#ModifyPriceSimple").val(priceSimple);
         $("#ModifyDefaultAdvanced").val(contracts.defaultAvance);
         $("#ModifyDefaultSimple").val(contracts.defaultSimple);
          $("#ModifyNbVehicles").text(contracts.nbVehicles);

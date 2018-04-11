@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 27 Feb 2018 10:31:31 +0000.
+ * Date: Wed, 11 Apr 2018 10:44:28 +0000.
  */
 
 namespace App\Models;
@@ -16,16 +16,12 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $id_contract
  * @property int $id_vehicle
  * @property int $id_type_customer_subscribe
- * @property int $id_boxe
  * @property float $price
  * @property bool $offer
+ * @property \Carbon\Carbon $AddingDate
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * 
- * @property \App\Models\Box $box
- * @property \App\Models\Contract $contract
- * @property \App\Models\TypesCustomersSubscribe $types_customers_subscribe
- * @property \App\Models\Vehicle $vehicle
+ * @property bool $isActive
  *
  * @package App\Models
  */
@@ -37,7 +33,11 @@ class Detail extends Eloquent
 		'id_type_customer_subscribe' => 'int',
 		'price' => 'float',
 		'offer' => 'bool',
-        'AddingDate' => 'date'
+		'isActive' => 'bool'
+	];
+
+	protected $dates = [
+		'AddingDate'
 	];
 
 	protected $fillable = [
@@ -46,23 +46,7 @@ class Detail extends Eloquent
 		'id_type_customer_subscribe',
 		'price',
 		'offer',
-        'AddingDate'
-    ];
-
-
-
-	public function contract()
-	{
-		return $this->belongsTo(\App\Models\Contract::class, 'id_contract');
-	}
-
-	public function types_customers_subscribe()
-	{
-		return $this->belongsTo(\App\Models\TypesCustomersSubscribe::class, 'id_type_customer_subscribe');
-	}
-
-	public function vehicle()
-	{
-		return $this->belongsTo(\App\Models\Vehicle::class, 'id_vehicle');
-	}
+		'AddingDate',
+		'isActive'
+	];
 }

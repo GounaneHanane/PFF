@@ -567,11 +567,13 @@ class OMSContratController extends Controller
            $client = $request->input("client");
            $nbAvance = $request->input("nbAvance");
            $nbSimple = $request->input("nbSimple");
-           $priceAvance = $request->input("priceAvance");
-           $priceSimple = $request->input("priceSimple");
+
            $defaultAvance  = $request->input("defaultAvance");
            $defaultSimple  = $request->input("defaultSimple");
 
+           $priceAvance = $request->input("priceAvance");
+           $priceSimple = $nbSimple * $defaultSimple;
+           $priceAvance = $nbAvance * $defaultAvance;
 
 
 
