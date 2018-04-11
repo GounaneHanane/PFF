@@ -80,7 +80,7 @@ class ContratController extends Controller
             ->join('vehicles','vehicles.id','details.id_vehicle')
             ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
             ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
-            ->select('details.*','vehicles.*','types_subscribes.type')
+            ->select('details.*','vehicles.*','types_subscribes.type','details.id as id_detail')
             ->get();
 
         return view('DetailsLines',[ 'details'=>$details ]);
