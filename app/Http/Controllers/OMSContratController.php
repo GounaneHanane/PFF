@@ -27,11 +27,12 @@ class OMSContratController extends Controller
 
         $c = DB::table('contracts')
             ->where('contracts.isActive', '=', '1')
+            ->join('detail_contract','detail_contract.id_contract','=','contracts.id')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->join('contract_warning','contract_warning.id','=','contracts.id')
-            ->select('contracts.*','count', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
-                DB::raw('( ifnull(contracts.nbAvance,0) + ifnull(contracts.nbSimple,0)) as nbVehicles'))
+            ->join('contract_warning','contract_warning.id','=','detail_contract.id')
+            ->select('detail_contract.*','contract_warning.count as count', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+                DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
 
 
@@ -60,6 +61,7 @@ class OMSContratController extends Controller
 
         return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $hasContrat,
             'typeSubscribes' => $types_subscribes,'nb'=>$nb,'clients' => $hasnotContrat]);
+
 
     }
 
