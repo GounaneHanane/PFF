@@ -31,7 +31,7 @@
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
 @section('content')
-    <div class="body" alt="{{ $contract->idContract }}">
+    <div class="body" alt="{{ $contract->id_detail }}">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">

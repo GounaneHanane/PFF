@@ -28,9 +28,10 @@ class OMSAlertsController extends Controller
         $threemonths = date("Y-m-d", strtotime("+3 month", strtotime($today)));
 
 
-       $contract = DB::table('contracts')
+       $contract = DB::table('detail_contract')
+           ->join('contracts','contracts.id','detail_contract.id_contract')
            ->join('customers','customers.id','contracts.id_customer')
-           ->select('contracts.*',DB::raw('(contracts.nbAvance + contracts.nbSimple) as park'),'customers.*')
+           ->select('detail_contract.*',DB::raw('(detail_contract.nbAvance + detail_contract.nbSimple) as park'),'customers.*')
            ;
 
 

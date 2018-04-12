@@ -343,5 +343,17 @@ class ContractController extends Controller
         $detail_contrat = DB::table('detail_contract')->where('contracts.id', $id)->update(['isActive' => 0]);
 
     }
+    public function refreshDetail($idContract)
+    {
+        $details = DB::table('info_detail_contract')->where('info_detail_contract.id_detail','=',$idContract)
+            ->where('info_detail_contract.isActive','=','1')
+            ->join('vehicles','vehicles.id','info_detail_contract.id_vehicle')
+            ->join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')
+            ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
+            ->select('info_detail_contract.*','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
+            ->get();
+
+        return view('DetailsLines',[ 'details'=>$details ]);
+    }
 
 }
