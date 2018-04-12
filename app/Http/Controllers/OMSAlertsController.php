@@ -29,8 +29,9 @@ class OMSAlertsController extends Controller
 
 
        $contract = DB::table('contracts')
+           ->join('detail_contract','detail_contract.id_contract','contracts.id')
            ->join('customers','customers.id','contracts.id_customer')
-           ->select('contracts.*',DB::raw('(contracts.nbAvance + contracts.nbSimple) as park'),'customers.*')
+           ->select('contracts.*',DB::raw('(detail_contract.nbAvance + detail_contract.nbSimple) as park'),'customers.*')->get()
            ;
 
 

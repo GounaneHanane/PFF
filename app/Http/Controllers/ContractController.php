@@ -263,7 +263,8 @@ class ContractController extends Controller
             ->join('contracts','contracts.id','detail_contract.id_contract')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+            ->join('contract_warning','contract_warning.id','=','detail_contract.id')
+            ->select('contracts.*', 'customers.*','count', 'contracts.id as id_contract', 'types_customers.type as type_customer',
                 'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
@@ -316,9 +317,10 @@ class ContractController extends Controller
             ->join('contracts','contracts.id','detail_contract.id_contract')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-
+            ->join('contract_warning','contract_warning.id','=','detail_contract.id')
             ->where($critiere)
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+
+            ->select('contracts.*', 'customers.*','count', 'contracts.id as id_contract', 'types_customers.type as type_customer',
                 'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
