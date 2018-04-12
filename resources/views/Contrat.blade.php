@@ -118,9 +118,7 @@
                                     echo "<tr style='background-color: #f6f4ff' id='Contrat{{ $c->id_contract  }}'>";
                                 else echo "<tr id='Contrat{{ $c->id_contract  }}'>";
                                     ?>
-                                        <td class="text-center" style="width: 9.09%" >{{$c ->id_contract}}</td>
 
-                                    <tr id="Contrat{{ $c->id_contract  }}">
                                         <td class="text-center" style="width: 9.09%" >{{$c ->detail_matricule}}</td>
 
                                         <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>

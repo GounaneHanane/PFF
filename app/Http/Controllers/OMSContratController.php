@@ -114,6 +114,7 @@ class OMSContratController extends Controller
             ->get();
 
 
+
         return view('ContractLines', ['contracts' => $QueryContracts]);
 
     }

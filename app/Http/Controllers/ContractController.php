@@ -62,11 +62,12 @@ class ContractController extends Controller
             ->join('contracts','contracts.id','detail_contract.id_contract')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
+            ->join('contract_warning','contract_warning.id','detail_contract.id')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
                 'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
+                'contract_warning.count as count',
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
-
 
         $hasContrat = DB::table('customers')
             ->whereIn('customers.id',function($q){
@@ -80,6 +81,8 @@ class ContractController extends Controller
             })
             ->select('customers.id', 'customers.name')->get();
 
+        $nb=DB::table('alerte')
+            ->select(DB::raw('count(*) as nb'))->get();
 
 
 
@@ -89,7 +92,7 @@ class ContractController extends Controller
         $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
 
         return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $hasContrat,
-            'typeSubscribes' => $types_subscribes , 'clients' => $hasnotContrat]);
+            'typeSubscribes' => $types_subscribes ,'nb'=>$nb, 'clients' => $hasnotContrat]);
     }
 
     public function update($id)
@@ -326,7 +329,7 @@ class ContractController extends Controller
 
     public function DisableContract($id)
     {
-        $detail_contrat = DB::table('detail_contract')->where('detail_contract.id', $id)->update(['isActive' => 0]);
+        $detail_contrat = DB::table('detail_contract')->where('contracts.id', $id)->update(['isActive' => 0]);
 
     }
 
