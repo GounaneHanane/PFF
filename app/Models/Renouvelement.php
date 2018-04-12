@@ -10,7 +10,7 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Box
+ * Class
  * 
  * @property int $id
  * @property string $reference

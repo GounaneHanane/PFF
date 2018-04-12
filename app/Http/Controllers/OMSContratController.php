@@ -589,16 +589,15 @@ class OMSContratController extends Controller
 
        public function searchDetail(Request $request)
        {
-           $idContract = $request->input('idContract');
-            $imei = ($request->input('imei') == null) ? null : $request->input('imei');
+           $imei = ($request->input('imei') == null) ? null : $request->input('imei');
            $type_abonnement = ($request->input('type_abonnement') == null) ? null : $request->input('type_abonnement');
-           $dateAjout = ($request->input('dataeAjout') == null) ? null : $request->input('dateAjout');
+           $dateAjout = ($request->input('dateAjout') == null) ? null : $request->input('dateAjout');
            $marque = ($request->input('marque') == null) ? null : $request->input('marque');
            $modele = ($request->input('model') == null) ? null : $request->input('model');
            $critiere = [];
            $i = 0;
 
-           $details = DB::table('details')->where('details.isActive', '=', '1');
+           $details = DB::table('info_detail_contract')->where('info_detail_contract.isActive', '=', '1');
 
 
 
@@ -640,36 +639,35 @@ class OMSContratController extends Controller
                    ->where('type_customers_subscribes.id_type_customer','=',$id_type_customer)
                    ->where('type_customers_subscribes.id_type_subscribe','=',$type_abonnement)
                    ->select('type_customers_subscribes.id')->pluck('id')->first();
-*/
+   */
                $critiere[$i] = ['types_subscribes.id','=',$type_abonnement];
                $i++;
 
            }
            if ($dateAjout != null) {
-               $critiere[$i] = ['details.AddingDate', '=', $dateAjout];
+               $critiere[$i] = ['info_detail_contract.AddingDate', '=', $dateAjout];
                $i++;
 
            }
 
-           $critiere[$i] = ['details.id_contract','=',$idContract];
-           $i++;
+
 
 
            $QueryDetails = $details
-
-               ->join('vehicles','vehicles.id','details.id_vehicle')
-               ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
+               ->join('detail_contract','detail_contract.id','info_detail_contract.id_detail')
+               ->join('vehicles','vehicles.id','info_detail_contract.id_vehicle')
+               ->join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')
                ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
 
 
                ->where($critiere)
-              ->select('details.*','vehicles.*','types_subscribes.type')
+               ->select('info_detail_contract.*','detail_contract.id as id_contract','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
                ->get();
 
 
 
 
-        // $vehilces = DB::table('vehicles')->where($critiere)->select('vehicles.*')->get();
+           // $vehilces = DB::table('vehicles')->where($critiere)->select('vehicles.*')->get();
 
            //return response()->json([ 'critiere'=>$critiere , 'details'=>$QueryDetails , 'matrice'=>$matrice , 'typeC'=>$id_type_customer]);
            return view('DetailsLines',[ 'details'=>$QueryDetails ]);

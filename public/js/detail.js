@@ -54,10 +54,9 @@ $(document).ready(function(){
 
             type: 'POST',
             data: {
-                idContract : idContrat,
                 AddingDateEdit : date,
-                types: types,
-                vehicules :imei,
+                typesEdit: types,
+                imeiId :imei,
                 _token: $('#EditVehicleToken').attr('value')
             },
 
@@ -165,8 +164,8 @@ $(document).ready(function(){
         $.get("/detail/search/",critiere,function(data, status){
 
             console.log(data);
-            $('tbody *').remove();
-            $('tbody').prepend(data);
+            $('#tableBody *').remove();
+            $('#tableBody').prepend(data);
         });
 
 
