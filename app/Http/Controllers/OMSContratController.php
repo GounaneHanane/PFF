@@ -35,7 +35,13 @@ class OMSContratController extends Controller
             ->get();
 
 
-        $AllC = DB::table('customers')
+        $hasContrat = DB::table('customers')
+            ->whereIn('customers.id',function($q){
+                $q->select('contracts.id_customer')->from('contracts');
+            })
+            ->select('customers.id', 'customers.name')->get();
+
+        $hasnotContrat = DB::table('customers')
             ->whereNotIn('customers.id',function($q){
                 $q->select('contracts.id_customer')->from('contracts');
             })
@@ -51,8 +57,10 @@ class OMSContratController extends Controller
 
         $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
 
-        return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $AllC,
-            'typeSubscribes' => $types_subscribes,'nb'=>$nb]);
+
+        return view('Contrat', ['contracts' => $c, 'clientTypes' => $ClientType, 'Customers' => $hasContrat,
+            'typeSubscribes' => $types_subscribes,'nb'=>$nb,'clients' => $hasnotContrat]);
+
     }
 
 
@@ -564,11 +572,13 @@ class OMSContratController extends Controller
            $client = $request->input("client");
            $nbAvance = $request->input("nbAvance");
            $nbSimple = $request->input("nbSimple");
-           $priceAvance = $request->input("priceAvance");
-           $priceSimple = $request->input("priceSimple");
+
            $defaultAvance  = $request->input("defaultAvance");
            $defaultSimple  = $request->input("defaultSimple");
 
+           $priceAvance = $request->input("priceAvance");
+           $priceSimple = $nbSimple * $defaultSimple;
+           $priceAvance = $nbAvance * $defaultAvance;
 
 
 
@@ -661,7 +671,9 @@ class OMSContratController extends Controller
 
 
                ->where($critiere)
+
                ->select('info_detail_contract.*','detail_contract.id as id_contract','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
+
                ->get();
 
 

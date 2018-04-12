@@ -4,9 +4,14 @@
 
 @section('import')
     @parent
+
+
+
     <link rel="stylesheet" href="/css/form.css" />
+    <link rel="stylesheet" href="/css/select.css" />
     <script  src="/js/delete.js"></script>
     <script  src="/js/add_contrat.js"></script>
+    <script  src="/js/select.js"></script>
     <script  src="/js/chosen.js"></script>
 
 
@@ -47,8 +52,8 @@
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label class="control-label">CLIENT</label>
-                                            <select id="customer" name="costumer_search" class="form-control chosen-select" style="">
-                                                <option value="0">Veuillez selectionner un client</option>
+                                            <select id="customer" name="costumer_search" data-live-search="true" class="selectpicker" style="">
+                                                <option class="bs-title-option" value="">Veuillez selectionner un client</option>
                                                     @foreach($Customers as $customer)
                                                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                                         @endforeach
@@ -105,6 +110,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($contracts as $c)
+
                                 <?php if($c->nbVehicles == 0)
 
                                 echo "<tr style='background-color: #f3d5aa' id='Contrat{{ $c->id_contract  }}'>";
@@ -113,6 +119,10 @@
                                 else echo "<tr id='Contrat{{ $c->id_contract  }}'>";
                                     ?>
                                         <td class="text-center" style="width: 9.09%" >{{$c ->id_contract}}</td>
+
+                                    <tr id="Contrat{{ $c->id_contract  }}">
+                                        <td class="text-center" style="width: 9.09%" >{{$c ->detail_matricule}}</td>
+
                                         <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->end_contract}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->name}}</td>
@@ -126,6 +136,7 @@
                                         <td class="text-center" style="width: 15%">
                                             <a class="btn btn-danger" onclick="disableContract({{$c->id_contract}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_contract}}','_self')" style="    width: 51%;
 "  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
+
                                             <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
                                         </td>
 
@@ -157,10 +168,10 @@
                                                     <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <select id="client" name="client" class="form-control">
+                                                    <select id="client" name="client" data-live-search="true" tabindex="-98" class="selectpicker">
                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un client</option>
-                                                        @foreach($Customers as $customer)
-                                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                        @foreach($clients as $c)
+                                                            <option value="{{ $c->id }}">{{ $c->name }}</option>
                                                         @endforeach
                                                     </select>
 
@@ -256,7 +267,7 @@
                                                     <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
 
                                                     <div>
-                                                        <input type="date" class="form-control" id="dated" name="dated">
+                                                        <input type="date" class="form-control" id="datedModify" name="dated">
                                                     </div>
 
                                                     <div class="form-group">

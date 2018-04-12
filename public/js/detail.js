@@ -82,7 +82,6 @@ $(document).ready(function(){
 
 */
         document.getElementById('add_dialog').showModal();
-        var today = new Date();
         $("#vehicules").val("0");
         $("#AddingDate").val();
         $("#types").val("0");

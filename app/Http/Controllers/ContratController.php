@@ -87,7 +87,7 @@ class ContratController extends Controller
             ->join('vehicles','vehicles.id','details.id_vehicle')
             ->join('type_customers_subscribes','type_customers_subscribes.id','details.id_type_customer_subscribe')
             ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
-            ->select('details.*','vehicles.*','types_subscribes.type')
+            ->select('details.*','vehicles.*','types_subscribes.type','details.id as id_detail')
             ->get();
 
         return view('DetailsLines',[ 'details'=>$details ]);
@@ -358,8 +358,29 @@ class ContratController extends Controller
        return response()->json(["detail"=>$detail]);
    }
 
+   public function renewal($id)
+   {
 
+       $contract = DB::table('contracts')->where('contracts.id','=',$id)->select('contracts.*')->first();
 
+        $renwal =  \DB::table('renewal')->insert([
+           [
+               'id_contract'      => $contract->id,
+               'urlContract'             => "",
+               'start_renewal' => $contract->start_contract,
+               'end_renewal'      => $contract->end_contract,
+               'nbAvance'             => $contract->nbAvance,
+               'nbSimple'             => $contract->nbSimple,
+               'priceAvance'             => $contract->priceAvance,
+               'priceSimple'             => $contract->priceSimple,
+               'price' => $contract->price,
+               'defaultSimple' => $contract->defaultSimple,
+               'defaultAvance' => $contract->defaultAvance,
+               'isActive'          => 1
+           ]
+       ]);
 
+       return response()->json($contract);
+   }
 
 }
