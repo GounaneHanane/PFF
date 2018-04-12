@@ -54,7 +54,8 @@ Route::get('/contrat/', 'ContractController@contrat');
 
 
 
-Route::get('/contrat/search/', 'OMSContratController@searchContrat');
+//Route::get('/contrat/search/', 'OMSContratController@searchContrat');
+Route::get('/contrat/search/', 'ContractController@searchContrat');
 
 Route::get("/detail/search/","OMSContratController@searchDetail");
 
@@ -65,8 +66,15 @@ Route::get('/contrat/update/{id}', 'ContractController@update');
 
 
 
-Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
-Route::get('/contrat/refresh/','OMSContratController@refresh');
+//Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
+Route::get('/contrat/delete/{id}','ContractController@DisableContract');
+//Route::get('/contrat/refresh/','OMSContratController@refresh');
+
+
+Route::get('/contrat/refresh/','ContractController@refresh');
+
+
+
 Route::get("/contrat/detail/refresh/{idContract}","ContratController@refreshDetail");
 Route::get('/detail/delete/{id}','OMSContratController@DisableDetail');
 Route::get('/contrat/detail/{id}','OMSContratController@DetailSelected');
@@ -91,7 +99,11 @@ Route::view('/layout', 'layout');
 Route::get('/home','AlertController@alert');
 Route::get('/addClient', 'ClientsController@AddCustomerView');
 Route::view('/addcontrat', 'add_contrat');
-Route::post('/contrat/addcontrat','OMSContratController@addContrat');
+
+//Route::post('/contrat/addcontrat','OMSContratController@addContrat');
+Route::post('/contrat/addcontrat','ContractController@addContrat');
+
+
 Route::post("/contrat/addDetail",'OMSContratController@addDetail');
 
 

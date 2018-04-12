@@ -63,7 +63,7 @@ class ContractController extends Controller
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
-                'detail_contract.*', 'detail_contract.id as id_detail',
+                'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
 
@@ -128,31 +128,55 @@ class ContractController extends Controller
 
 
 
+        $id = DB::table('contracts')->
+            where('contracts.id_customer','=',$client)
+            ->select('contracts.id')->pluck('id')->first();
+
+        $gid =  str_pad($id, 4, '0', STR_PAD_LEFT);
+
+
+
+
 
         $contractDate = $this->dateContract($date);
 
         $start_date = $contractDate[0];
         $end_date = $contractDate[1];
 
+        $year = date("Y",strtotime($start_date));
+        $yy = $year[2].$year[3];
+
+        $mm = date("m",strtotime($start_date));
+
+
+
+
+        $nbAnnee = str_pad(
+            DB::table('detail_contract')->where('detail_contract.id_contract','=',$id)->get()->count(),
+                 2,
+        '0' , STR_PAD_LEFT);
+
+        $matricule_detail = "CR".$yy.$mm."-".$nbAnnee."-".$gid;
         $total = $priceAvance + $priceSimple;
 
 
-        $contract = DB::table('detail_contract')->
-             join('contracts','contracts.id','detail_contract.id_contract')
-            ->where('contracts.id_customer','=',$client)
+        $contract = DB::table('detail_contract')
+            ->where('detail_contract.id_contract','=',$id)
             ->where('detail_contract.status','=','1')
             ->update(['nbSimple'=>$nbSimple , 'nbAvance'=>$nbAvance , 'price'=>$total
                 ,'defaultSimple'=>$defaultSimple , 'defaultAvance'=>$defaultAvance
-                ,'start_contract'=>$start_date , 'end_contract'=>$end_date
+                ,'start_contract'=>$start_date , 'end_contract'=>$end_date , 'matricule'=>$matricule_detail
             ])
 
         ;
 
 
-        return response()->json(['dA'=>$start_date,'dS'=>$end_date , 'date'=>$date]);
+        return response()->json(['dA'=>$start_date,'dS'=>$end_date , 'date'=>$date
+            , 'nbAnnee' => $nbAnnee ,'id' => $id
+            ,'matricule'=>$matricule_detail]);
     }
 
-    public function addContract(Request $request)
+    public function addContrat(Request $request)
     {
         $client = $request->input('client');
         $nbSimple = $request->input('nbVehiclesSimple');
@@ -169,22 +193,141 @@ class ContractController extends Controller
         $start_date = $contractDate[0];
         $end_date = $contractDate[1];
 
-        $id = DB::table('contracts')->orderBy('id','desc')->select('contracts.id')->pluck('id')->first('id');
+        $id = DB::table('contracts')->orderBy('id','desc')->select('contracts.id')->pluck('id')->first();
+        if($id == null)
+            $id = 0;
+
+        $id++;
+
 
         $year = date("Y",strtotime($start_date));
         $yy = $year[2].$year[3];
 
-        $month = date("m",strtotime($start_date));
-        $mm = $month[2].$month[3];
+        $mm = date("m",strtotime($start_date));
 
-        $matricule = "CR".$yy.$mm."-"."01".;
+        $gid =  str_pad($id, 4, '0', STR_PAD_LEFT);
+
+
+
+        $total = $priceAvance + $priceSimple;
+
+
+
+        $matricule_detail = "CR".$yy.$mm."-"."01-".$gid;
+        $matricule_contract = "CR".$yy.$mm."-".$gid;
 
         $contract =  \DB::table('contracts')->insert([
             [
-                'matricule' => ,
+                'matricule' =>  $matricule_contract,
+                'id_customer' => $client,
+                'created_at' => $date,
+                'updated_at' => $date,
                 'isActive'          => 1
             ]
         ]);
+
+
+
+
+
+        $contract =  \DB::table('detail_contract')->insert([
+            [
+                'id_contract' =>  $id,
+                'created_at' => $date,
+                'updated_at' => $date,
+                'matricule' =>  $matricule_detail,
+                'urlPdf' => '/pdf/'.$matricule_detail,
+                'nbAvance' => $nbAvance,
+                'nbSimple' => $nbSimple,
+                'defaultAvance' => $defaultAvance,
+                'defaultSimple' => $defaultSimple,
+                'price' => $total,
+                'status' => '1',
+                'start_contract' => $start_date,
+                'end_contract' => $end_date,
+                'isActive'          => 1
+            ]
+        ]);
+
+        return response(strlen($id));
+    }
+
+    public function refresh()
+    {
+        $c = DB::table('detail_contract')
+            ->where('detail_contract.isActive', '=', '1')
+            ->where('detail_contract.status','=','1')
+            ->join('contracts','contracts.id','detail_contract.id_contract')
+            ->join('customers', 'customers.id', '=', 'contracts.id_customer')
+            ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
+            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+                'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
+                DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
+            ->get();
+
+        return view('ContractLines', ['contracts' => $c]);
+    }
+
+    public function searchContrat(Request $request)
+    {
+        $matricule = ($request->input('matricule') == null) ? null : $request->input('matricule');
+        $id_customer = ($request->input('id_customer') == null) ? null : $request->input('id_customer');
+        $debut_contrat = ($request->input('debut_contrat') == null) ? null : $request->input('debut_contrat');
+        $fin_contrat = ($request->input('fin_contrat') == null) ? null : $request->input('fin_contrat');
+        $typeClient = ($request->input('typeClient') == null) ? null : $request->input('typeClient');
+        $critiere = [];
+        $i = 0;
+
+        $contracts = DB::table('detail_contract')->where('detail_contract.isActive', '=', '1')->
+            where('detail_contract.status','=','1');
+
+        if ($matricule != null) {
+            $critiere[$i] = ['detail_contract.matricule', 'like', $matricule];
+            $i++;
+
+        }
+        if ($debut_contrat != null) {
+            $critiere[$i] = ['detail_contract.start_contract', '=', $debut_contrat];
+            $i++;
+
+        }
+        if ($fin_contrat != null) {
+            $critiere[$i] = ['detail_contract.end_contract', '=', $fin_contrat];
+            $i++;
+
+        }
+
+        if ($typeClient != null) {
+            $critiere[$i] = ['customers.id_type_customer', '=', $typeClient];
+            $i++;
+
+        }
+        if ($id_customer != null) {
+            $critiere[$i] = ['customers.id', '=', $id_customer];
+            $i++;
+
+        }
+
+
+        $QueryContracts = $contracts
+            ->join('contracts','contracts.id','detail_contract.id_contract')
+            ->join('customers', 'customers.id', '=', 'contracts.id_customer')
+            ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
+
+            ->where($critiere)
+            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+                'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
+                DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
+            ->get();
+
+
+        return view('ContractLines', ['contracts' => $QueryContracts]);
+    }
+
+    public function DisableContract($id)
+    {
+        $detail_contrat = DB::table('detail_contract')->where('detail_contract.id', $id)->update(['isActive' => 0]);
+
     }
 
 }

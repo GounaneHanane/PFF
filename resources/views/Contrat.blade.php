@@ -113,7 +113,7 @@
                                 <tbody>
                                 @foreach($contracts as $c)
                                     <tr id="Contrat{{ $c->id_contract  }}">
-                                        <td class="text-center" style="width: 9.09%" >{{$c ->id_contract}}</td>
+                                        <td class="text-center" style="width: 9.09%" >{{$c ->detail_matricule}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->end_contract}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$c->name}}</td>

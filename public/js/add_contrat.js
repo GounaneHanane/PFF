@@ -242,7 +242,7 @@ $(document).ready(function() {
         critiere = {};
 
         if (matricule != "" && matricule != null)
-            critiere['id_contract'] = matricule;
+            critiere['matricule'] = matricule;
 
         if (client != "" && client != '0')
             critiere['id_customer'] = client;
