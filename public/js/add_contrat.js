@@ -297,7 +297,7 @@ $(document).ready(function() {
 
 
 
-    $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModifyContract').click(function(){
+    $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
         $.get("/contrat/refresh/",{},function(data,status){
             $('tbody *').remove();
             $('tbody').prepend(data);
@@ -393,6 +393,11 @@ $(document).ready(function() {
             type: 'POST',
 
             success: function (data, status) {
+                document.getElementById('edit_dialog').close();
+                $.get("/contrat/refresh/",{},function(data,status){
+                    $('tbody *').remove();
+                    $('tbody').prepend(data);
+                });
             }
 
         });

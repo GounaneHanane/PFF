@@ -152,7 +152,7 @@
 
 
                                                                 <div class="form-group">
-                                                                    <select id="vehicules" name="vehicules" data-live-search="true" class="selectpicker">
+                                                                    <select id="vehicules" name="vehicules" data-live-search="true" class="form-control selectpicker">
                                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un vehicule</option>
                                                                         @foreach($vehicles as $vehicle)
                                                                             <option value="{{$vehicle->id}}">{{$vehicle->imei}}</option>

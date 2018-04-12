@@ -62,7 +62,7 @@ Route::get("/detail/search/","OMSContratController@searchDetail");
 
 //Route::get('/contrat/update/{id}', 'OMSContratController@update');
 Route::get('/contrat/update/{id}', 'ContractController@update');
-
+Route::get('/alerte/renv/{id_detail}','AlertController@Alert_Detail_Contrat');
 
 
 
@@ -97,7 +97,7 @@ Route::post('/contract','ClientsController@json');
 
 //Route::view('/layout', 'layout');
 Route::get('/layout','AlertController@AlertNotification');
-
+Route::get('/Renouvelement','AlertController@AlertNotification2');
 
 Route::get('/home','AlertController@alert');
 Route::get('/addClient', 'ClientsController@AddCustomerView');

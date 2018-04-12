@@ -119,7 +119,6 @@
                                 else echo "<tr id='Contrat{{ $c->id_contract  }}'>";
                                     ?>
 
-
                                         <td class="text-center" style="width: 9.09%" >{{$c ->detail_matricule}}</td>
 
                                         <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>
@@ -167,7 +166,7 @@
                                                     <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <select id="client" name="client" data-live-search="true" tabindex="-98" class="selectpicker">
+                                                    <select id="client" name="client" data-live-search="true" tabindex="-98" class="form-control selectpicker">
                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un client</option>
                                                         @foreach($clients as $c)
                                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
@@ -205,11 +204,9 @@
                                                         <input type="text"  class="form-control" id="priceVehiclesAdvanced"  placeholder="Prix" >
 
                                                     </div>
-                                                    <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                        <a id="ValidatePriceAdvanced"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                    </div>
+
                                                 </div>
-                                                <div  style="margin-top: 10%;margin-bottom: 11%;">
+                                                <div  style="margin-bottom: 11%;">
 
                                                     <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                     <input type="Text" value="simple" id="Simple" disabled class="form-control">
@@ -228,9 +225,7 @@
                                                         <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >
 
                                                     </div>
-                                                <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                    <a id="ValidatePriceSimple"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                </div>
+
                                         </div>
 
                                                 <center><button class="btn btn-info" type="button" id="AddDetailGamme" >Enregistrer</button></center>
@@ -302,11 +297,9 @@
 
                                                         <input type="text" id="ModifyPriceAdvanced" class="form-control" value="0" placeholder="Prix" >
                                                     </div>
-                                                    <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                        <a id="ModifyValidateAdvancedPrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                    </div>
+
                                                 </div>
-                                                <div  style="margin-top: 10%;margin-bottom: 11%;">
+                                                <div  style="margin-bottom: 11%;">
 
                                                     <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
                                                         <input type="Text" value="Simple" disabled class="form-control">
@@ -322,9 +315,7 @@
 
                                                         <input type="text" id="ModifyPriceSimple" class="form-control" value="0" placeholder="Prix" >
                                                     </div>
-                                                    <div class="form-group" style="    width: 39%; margin-left: 62%;     margin-top: -48px;">
-                                                        <a id="ModifyValidateSimplePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                    </div>
+
                                                 </div>
                                                 <center><button class="btn btn-info" type="button" id="ModfiyContract">Modifier</button></center>
                                                 </form>
