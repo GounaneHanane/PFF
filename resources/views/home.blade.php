@@ -166,6 +166,7 @@
                             </div>
 
                             <center><button class="btn btn-info" type="button" id="AddRenGamme" >Enregistrer</button></center>
+                            <center><button class="btn btn-info" type="button" id="hola" >test</button></center>
                         </form>
                         <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                     </div>

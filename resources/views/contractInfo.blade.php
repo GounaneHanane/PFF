@@ -32,7 +32,7 @@
         crossorigin="anonymous"></script>
 @section('content')
 
-    <div class="body" alt="">
+    <div class="body" alt="{{ $idContrat }}">
 
         <div class="container-fluid">
             <div class="row">
@@ -128,8 +128,8 @@
                                         <td id="Detail{{$details->id}}type" class="text-center" style="width: 9.09%">{{$details -> typeSub}}</td>
                                         <td id="Detail{{$details->id}}price" class="text-center" style="width: 9.09%">{{$details -> price}}</td>
                                         <?php if($details->status==1)
-                                           echo "<td class='text-center' style='width: 9.09%'><a class='btn btn-danger' onclick='disableDetail({{$details->id}})' > <span class='glyphicon glyphicon-trash edit trash '  ></span></a>
-                                            <a class=' btn btn-primary' id='edit_detail' onclick='editDetail({{$details->id}})' ><span class='glyphicon glyphicon-pencil edit edit_pencil '></span></a>
+                                           echo "<td class='text-center' style='width: 9.09%'><a class='btn btn-danger' onclick='disableDetail(".$details->id.")' > <span class='glyphicon glyphicon-trash edit trash '  ></span></a>
+                                            <a class=' btn btn-primary' id='edit_detail' onclick='editDetail(".$details->id.")' ><span class='glyphicon glyphicon-pencil edit edit_pencil '></span></a>
                                         </td>
                                     ";?></tr>
                                 @endforeach
@@ -185,9 +185,9 @@
                                                                 </div>
                                                             </form>
 
-                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles()" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            </form>
 
-                                                                </form>
                                                             <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                         </div>
                                                     </div>

@@ -13,6 +13,8 @@
         });
 
     });
+
+
     $('#AllIn').click(function () {
         var vehicles=$('#OldVehicles option');
         for(var i=0;i<vehicles.length;i++)
@@ -32,6 +34,8 @@
          $( "#NewVehicles option:selected" ).each(function() {
 
              $('#OldVehicles').append("<option>"+$( this ).text()+"</option>");
+
+
              $(this).remove();
          });
      });
@@ -53,10 +57,16 @@
          var defaultAdvanced = $("#defaultAdvanced").val();
 
 
+      /*   $('#NewVehicles option').each(function () {
+
+            $('#NewVehicles option').attr('selected','true');
+
+        });*/
 
 
 
-         $.ajax({
+
+       $.ajax({
              headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
              },
@@ -75,17 +85,18 @@
              },
 
              success: function (data, status) {
-                 console.log(data);
+
                  document.getElementById('add_dialog').close();
-                 var NewVehicles;
+                 var NewVehicles=[];
          $('#NewVehicles option').each(function(){
-             NewVehicles=$('#NewVehicles').attr('selected','true').val();
+             NewVehicles.push($(this).val());
+
          });
 
          var id_detail=$('#id_detail').val();
 
 
-               //console.log(NewVehicles[i].text);
+
 
 
                      $.ajax({
@@ -101,8 +112,7 @@
 
                         ,
                         success: function (data, status) {
-                                 console.log(NewVehicles.length);
-                            console.log(data);
+
 
                  }});
               //   }

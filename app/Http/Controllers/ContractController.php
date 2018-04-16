@@ -356,7 +356,7 @@ class ContractController extends Controller
 
     public function DisableContract($id)
     {
-        $detail_contrat = DB::table('detail_contract')->where('contracts.id', $id)->update(['isActive' => 0]);
+        $detail_contrat = DB::table('detail_contract')->where('detail_contract.id', $id)->update(['isActive' => 0]);
 
     }
     public function refreshDetail($idContract)

@@ -101,7 +101,9 @@ class ContratController extends Controller
         join('detail_contract','detail_contract.id','info_detail_contract.id_detail')->
         join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')->
         join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')->
+
         select('vehicles.*','vehicles.id as idVehicle','id_detail','types_subscribes.id as idtypeSub','types_subscribes.type as typeSub','info_detail_contract.*','detail_contract.status as status')->get();
+
       ;
       $type=DB::table('types_subscribes')->
     select('types_subscribes.*')->get();
@@ -117,8 +119,10 @@ class ContratController extends Controller
             select('customers.name','detail_contract.*')->get();
         $nb=DB::table('alerte')
             ->select(DB::raw('count(*) as nb'))->get();
+       return view('contractInfo',['details'=>$details,  "types_subscribes"=>$types_subscribes ,"contract"=>$contract,'types'=>$type  ,"nb"=>$nb,'vehicles'=>$vehicle,'cli'=>$client ,"idContrat"=>$idContrat]);
 
-       return view('contractInfo',['details'=>$details,  "types_subscribes"=>$types_subscribes ,"contract"=>$contract,'types'=>$type  ,"nb"=>$nb,'vehicles'=>$vehicle,'cli'=>$client]);
+
+        return response()->json($details);
 
 
     }
@@ -181,12 +185,10 @@ class ContratController extends Controller
             ->select(DB::raw($PriceContract."*timestampdiff(month,'".$AddingDate."',end_contract)/timestampdiff(month,start_Contract,end_contract) as thirdPrice"))
             ->pluck('thirdPrice')->first();
         $AddingDate = explode('-', $AddingDate);
-
         if($end_contract!=$AddingDate[2])
         {
             $price+=($PriceContract/12)*(1/2);
         }
-
         return response($price);
     }
     public function getPriceEdit(Request $request)
@@ -466,8 +468,10 @@ class ContratController extends Controller
         $contractDate = $this->dateContract($date);
         $start_datee = $contractDate[0];
         $vehicles=$request->input('NewVehicles');
+
         foreach($vehicles as $v)
         {
+           
             $idVehicle=DB::table('vehicles')->where('imei','=',$v)->select('vehicles.id')->pluck('id')->first();
             $idTypeCustomerSubscribe=DB::table('info_detail_contract')->where('id_detail','=',$id)->select('id_type_customer_subscribe')->pluck('id_type_customer_subscribe')->first();
             $price=DB::table('type_customers_subscribes')->where('id','=',$idTypeCustomerSubscribe)->select('price')->pluck('price')->first();
