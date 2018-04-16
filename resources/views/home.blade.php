@@ -6,7 +6,7 @@
     @parent
     <link rel="stylesheet" href="/css/form.css" />
     <script  src="/js/search.js"></script>
-    <script  src="/js/add_contrat.js"></script>
+
     <script src="/js/alert.js"></script>
     <link rel="stylesheet" href="/css/alerte.css"/>
     <script  src="/js/chart.js"></script>
@@ -67,7 +67,7 @@
 
                             <td class="text-center" style="width:12.5%">
                                 <a onclick="renewal({{ $a->id }})">
-                                <span class="btn btn-success glyphicon glyphicon-ok"  onclick="document.getElementById('add_dialog').showModal();"  style=" float: inherit;"></span>
+                                <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;"></span>
                                 </a>
                             </td>
                         </tr>
@@ -91,16 +91,17 @@
                 <div class="panel-body">
                     <div class="form" >
 
-                        <form id="contrat">
-
+                        <form id="contrat" method="POST">
+                            <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
                             <div>
                                 <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                             </div>
                             <div class="form-group" style="    width: 41%;margin-top: 3%">
-                                <select size="10" id="OldVehicles" name="OldVehicles" class="form-control selectpicker">
+                                <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control selectpicker">
                                 </select>
                             </div>
-                            <div class="form-group" style="     margin-left: 43%; margin-top: -37%;">
+                            <div class="form-group" style="     margin-left: 43%; margin-top: -37%;" >
                                <button type="button" class="form-control" id="AllOut" style="width: 17%"><<</button>
                                 <button type="button" class="form-control" id="OneOut" style="width:17%"><</button>
                                 <button type="button" class="form-control" id="OneIn" style="width: 17%">></button>
@@ -108,7 +109,7 @@
                             </div>
 
                             <div class="form-group" style="    width: 37%;margin-left: 57%;margin-top: -33%;">
-                                <select size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control selectpicker">
+                                <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control selectpicker">
                                 </select>
                             </div>
 
@@ -118,7 +119,7 @@
                         </form>
 
                         <form id="vehicles" method="POST">
-                            <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
+
                             <div >
 
                                 <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
@@ -133,11 +134,11 @@
 
                                 <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                    <input type="text" id="defaultAdvanced"  class="form-control"  placeholder="Defaut" >
+                                    <input type="text" id="defaultAdvanced"  name="defaultAdvanced" class="form-control"  placeholder="Defaut" >
 
                                 </div>
                                 <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                    <input type="text"  class="form-control" id="priceVehiclesAdvanced"  placeholder="Prix" >
+                                    <input type="text"  class="form-control" id="priceVehiclesAdvanced" name="priceVehiclesAdvanced"  placeholder="Prix" >
 
                                 </div>
 
@@ -164,7 +165,7 @@
 
                             </div>
 
-                            <center><button class="btn btn-info" type="button" id="AddDetailGamme" >Enregistrer</button></center>
+                            <center><button class="btn btn-info" type="button" id="AddRenGamme" >Enregistrer</button></center>
                         </form>
                         <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                     </div>

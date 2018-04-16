@@ -11,8 +11,9 @@ $(document).ready(function(){
         limit: 2,
         initialPage: 2
     });*/
-    $('#addVehicleBtn2').click(function(){
+/*    $('#addVehicleBtn2').click(function(){
 
+        $get('/contrat/detail/verifyType/')
         var imei = $("#vehicules").val();
         var typeSubscribe=$("#types").val();
         var price=$("#priceVehicles").val();
@@ -53,7 +54,7 @@ $(document).ready(function(){
 
                 document.getElementById('add_dialog').close();
                 var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
-console.log(data.dated);
+                console.log(data.dated);
                 for(var j = 0;j<inputs.length;j++)
                 {
 
@@ -106,7 +107,7 @@ console.log(data.dated);
 
 
 
-    });
+    });*/
 
 
 
@@ -209,6 +210,111 @@ function disableContract(id)
         $("#Contrat"+id).remove();
     });
 
+}
+function AddVeihcles(idDetail) {
+    var idType=$('#types').val();
+    $.get("/contrat/detail/verifyType/"+idDetail+"/"+idType,{},function (data,status) {
+        if(data==0)
+        {
+            alert("Merci de changer le type");
+        }
+        else {
+
+
+            var imei = $("#vehicules").val();
+            var typeSubscribe=$("#types").val();
+            var price=$("#priceVehicles").val();
+            var date=$('#AddingDate').val();
+            var  inputs = [ 'vehicles','types','priceVehicles','addingDate'];
+            for(var j = 0;j<inputs.length;j++)
+            {
+
+
+                if ($('#Err' + inputs[j]).length) {
+
+
+                    $('#Err' + inputs[j]).remove();
+
+                }
+
+
+
+
+
+            }
+
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: 'http://127.0.0.1:8000/contract/addVehicule/',
+                type: 'POST',
+                data: {
+                    vehicules: imei,
+                    types: typeSubscribe,
+                    priceVehicles: price,
+                    AddingDate:date,
+                    _token : $('#VehicleToken').attr('value')
+                },
+                success: function (data, status) {
+
+                    document.getElementById('add_dialog').close();
+                    var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
+                    console.log(data.dated);
+                    for(var j = 0;j<inputs.length;j++)
+                    {
+
+
+                        if ($('#Err' + inputs[j]).length) {
+
+
+                            $('#Err' + inputs[j]).remove();
+
+                        }
+
+
+
+
+
+                    }
+
+
+                },
+                error: function (jqXhr) {
+                    if (jqXhr.status === 422) {
+                        var errors = jqXhr.responseJSON;
+
+                        console.log(errors);
+
+                        var l = 0;
+                        $.each(errors.message, function (key, value) {
+                            // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                            if ($('#Err' + key).length) {
+                                //$('#Err' + key).html(value);
+
+                                $('#Err' + key).text(value);
+                            }
+                            else {
+                                $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+                                l++;
+
+                            }
+                        });
+
+
+                        // $( '#form-errors' ).html( errorsHtml );
+
+                    }
+                }
+
+            })
+
+
+
+        }
+    })
 }
 function disableDetail(idDet,idCon)
 {

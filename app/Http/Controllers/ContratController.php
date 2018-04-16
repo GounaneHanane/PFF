@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\detail_contract;
+use App\Models\detail_contract;
 use App\info_detail_contract;
 use App\Models\TypesSubscribe;
 use App\Models\Vehicle;
@@ -17,6 +17,42 @@ use Validator;
 use Illuminate\Support\Facades\DB;
 class ContratController extends Controller
 {
+    public function dateContract($dateC)
+    {
+
+        if ($dateC)
+            $date_start_contract = $dateC;
+        else
+            $date_start_contract = date("Y-m-d");
+
+
+        $date = explode('-', $date_start_contract);
+
+        if ($date[2] > 1 and $date[2] < 15) {
+            $date[2] = '15';
+        }
+        if ($date[2] > 15) {
+            $time = strtotime($date_start_contract);
+            $date = date("Y-m-d", strtotime("+1 month", $time));
+            $date = explode('-', $date);
+            $date[2] = '1';
+
+
+        }
+
+        $date = implode('-', $date);
+
+        $date_start_contract = $date;
+
+        $time = strtotime($date_start_contract);
+        $date_end_contract = date("Y-m-d", strtotime("+1 year", $time));
+
+        $contratDated = array();
+        $contratDated[0] = $date_start_contract;
+        $contratDated[1] = $date_end_contract;
+        return $contratDated;
+
+    }
 
    public function AddingInfo($nameCustomer)
    {
@@ -47,9 +83,8 @@ class ContratController extends Controller
        $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
 
 
-      $contract = DB::table('contracts')->where('status','=','1')->
-          join('detail_contract','detail_contract.id_contract','contracts.id')->
-             select("contracts.*",DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","contracts.id as idContract")
+      $contract = DB::table('detail_contract')->where('status','=','1')->
+             select(DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","detail_contract.id_contract as idContract")
                  ->where('detail_contract.id','=',$idContrat)
                  ->first();
 
@@ -57,7 +92,7 @@ class ContratController extends Controller
 
 
 
-        $details = DB::table('info_detail_contract')->where([['id_contract','=',$idContrat],['info_detail_contract.isactive','=','1'],['detail_contract.status','=','1']])->
+        $details = DB::table('info_detail_contract')->where([['id_detail','=',$idContrat],['info_detail_contract.isactive','=','1'],['detail_contract.status','=','1']])->
         join('vehicles','vehicles.id','info_detail_contract.id_vehicle')->
         join('detail_contract','detail_contract.id','info_detail_contract.id_detail')->
         join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')->
@@ -66,12 +101,12 @@ class ContratController extends Controller
       ;
       $type=DB::table('types_subscribes')->
     select('types_subscribes.*')->get();
-        $vehicle=DB::table('vehicles')->where([['vehicles.isActive','=','1'],['contracts.id','=',$idContrat]])->
+        $vehicle=DB::table('vehicles')->where([['vehicles.isActive','=','1'],['detail_contract.id','=',$idContrat]])->
         join('customers','customers.id','vehicles.customer_id')->
         join('contracts','customers.id','contracts.id_customer')->
-
+        join('detail_contract','detail_contract.id_contract','contracts.id')->
         select('vehicles.*')->get();
-        $client=DB::table('contracts')->where([['contracts.id','=',$idContrat],['contracts.isactive','=','1'],['status','=','1']])->
+        $client=DB::table('contracts')->where([['detail_contract.id','=',$idContrat],['contracts.isactive','=','1'],['status','=','1']])->
             join('customers','customers.id','contracts.id_customer')->
         join('detail_contract','detail_contract.id_contract','contracts.id')->
             select('customers.name','detail_contract.*')->get();
@@ -123,20 +158,20 @@ class ContratController extends Controller
 
         $AddingDate=$date;
 
-        $idDetailContract = DB::table('vehicles')->where('vehicles.id', '=',$request->input('vehicules') )->
+        $idDetailContract = DB::table('vehicles')->where('vehicles.id', '=',$request->input('vehicules') )->where('detail_contract.status',"=",'1')->
         join('customers', 'customers.id', 'vehicles.customer_id')->
         join('contracts','contracts.id_customer','customers.id')->
         join('detail_contract','detail_contract.id_contract','contracts.id')->
         select('detail_contract.id')->pluck('id')->first();
         if($request->input('types')==1)
-            $PriceContract = DB::table('detail_contract')->where('id', '=', $idDetailContract)
+            $PriceContract = DB::table('detail_contract')->where('id', '=', $idDetailContract)->where('status','=','1')
                 ->select('defaultSimple')->pluck("defaultSimple")->first();
         else
-            $PriceContract = DB::table('detail_contract')->where('id', '=', $idDetailContract)
+            $PriceContract = DB::table('detail_contract')->where('id', '=', $idDetailContract)->where('status','=','1')
                 ->select('defaultAvance')->pluck("defaultAvance")->first();
-        $end_contract=DB::table('detail_contract')->where('id','=',$idDetailContract)
+        $end_contract=DB::table('detail_contract')->where('id','=',$idDetailContract)->where('status','=','1')
             ->select(DB::raw('day(end_contract) as date'))->pluck('date')->first();
-        $price=DB::table('detail_contract')->where('id','=',$idDetailContract)
+        $price=DB::table('detail_contract')->where('id','=',$idDetailContract)->where('status','=','1')
             ->select(DB::raw($PriceContract."*timestampdiff(month,'".$AddingDate."',end_contract)/timestampdiff(month,start_Contract,end_contract) as thirdPrice"))
             ->pluck('thirdPrice')->first();
         $AddingDate = explode('-', $AddingDate);
@@ -175,7 +210,7 @@ class ContratController extends Controller
         $AddingDate=$date;
 
 
-        $idDetailContract = DB::table('vehicles')->where('vehicles.imei', '=',$request->input('imeiId') )->
+        $idDetailContract = DB::table('vehicles')->where('vehicles.imei', '=',$request->input('imeiId') )->where('detail_contract.status','=','1')->
         join('customers', 'customers.id', 'vehicles.customer_id')->
         join('contracts','contracts.id_customer','customers.id')->
         join('detail_contract','detail_contract.id_contract','contracts.id')->
@@ -253,7 +288,7 @@ class ContratController extends Controller
 
        $messages = [
            'required' => strtoupper(':attribute') .' est obligatoire',
-           'unique' => strtoupper(':attribute').' est déja existe'
+
        ];
 
 
@@ -262,7 +297,7 @@ class ContratController extends Controller
 
 
        $validator = Validator::make($request->all(), [
-           'vehicules' => 'required|unique:info_detail_contract,id_vehicle',
+           'vehicules' => 'required:info_detail_contract,id_vehicle',
            'types' => 'required',
            'priceVehicles'=>'required',
 
@@ -360,70 +395,88 @@ class ContratController extends Controller
        return response()->json(["detail"=>$detail]);
    }
 
-   public function renewal($id)
+   public function renewal(Request $request)
    {
+        $id=$request->input('id_detail');
+        $detail= DB::table('detail_contract')->where('detail_contract.id','=',$id)->select('detail_contract.*')->first();
+       $id_contract= DB::table('detail_contract')->where('detail_contract.id','=',$id)->select('detail_contract.id_contract')->pluck('id_contract')->first();
+      $start_date= DB::table('detail_contract')->where('id', '<=' ,DB::raw('All (select id from detail_contract where id_contract = '.$id_contract.")"))
+           ->select('start_contract')->pluck('start_contract')->first();
+       $last_id = DB::table('detail_contract')->orderBy('id','desc')->select('detail_contract.id')->pluck('id')->first();
+       if($last_id == null)
+           $last_id = 0;
 
-       $contract = DB::table('contracts')->where('contracts.id','=',$id)->select('contracts.*')->first();
-       $id = DB::table('contracts')->orderBy('id','desc')->select('contracts.id')->pluck('id')->first();
-       if($id == null)
-           $id = 0;
-
-       $id++;
-
+       $last_id++;
+        $count=DB::table('detail_contract')->where('id_contract','=',$id_contract)
+           ->count();
 
        $year = date("Y",strtotime($start_date));
        $yy = $year[2].$year[3];
 
        $mm = date("m",strtotime($start_date));
 
-       $gid =  str_pad($id, 4, '0', STR_PAD_LEFT);
+       $gid =  str_pad($last_id, 4, '0', STR_PAD_LEFT);
+     //   $count=str_pad($count,2,0,STR_PAD_LEFT);
 
 
+       $total = $request->input('defaultAdvanced')* $request->input('nbVehiclesAdvanced') +$request->input('nbVehiclesSimple')*$request->input('defaultSimple') ;
 
-       $total = $priceAvance + $priceSimple;
+       $date = $request->input("dated");
+
+       $contractDate = $this->dateContract($date);
+
+      $start_datee = $contractDate[0];
+       $end_date = $contractDate[1];
+
+       $matricule_detail = "CR".$yy.$mm."-".($count+1)."-".$gid;
+       $detail_contrat=new detail_contract();
+         $detail_contrat->id_contract=$id_contract;
+        $detail_contrat->start_contract=$start_datee;
+        $detail_contrat->end_contract=$end_date;
+        $detail_contrat->urlPdf='/pdf/'.$matricule_detail;
+        $detail_contrat->matricule=$matricule_detail;
+       $detail_contrat->nbAvance=$request->input('nbVehiclesAdvanced');
+       $detail_contrat->nbSimple=$request->input('nbVehiclesSimple');
+       $detail_contrat->defaultAvance=$request->input('defaultAdvanced');
+       $detail_contrat->price=$total;
+       $detail_contrat->status=1;
+       $detail_contrat->isActive=1;
+       $detail_contrat->defaultSimple=$request->input('defaultSimple');
+       $detail_contrat->save();
+      DB::table('detail_contract')->where('id','=',$id)->update(['status'=>0]);
 
 
-
-       $matricule_detail = "CR".$yy.$mm."-"."01-".$gid;
-        $detail_contrat=new detail_contract();
-       $contract =  \DB::table('detail_contract')->insert([
-           [
-               'id_contract' =>  $id,
-               'created_at' => $date,
-               'updated_at' => $date,
-               'matricule' =>  $matricule_detail,
-               'urlPdf' => '/pdf/'.$matricule_detail,
-               'nbAvance' => $nbAvance,
-               'nbSimple' => $nbSimple,
-               'defaultAvance' => $defaultAvance,
-               'defaultSimple' => $defaultSimple,
-               'price' => $total,
-               'status' => '1',
-               'start_contract' => $start_date,
-               'end_contract' => $end_date,
-               'isActive'          => 1
-           ]
-       ]);
-
-       $detail_contrat->
-          $a  =  \DB::table('renewal')->insert([
-           [
-               'id_contract'      => $contract->id,
-               'urlContract'             => "",
-               'start_renewal' => $contract->start_contract,
-               'end_renewal'      => $contract->end_contract,
-               'nbAvance'             => $contract->nbAvance,
-               'nbSimple'             => $contract->nbSimple,
-               'priceAvance'             => $contract->priceAvance,
-               'priceSimple'             => $contract->priceSimple,
-               'price' => $contract->price,
-               'defaultSimple' => $contract->defaultSimple,
-               'defaultAvance' => $contract->defaultAvance,
-               'isActive'          => 1
-           ]
-       ]);
-
-       return response()->json($contract);
+       return response()->json($id_contract);
+      //return response($id_contract);
    }
+    public function vehicleRenewal(Request $request)
+    {
+        $id=$request->input('id_detail');
+        $contract_id=DB::table('detail_contract')->where('id','=',$id)->select('id_contract')->pluck('id_contract')->first();
+        $new_id=DB::table('detail_contract')->where('id_contract','=',$contract_id)->where('status','=','1')->select('id')->pluck('id')->first();
+        $date = $request->input("dated");
+        $contractDate = $this->dateContract($date);
+        $start_datee = $contractDate[0];
+        $vehicles=$request->input('NewVehicles');
+        foreach($vehicles as $v)
+        {
+            $idVehicle=DB::table('vehicles')->where('imei','=',$v)->select('vehicles.id')->pluck('id')->first();
+            $idTypeCustomerSubscribe=DB::table('info_detail_contract')->where('id_detail','=',$id)->select('id_type_customer_subscribe')->pluck('id_type_customer_subscribe')->first();
+            $price=DB::table('type_customers_subscribes')->where('id','=',$idTypeCustomerSubscribe)->select('price')->pluck('price')->first();
+            $info_detail_contract = new info_detail_contract();
+            $info_detail_contract->id_detail = $new_id;
+            $info_detail_contract->id_vehicle = $idVehicle;
+            $info_detail_contract->id_type_customer_subscribe = $idTypeCustomerSubscribe ;
+            $info_detail_contract->price = $price;
+            $info_detail_contract->offer = 0;
+            $info_detail_contract->AddingDate=$start_datee;
+            $info_detail_contract->save();
+
+        }
+
+
+        return response()->json($info_detail_contract);
+        //return response($id_contract);
+    }
 
 }

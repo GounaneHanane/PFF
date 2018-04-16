@@ -141,7 +141,7 @@ class OMSContratController extends Controller
     public function DisableDetail($id)
     {
 
-        $detail = DB::table('details')->where('details.id', $id)->update(['isActive' => 0]);
+        $detail = DB::table('info_detail_contract')->where('info_detail_contract.id', $id)->update(['isActive' => 0]);
 
     }
 

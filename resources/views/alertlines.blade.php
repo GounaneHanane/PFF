@@ -7,6 +7,6 @@
         <td class="text-center" style="width:12.5%">{{$a->end_contract}}</td>
         <td class="text-center" style="width:12.5%">{{$a->price}}</td>
         <td class="text-center" style="width:12.5%">{{$a->park}}</td>
-        <td class="text-center" style="width:12.5%"><span class="btn btn-success glyphicon glyphicon-ok"    style=" float: inherit;"></span></td>
+        <td class="text-center" style="width:12.5%"><a onclick="renewal({{ $a->id }})"><span class="btn btn-success glyphicon glyphicon-ok"    style=" float: inherit;"></span></a></td>
     </tr>
 @endforeach

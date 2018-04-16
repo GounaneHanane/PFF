@@ -50,7 +50,7 @@ Route::view('/dashboard', 'Dashboard');
 //Route::view('/contrat', 'Contrat');
 //Route::get('/contrat/', 'OMSContratController@contrat');
 Route::get('/contrat/', 'ContractController@contrat');
-
+Route::get('/contrat/detail/verifyType/{idDetail}/{idType}','ContractController@verifyType');
 
 
 
@@ -63,7 +63,7 @@ Route::get("/detail/search/","OMSContratController@searchDetail");
 //Route::get('/contrat/update/{id}', 'OMSContratController@update');
 Route::get('/contrat/update/{id}', 'ContractController@update');
 Route::get('/alerte/renv/{id_detail}','AlertController@Alert_Detail_Contrat');
-
+Route::post('/renewal/vehicles','ContratController@vehicleRenewal');
 
 
 //Route::get('/contrat/delete/{id}','OMSContratController@DisableContract');
@@ -85,7 +85,7 @@ Route::post("/contrat//detail/price/calcul","ContratController@getPrice");
 Route::post("/contrat//detail/price/calculEdit","ContratController@getPriceEdit");
 
 
-Route::get('/renewal/{id}','ContratController@renewal');
+Route::post('/renewal/','ContratController@renewal');
 
 
 Route::get("/contrat/price/{idClient}/",'OMSContratController@getPrice');

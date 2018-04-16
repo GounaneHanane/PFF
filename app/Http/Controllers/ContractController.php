@@ -15,7 +15,7 @@ use Validator;
 use Illuminate\Support\Facades\DB;
 class ContractController extends Controller
 {
-    private function dateContract($dateC)
+    public function dateContract($dateC)
     {
 
         if ($dateC)
@@ -52,7 +52,28 @@ class ContractController extends Controller
 
     }
 
+    public  function verifyType($idDetail,$idType)
+    {
 
+        $count=DB::table('info_detail_contract')
+            ->where('info_detail_contract.id_detail','=',$idDetail)
+            ->where('info_detail_contract.isActive','=','1')
+            ->where('id_type_subscribe','=',$idType)
+
+            ->join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')
+            ->count();
+        if($idType==1)
+            $nbVehicle=DB::table('detail_contract')->where('id','=',$idDetail)->where('status','=','1')
+             -> select( DB::raw(' ifnull(detail_contract.nbSimple,0) as nbVehicles'))->pluck('nbVehicles')->first();
+        if($idType==2)
+            $nbVehicle=DB::table('detail_contract')->where('id','=',$idDetail)->where('status','=','1')
+                -> select( DB::raw(' ifnull(detail_contract.nbAvance,0) as nbVehicles'))->pluck('nbVehicles')->first();
+        if($count<$nbVehicle)
+            return response(1);
+        else if ($count==$nbVehicle)
+            return response(0);
+
+    }
     public function contrat()
     {
 
@@ -64,14 +85,13 @@ class ContractController extends Controller
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
 
             ->join('contract_warning','contract_warning.id','detail_contract.id')
-            ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
+            ->select('contracts.*','detail_contract.id as id_detail', 'customers.*', 'contracts.id as idContract', 'types_customers.type as type_customer',
 
                 'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
                 'contract_warning.count as count',
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
-        $nb=DB::table('alerte')
-            ->select(DB::raw('count(*) as nb'))->get();
+
 
         $hasContrat = DB::table('customers')
             ->whereIn('customers.id',function($q){
@@ -227,21 +247,21 @@ class ContractController extends Controller
             [
                 'matricule' =>  $matricule_contract,
                 'id_customer' => $client,
-                'created_at' => $date,
-                'updated_at' => $date,
+                'created_at' => date("Y-m-d"),
+                'updated_at' => date("Y-m-d"),
                 'isActive'          => 1
             ]
         ]);
 
-
+        $id_contract=DB::table('contracts')->where('matricule','=',$matricule_contract)->select('id')->pluck('id')->first();
 
 
 
         $contract =  \DB::table('detail_contract')->insert([
             [
-                'id_contract' =>  $id,
-                'created_at' => $date,
-                'updated_at' => $date,
+                'id_contract' =>  $id_contract,
+                'created_at' => date("Y-m-d"),
+                'updated_at' => date("Y-m-d"),
                 'matricule' =>  $matricule_detail,
                 'urlPdf' => '/pdf/'.$matricule_detail,
                 'nbAvance' => $nbAvance,

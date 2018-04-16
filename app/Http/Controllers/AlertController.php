@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\detail_contract;
 use App\Models\TypesCustomersSubscribe;
 use App\Rules\home;
 use Illuminate\Http\Request;
@@ -37,12 +38,27 @@ class AlertController extends Controller
     {
         $info=DB::table('detail_contract')->where('detail_contract.id','=',$id_detail)
             ->join('info_detail_contract','info_detail_contract.id_detail','detail_contract.id')
-            ->select('detail_contract.*')->first();
+            ->join('contracts','detail_contract.id_contract','contracts.id')
+            ->join('customers','customers.id','contracts.id_customer')
+            ->join('type_customers_subscribes','type_customers_subscribes.id_type_customer','customers.id_type_customer')
+            ->select('detail_contract.*','customers.*')->first();
+        $SimplePrice=DB::table('detail_contract')->where('detail_contract.id','=',$id_detail)->where('type_customers_subscribes.id_type_subscribe','=','1')
+            ->join('info_detail_contract','info_detail_contract.id_detail','detail_contract.id')
+            ->join('contracts','detail_contract.id_contract','contracts.id')
+            ->join('customers','customers.id','contracts.id_customer')
+            ->join('type_customers_subscribes','type_customers_subscribes.id_type_customer','customers.id_type_customer')
+            ->select('type_customers_subscribes.price')->first();
+        $AdvancedPrice=DB::table('detail_contract')->where('detail_contract.id','=',$id_detail)->where('type_customers_subscribes.id_type_subscribe','=','2')
+            ->join('info_detail_contract','info_detail_contract.id_detail','detail_contract.id')
+            ->join('contracts','detail_contract.id_contract','contracts.id')
+            ->join('customers','customers.id','contracts.id_customer')
+            ->join('type_customers_subscribes','type_customers_subscribes.id_type_customer','customers.id_type_customer')
+            ->select('type_customers_subscribes.price')->first();
         $vehicles=DB::table('detail_contract')->where('detail_contract.id','=',$id_detail)
             ->join('info_detail_contract','info_detail_contract.id_detail','detail_contract.id')
             ->join('vehicles','vehicles.id','info_detail_contract.id_vehicle')
             ->select('vehicles.imei')->get();
-        return response()->json(["info"=>$info,"vehicles"=>$vehicles]);
+        return response()->json(["info"=>$info,"vehicles"=>$vehicles,"simplePrice"=>$SimplePrice,"advancedPrice"=>$AdvancedPrice]);
     }
 
 }

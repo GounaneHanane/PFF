@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="/css/mobile.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+        <script  src="/js/add_contrat.js"></script>
 
 
 
@@ -75,7 +75,7 @@
                             </a>
                             <ul class="nav submenu" STYLE="display: none">
                         <li><a href="/contrat">Contrats </a> </li>
-                        <li><a href="//Renouvelement">Renouvelements<span id="carte_link"></span></a> </li>
+                        <li><a href="/Renouvelement">Renouvelements<span id="carte_link"></span></a> </li>
                         <li><a href="/home">Alertes <span id="carte_link"></span></a> </li>
 
                             </ul>

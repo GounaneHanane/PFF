@@ -20,49 +20,14 @@ class OMSAlertsController extends Controller
     public function alert($amount)
     {
 
-        $today = date("Y-m-d");
 
-        $week = date("Y-m-d", strtotime("+7 day", strtotime($today)));
-        $twoweeks = date("Y-m-d", strtotime("+15 day", strtotime($today)));
-        $month = date("Y-m-d", strtotime("+1 month", strtotime($today)));
-        $threemonths = date("Y-m-d", strtotime("+3 month", strtotime($today)));
-
-
-       $contract = DB::table('contracts')
+      $a= DB::table('contracts')->where(DB::raw('to_days(detail_contract.end_contract) - to_days(curdate())'),'<',$amount)->where('detail_contract.status','=','1')
            ->join('detail_contract','detail_contract.id_contract','contracts.id')
            ->join('customers','customers.id','contracts.id_customer')
-           ->select('contracts.*',DB::raw('(detail_contract.nbAvance + detail_contract.nbSimple) as park'),'customers.*')->get()
-           ;
+           ->select('detail_contract.*',DB::raw('(detail_contract.nbAvance + detail_contract.nbSimple) as park'),'customers.*')->get();
 
-
-
-        $data = null;
-
-        switch($amount)
-        {
-            case 7:
-                $data = $contract->whereBetween(DB::raw("datediff('".$week."',end_contract)"), array(1,7))->get();
-                break;
-
-            case 15:
-                $data = $contract->whereBetween(DB::raw("datediff('".$twoweeks."',end_contract)"),array(1,15))
-                    ->get();
-                break;
-
-            case 30:
-                $data = $contract->whereBetween(DB::raw("datediff('".$month."',end_contract) "), array(1,31))
-                ->get();
-                break;
-            case 90:
-                $data = $contract->whereBetween(DB::raw("datediff('".$threemonths."',end_contract) "), array(1,90))
-                ->get();
-                  break;
-        }
-
-
-      // return response()->json($data);
-     //   return response($twoweeks);
-        return view('alertlines',['alert'=>$data]);
+       return view('alertlines',['alert'=>$a]);
+      //  return response($a);
 
     }
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class detail_contract extends Model
+class detail_contract extends Eloquent
 {
+    public $table='detail_contract';
     protected $casts = [
-        'id_contract' => 'int',
-        'id' => 'varchar'
+        'id_contract' => 'int'
     ];
 
     protected $dates = [
@@ -16,21 +16,27 @@ class detail_contract extends Model
         'end_contract'
     ];
     protected $fillable = [
-        'id',
         'id_contract',
         'start_contract',
         'end_contract',
-        'urlContract',
-        'isActive'
+        'urlPdf',
+        'isActive',
+        'matricule',
+        'nbAvance',
+        'nbSimple' ,
+        'defaultAvance',
+        'defaultSimple',
+        'price',
+        'status'
     ];
 
     public function contract()
     {
-        return $this->belongsTo(\App\Models\Customer::class, 'id_contract');
+        return $this->belongsTo(\App\Models\Contract::class, 'id_contract');
     }
 
-    public function detail()
+    public function info_detail_contract()
     {
-        return $this->hasMany(\App\Models\Detail::class, 'id_detail');
+        return $this->hasMany(\App\Models\info_detail_contract::class, 'id_detail');
     }
 }

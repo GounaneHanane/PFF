@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/form.css" />
     <script  src="/js/delete.js"></script>
     <script  src="/js/abonnement.js"></script>
-    <script  src="/js/add_contrat.js"></script>
+
     <script src="/js/detail.js"></script>
     <script  src="/js/select.js"></script>
 
@@ -31,7 +31,7 @@
         integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
 @section('content')
-    <div class="body" alt="{{ $contract->idContract }}">
+    <div class="body" alt="">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -180,7 +180,7 @@
                                                                     <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                                 </div>
                                                             </form>
-                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{$details->id_detail}})" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
                                                             </form>
                                                             <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                         </div>
