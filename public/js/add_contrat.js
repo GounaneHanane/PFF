@@ -211,8 +211,10 @@ function disableContract(id)
     });
 
 }
-function AddVeihcles(idDetail) {
+function AddVeihcles() {
     var idType=$('#types').val();
+    var idDetail=$('#line').innerHTML;
+    alert(idDetail);
     $.get("/contrat/detail/verifyType/"+idDetail+"/"+idType,{},function (data,status) {
         if(data==0)
         {

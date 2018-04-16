@@ -92,7 +92,6 @@ class ContractController extends Controller
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
 
-
         $hasContrat = DB::table('customers')
             ->whereIn('customers.id',function($q){
                 $q->select('contracts.id_customer')->from('contracts');
