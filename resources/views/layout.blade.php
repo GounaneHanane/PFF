@@ -75,23 +75,12 @@
                             </a>
                             <ul class="nav submenu" STYLE="display: none">
                         <li><a href="/contrat">Contrats </a> </li>
-                        <li><a href="/renouv">Renouvelements<span id="carte_link"></span></a> </li>
+                        <li><a href="/Renouvelement">Renouvelements<span id="carte_link"></span></a> </li>
                         <li><a href="/home">Alertes <span id="carte_link"></span></a> </li>
 
                             </ul>
                         </li>
-                        <li>
-                            <a class="submenu-toggle">
-                                <i class="glyphicon glyphicon-barcode"></i>
-                                <span>STOCKS</span>
-                            </a>
-                            <ul class="nav submenu" id="menu" style="display: none;">
-                                <li><a href="http://oms.opentech.codes/product/box">Boîtiers </a> </li>
-                                <li><a href="http://oms.opentech.codes/product/card">Cartes Sim <span id="carte_link"></span></a> </li>
-                                <li><a href="http://oms.opentech.codes/product/affectation/1/">Stocks Personnels <span id="carte_link"></span></a> </li>
 
-                            </ul>
-                        </li>
                     </ul>
                 </div>
             </div>

@@ -67,7 +67,7 @@
 
                             <td class="text-center" style="width:12.5%">
                                 <a onclick="renewal({{ $a->id }})">
-                                <span class="btn btn-success glyphicon glyphicon-ok"    style=" float: inherit;"></span>
+                                <span class="btn btn-success glyphicon glyphicon-ok"  onclick="document.getElementById('add_dialog').showModal();"  style=" float: inherit;"></span>
                                 </a>
                             </td>
                         </tr>
@@ -78,9 +78,106 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript">
-    </script>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script src="path/to/chartjs/dist/Chart.js"></script>
+    <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
+
+        <div class="container-fluid body">
+            <div class="panel">
+                <div id="add_title">
+                    <h4>Ajouter un Contrat</h4>
+                </div>
+
+
+
+                <div class="panel-body">
+                    <div class="form" >
+
+                        <form id="contrat">
+
+                            <div>
+                                <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
+                            </div>
+                            <div class="form-group" style="    width: 41%;margin-top: 3%">
+                                <select size="10" id="OldVehicles" name="OldVehicles" class="form-control selectpicker">
+                                </select>
+                            </div>
+                            <div class="form-group" style="     margin-left: 43%; margin-top: -37%;">
+                               <button type="button" class="form-control" id="AllOut" style="width: 17%"><<</button>
+                                <button type="button" class="form-control" id="OneOut" style="width:17%"><</button>
+                                <button type="button" class="form-control" id="OneIn" style="width: 17%">></button>
+                                <button type="button" class="form-control" href="#" id="AllIn" style="width: 17%">>></button>
+                            </div>
+
+                            <div class="form-group" style="    width: 37%;margin-left: 57%;margin-top: -33%;">
+                                <select size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control selectpicker">
+                                </select>
+                            </div>
+
+                            <span >Nombre de Vehicules :</span>
+                            <span id="NbVehicles" alt=""></span>
+
+                        </form>
+
+                        <form id="vehicles" method="POST">
+                            <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
+                            <div >
+
+                                <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
+                                    <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
+                                </div>
+
+                                <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                    <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
+
+
+                                </div>
+
+                                <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
+
+                                    <input type="text" id="defaultAdvanced"  class="form-control"  placeholder="Defaut" >
+
+                                </div>
+                                <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                    <input type="text"  class="form-control" id="priceVehiclesAdvanced"  placeholder="Prix" >
+
+                                </div>
+
+                            </div>
+                            <div  style="margin-bottom: 11%;">
+
+                                <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
+                                    <input type="Text" value="simple" id="Simple" disabled class="form-control">
+
+                                </div>
+
+                                <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                    <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
+
+                                </div>
+                                <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
+
+                                    <input type="text" id="defaultSimple" class="form-control"  placeholder="Defaut" >
+                                </div>
+                                <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                    <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >
+
+                                </div>
+
+                            </div>
+
+                            <center><button class="btn btn-info" type="button" id="AddDetailGamme" >Enregistrer</button></center>
+                        </form>
+                        <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                    </div>
+
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+    </dialog>
     @endsection

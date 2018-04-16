@@ -24,7 +24,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="pull-left">Abonnements</h3>
+                    <h3 class="pull-left">Renouvelement</h3>
                     <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
                 </div>
                 <div class="col-md-12">
@@ -37,27 +37,44 @@
                         <div class="panel-body">
                             <table class="table table-bordered">
                                 <thead>
-                                <tr>
-                                    <th class="text-center" style="width:16.66%">TYPE D'ABONNEMENT</th>
-                                    <th class="text-center" style="width:16.66%">TYPE DE CLIENT</th>
-                                    <th class="text-center" style="width:16.66%">PRIX</th>
-                                    <th class="text-center" style="width:16.66%">NOMBRE DE VEHICULES</th>
-                                    <th class="text-center" style="width:16.66%">COCHER</th>
+                                <tr style="color: #2a4f7d;">
+                                    <th class="text-center" style="width: 9.09%" >N°CONTRAT</th>
+                                    <th class="text-center" style="width: 9.09%">DATE DE DEBUT</th>
+                                    <th class="text-center" style="width: 9.09%">DATE DE FIN</th>
+                                    <th class="text-center" style="width: 9.09%">NOM</th>
+                                    <th class="text-center" style="width: 9.09%">TYPE DE CLIENT</th>
+                                    <th class="text-center" style="width: 9.09%">CONTACT</th>
+                                    <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
+                                    <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULE</th>
+                                    <th class="text-center" style="width: 9.09%">NOMBRE DE SIMPLE</th>
+                                    <th class="text-center" style="width: 9.09%">NOMBRE D'AVANCE</th>
+                                    <th class="text-center" style="width: 9.09%">PRICE</th>
+                                    <th class="text-center" style="width: 9.09%">Renouveler</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                <tr value="" style="cursor: pointer;" >
+                                @foreach($archive as $a)
+                                    <tr>
+                                        <td class="text-center" style="width: 9.09%" >{{$a ->detail_matricule}}</td>
 
+                                        <td class="text-center" style="width: 9.09%">{{$a->start_contract}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$a->end_contract}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$a->name}}</td>
+                                        <td class="text-center" style="width:9.09%">{{ $a->type_customer}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$a->contact}}</td>
+                                        <td class="text-center" style="width: 9.09%">{{$a->phone_number}}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $a->nbVehicles }}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $a->nbSimple }}</td>
+                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $a->nbAvance }}</td>
+                                        <td class="text-center" style="width:9.09%">{{$a->price}}</td>
+                                        <td class="text-center" style="width:12.5%">
+                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$a->id_detail}}','_self')" style="    width: 51%;
+"  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
+                                        </td>
 
-                                    <td class="text-center"></td>
-                                    <td class="text-center">}</td>
-                                    <td class="text-center"></td>
-                                    <td class="text-center"></td>
-                                    <td class="text-center"><a class="btn btn-danger" href=""> <span class="glyphicon glyphicon-trash edit trash " ></span></a>
-                                        <a class=" btn btn-primary"  id="edit_abonnement" onclick=""><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a></td>
-                                </tr>
-
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

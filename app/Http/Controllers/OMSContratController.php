@@ -556,17 +556,6 @@ class OMSContratController extends Controller
             }
 
 
-
-
-
-            //$vehicles = DB::table('vehicles'),
-
-
-
-
-
-            // return response($typeAbonnement." ".$nbVehicles." ".$total." ".$price." ".$idCustomer." ".$idContrat);
-
             return response()->json($vehicles);
         }
        public function updateContract(Request $request)
