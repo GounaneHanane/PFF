@@ -13,6 +13,21 @@
         });
 
     });
+
+
+    $("#BtnAlertCancel").click(function()
+    {
+            document.getElementById('add_dialog').close();
+             $.get("/alert/refresh/", {}, function (data, status) {
+
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+
+        });
+
+    });
+
+
     $('#AllIn').click(function () {
         var vehicles=$('#OldVehicles option');
         for(var i=0;i<vehicles.length;i++)
@@ -100,8 +115,13 @@
 
                         ,
                         success: function (data, status) {
-                                 console.log(NewVehicles.length);
-                            console.log(data);
+                                                $.get("/alert/refresh/", {}, function (data, status) {
+
+                            $('tbody *').remove();
+                            $('tbody').prepend(data);
+
+                        });
+
 
                  }});
               //   }

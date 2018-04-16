@@ -72,6 +72,7 @@ Route::get('/contrat/delete/{id}','ContractController@DisableContract');
 
 
 Route::get('/contrat/refresh/','ContractController@refresh');
+Route::get("/alert/refresh",'AlertController@refresh');
 
 
 
