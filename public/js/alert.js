@@ -85,7 +85,6 @@
          var id_detail=$('#id_detail').val();
 
 
-               //console.log(NewVehicles[i].text);
 
 
                      $.ajax({

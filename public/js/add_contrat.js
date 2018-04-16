@@ -258,6 +258,8 @@ function AddVeihcles(idDetail) {
                     _token : $('#VehicleToken').attr('value')
                 },
                 success: function (data, status) {
+                            var id = $('.body').attr('alt');
+
 
                     document.getElementById('add_dialog').close();
                     var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
@@ -274,10 +276,18 @@ function AddVeihcles(idDetail) {
                         }
 
 
+                            $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
+
+                                $('#tableBody *').remove();
+                                $('#tableBody').prepend(data);
+
+                            });
+
 
 
 
                     }
+
 
 
                 },
