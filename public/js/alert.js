@@ -15,7 +15,7 @@
     });
 
 
-<<<<<<< HEAD
+
     $("#BtnAlertCancel").click(function()
     {
             document.getElementById('add_dialog').close();
@@ -29,8 +29,7 @@
     });
 
 
-=======
->>>>>>> 8dedbfc948e98a0d9c3051428d953991ce912d51
+
     $('#AllIn').click(function () {
         var vehicles=$('#OldVehicles option');
         for(var i=0;i<vehicles.length;i++)
@@ -112,10 +111,6 @@
          var id_detail=$('#id_detail').val();
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8dedbfc948e98a0d9c3051428d953991ce912d51
 
 
                      $.ajax({

@@ -165,7 +165,6 @@
                             </div>
 
                             <center><button class="btn btn-info" type="button" id="AddRenGamme" >Enregistrer</button></center>
-                            <center><button class="btn btn-info" type="button" id="hola" >test</button></center>
                         </form>
                         <center> <button class="btn btn-info" id="BtnAlertCancel" >Cancel</button></center>
                     </div>
