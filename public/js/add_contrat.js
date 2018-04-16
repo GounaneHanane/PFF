@@ -425,38 +425,42 @@ $(document).ready(function() {
 
         var client = $('#client').val();
 
+        if(nbVehiclesAvance!='' && nbVehiclesSimple!='' && date!='' && priceVehiclesAvance!='' && priceVehiclesSimple!='' && defaultAvance!='' && defaultSimple!='')
+        {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '/contrat/addcontrat',
+                type: 'POST',
+                data: {
+                    client: client,
+                    nbVehiclesSimple: nbVehiclesSimple,
+                    nbVehiclesAvance : nbVehiclesAvance,
+                    defaultSimple : defaultSimple,
+                    defaultAvance : defaultAvance,
+                    priceVehiclesSimple : priceVehiclesSimple,
+                    priceVehiclesAvance : priceVehiclesAvance,
+                    dated :date,
+                    _token: $('#ContratToken').attr('value')
+                },
+
+                success: function (data, status) {
+                    console.log(data);
+                    document.getElementById('add_dialog').close();
+
+                    $.get("/contrat/refresh/", {}, function (data, status) {
+                        $('tbody *').remove();
+                        $('tbody').prepend(data);
+                    });
+                }
+            });
+        }
+        else
+            alert('Merci de renseigner tous les champs !! ');
 
 
 
-
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url: '/contrat/addcontrat',
-            type: 'POST',
-            data: {
-                client: client,
-                nbVehiclesSimple: nbVehiclesSimple,
-                nbVehiclesAvance : nbVehiclesAvance,
-                defaultSimple : defaultSimple,
-                defaultAvance : defaultAvance,
-                priceVehiclesSimple : priceVehiclesSimple,
-                priceVehiclesAvance : priceVehiclesAvance,
-                dated :date,
-                _token: $('#ContratToken').attr('value')
-            },
-
-            success: function (data, status) {
-                console.log(data);
-                document.getElementById('add_dialog').close();
-
-                $.get("/contrat/refresh/", {}, function (data, status) {
-                    $('tbody *').remove();
-                    $('tbody').prepend(data);
-                });
-            }
-        });
 
 
 
@@ -542,7 +546,7 @@ $(document).ready(function() {
 
 
 
-    $('#nbVehiclesAdvanced,#defaultAdvanced').change(function () {
+    $('#nbVehiclesAdvanced,#defaultAdvanced,#client option').change(function () {
            var defaultAvance = $("#defaultAdvanced").val();
            var nbVAd = $("#nbVehiclesAdvanced").val();
            var baseVehicles =  $("#NbVehicles").text();

@@ -135,7 +135,7 @@
 
                                             <a class="btn btn-danger" onclick="disableContract({{$c->id_detail}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;">
 
-                                            <span class="glyphicon glyphicon-info-sign "></a>
+                                                <span class="glyphicon glyphicon-info-sign "></span></a>
                                             <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
                                         </td>
 

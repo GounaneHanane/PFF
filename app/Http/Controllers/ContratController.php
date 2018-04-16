@@ -471,7 +471,7 @@ class ContratController extends Controller
 
         foreach($vehicles as $v)
         {
-           
+
             $idVehicle=DB::table('vehicles')->where('imei','=',$v)->select('vehicles.id')->pluck('id')->first();
             $idTypeCustomerSubscribe=DB::table('info_detail_contract')->where('id_detail','=',$id)->select('id_type_customer_subscribe')->pluck('id_type_customer_subscribe')->first();
             $price=DB::table('type_customers_subscribes')->where('id','=',$idTypeCustomerSubscribe)->select('price')->pluck('price')->first();

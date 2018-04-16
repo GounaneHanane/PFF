@@ -5,7 +5,6 @@
         var id = $("#alert").val();
 //console.log(id);
         $.get("/alert/" + id, {}, function (data, status) {
-            //console.log(id);
             console.log(data);
             $("tbody *").remove();
             $("tbody ").append(data);

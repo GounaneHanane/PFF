@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    $("#ValidatePrice").click(function () {
+    $("#AddingDate,#types").click(function () {
 
         var date = $("#AddingDate").val();
         var imei = $("#vehicules").val();
@@ -34,7 +34,7 @@ $(document).ready(function(){
 
     });
 
-    $("#ValidatePriceEdit").click(function () {
+    $("#typesEdit,#AddingDateEdit").change(function () {
 
         var date = $("#AddingDateEdit").val();
         var imei = $("#imeiId").val();
