@@ -114,22 +114,24 @@
                                     <th class="text-center" style="width: 9.09%">DATE D'AJOUT</th>
                                     <th class="text-center" style="width: 9.09%">TYPE D'ABONNEMENT</th>
                                     <th class="text-center" style="width: 9.09%">PRIX</th>
+
                                     <th class="text-center" style="width: 9.09%">ACTIONS</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tableBody">
                                 @foreach($details as $details)
-                                    <tr style="color: #2a4f7d;" id="{{$details->id}}">
+                                    <tr style="color: #2a4f7d;" value="{{$details->id}}" id="line">
                                         <td id="Detail{{$details->id}}imei" class="text-center" style="width: 9.09%">{{$details -> imei}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$details -> marque}}</td>
                                         <td class="text-center" style="width: 9.09%">{{$details -> model}}</td>
                                         <td id="Detail{{$details->id}}date" class="text-center" style="width: 9.09%">{{$details -> AddingDate}}</td>
                                         <td id="Detail{{$details->id}}type" class="text-center" style="width: 9.09%">{{$details -> typeSub}}</td>
                                         <td id="Detail{{$details->id}}price" class="text-center" style="width: 9.09%">{{$details -> price}}</td>
-                                        <td class="text-center" style="width: 9.09%"><a class="btn btn-danger" onclick="disableDetail({{$details->id}})" > <span class="glyphicon glyphicon-trash edit trash "  ></span></a>
-                                            <a class=" btn btn-primary" id="edit_detail" onclick="editDetail({{$details->id}})" ><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
+                                        <?php if($details->status==1)
+                                           echo "<td class='text-center' style='width: 9.09%'><a class='btn btn-danger' onclick='disableDetail(".$details->id.")' > <span class='glyphicon glyphicon-trash edit trash '  ></span></a>
+                                            <a class=' btn btn-primary' id='edit_detail' onclick='editDetail(".$details->id.")' ><span class='glyphicon glyphicon-pencil edit edit_pencil '></span></a>
                                         </td>
-                                    </tr>
+                                    ";?></tr>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -182,8 +184,10 @@
                                                                     <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                                 </div>
                                                             </form>
+
                                                             <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
                                                             </form>
+
                                                             <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                         </div>
                                                     </div>

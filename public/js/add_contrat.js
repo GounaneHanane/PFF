@@ -213,6 +213,7 @@ function disableContract(id)
 }
 function AddVeihcles(idDetail) {
     var idType=$('#types').val();
+
     $.get("/contrat/detail/verifyType/"+idDetail+"/"+idType,{},function (data,status) {
         if(data==0)
         {
