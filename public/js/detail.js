@@ -14,7 +14,7 @@ $(document).ready(function(){
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/contrat//detail/price/calcul',
+            url: '/contrat/detail/price/calcul',
 
             type: 'POST',
             data: {

@@ -32,7 +32,7 @@
         crossorigin="anonymous"></script>
 @section('content')
 
-    <div class="body" alt="">
+    <div class="body" alt="{{ $idContrat }}">
 
         <div class="container-fluid">
             <div class="row">
@@ -182,7 +182,7 @@
                                                                     <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
                                                                 </div>
                                                             </form>
-                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{$details->id_detail}})" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
                                                             </form>
                                                             <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                                         </div>

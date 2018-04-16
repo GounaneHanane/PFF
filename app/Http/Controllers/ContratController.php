@@ -84,7 +84,7 @@ class ContratController extends Controller
 
 
 
-      $contract = DB::table('detail_contract')->where('status','=','1')->
+      $contract = DB::table('detail_contract')->
              select(DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","detail_contract.id_contract as idContract")
                  ->where('detail_contract.id','=',$idContrat)
 
@@ -101,7 +101,7 @@ class ContratController extends Controller
         join('detail_contract','detail_contract.id','info_detail_contract.id_detail')->
         join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')->
         join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')->
-        select('vehicles.*','vehicles.id as idVehicle','types_subscribes.id as idtypeSub','types_subscribes.type as typeSub','info_detail_contract.*')->get();
+        select('vehicles.*','vehicles.id as idVehicle','types_subscribes.id as idtypeSub','types_subscribes.type as typeSub','info_detail_contract.*','detail_contract.id as id_detail')->get();
       ;
       $type=DB::table('types_subscribes')->
     select('types_subscribes.*')->get();
@@ -118,10 +118,9 @@ class ContratController extends Controller
             select('customers.name','detail_contract.*')->get();
         $nb=DB::table('alerte')
             ->select(DB::raw('count(*) as nb'))->get();
+       return view('contractInfo',['details'=>$details,  "types_subscribes"=>$types_subscribes ,"contract"=>$contract,'types'=>$type  ,"nb"=>$nb,'vehicles'=>$vehicle,'cli'=>$client ,"idContrat"=>$idContrat]);
 
-       return view('contractInfo',['details'=>$details,  "types_subscribes"=>$types_subscribes ,"contract"=>$contract,'types'=>$type  ,"nb"=>$nb,'vehicles'=>$vehicle,'cli'=>$client]);
-
-        return response()->json($detail);
+        return response()->json($details);
 
     }
     public  function refreshDetail($idContract)
@@ -183,12 +182,10 @@ class ContratController extends Controller
             ->select(DB::raw($PriceContract."*timestampdiff(month,'".$AddingDate."',end_contract)/timestampdiff(month,start_Contract,end_contract) as thirdPrice"))
             ->pluck('thirdPrice')->first();
         $AddingDate = explode('-', $AddingDate);
-
         if($end_contract!=$AddingDate[2])
         {
             $price+=($PriceContract/12)*(1/2);
         }
-
         return response($price);
     }
     public function getPriceEdit(Request $request)
