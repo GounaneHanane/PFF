@@ -32,7 +32,11 @@ class AlertController extends Controller
     {
         $nb=DB::table('alerte')
             ->select(DB::raw('count(*) as nb'))->get();
-        return view('renouvelement',['nb'=>$nb]);
+
+        $a=DB::table('alerte')
+            ->join('detail_contract','detail_contract.id','alerte.id')
+            ->select('alerte.*',DB::raw('(detail_contract.nbAvance + detail_contract.nbSimple) as park'))->get();
+        return view('renouvelement',['alert'=>$a,'nb'=>$nb]);
     }
     public function Alert_Detail_Contrat($id_detail)
     {

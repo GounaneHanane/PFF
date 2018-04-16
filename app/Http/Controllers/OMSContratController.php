@@ -556,17 +556,6 @@ class OMSContratController extends Controller
             }
 
 
-
-
-
-            //$vehicles = DB::table('vehicles'),
-
-
-
-
-
-            // return response($typeAbonnement." ".$nbVehicles." ".$total." ".$price." ".$idCustomer." ".$idContrat);
-
             return response()->json($vehicles);
         }
        public function updateContract(Request $request)
@@ -608,13 +597,17 @@ class OMSContratController extends Controller
            $marque = ($request->input('marque') == null) ? null : $request->input('marque');
            $modele = ($request->input('model') == null) ? null : $request->input('model');
            $critiere = [];
+
+           $idContract = $request->input('idContract');
+
            $i = 0;
 
-           $details = DB::table('info_detail_contract')->where('info_detail_contract.isActive', '=', '1');
+           $details = DB::table('info_detail_contract')->where('info_detail_contract.isActive', '=', '1')
+           ;
 
 
 
-
+             $critiere[0]  = ['detail_contract.id','=',$idContract];
 
 
            if ($imei != null) {
@@ -635,24 +628,7 @@ class OMSContratController extends Controller
            }
 
            if ($type_abonnement != null) {
-               /*
 
-               $idCustomer = DB::table('contracts')
-                   ->where('contracts.id','=',$idContract)
-                   ->select('contracts.id_customer')
-                   ->pluck('id_customer')->first();
-
-
-               $id_type_customer = DB::table('customers')
-                   ->where('customers.id','=',$idCustomer)
-                   ->select('customers.id_type_customer')
-                   ->pluck('id_type_customer')->first();
-
-               $matrice = DB::table('type_customers_subscribes')
-                   ->where('type_customers_subscribes.id_type_customer','=',$id_type_customer)
-                   ->where('type_customers_subscribes.id_type_subscribe','=',$type_abonnement)
-                   ->select('type_customers_subscribes.id')->pluck('id')->first();
-   */
                $critiere[$i] = ['types_subscribes.id','=',$type_abonnement];
                $i++;
 
@@ -662,9 +638,6 @@ class OMSContratController extends Controller
                $i++;
 
            }
-
-
-
 
            $QueryDetails = $details
                ->join('detail_contract','detail_contract.id','info_detail_contract.id_detail')
@@ -681,10 +654,6 @@ class OMSContratController extends Controller
 
 
 
-
-           // $vehilces = DB::table('vehicles')->where($critiere)->select('vehicles.*')->get();
-
-           //return response()->json([ 'critiere'=>$critiere , 'details'=>$QueryDetails , 'matrice'=>$matrice , 'typeC'=>$id_type_customer]);
            return view('DetailsLines',[ 'details'=>$QueryDetails ]);
        }
 

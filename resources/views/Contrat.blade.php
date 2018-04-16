@@ -132,9 +132,10 @@
                                         <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbAvance }}</td>
                                         <td class="text-center" style="width:9.09%">{{$c->price}}</td>
                                         <td class="text-center" style="width: 15%">
-                                            <a class="btn btn-danger" onclick="disableContract({{$c->id}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;
-"  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
 
+                                            <a class="btn btn-danger" onclick="disableContract({{$c->id}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;
+=======
+                                            <a class="><span class="glyphicon glyphicon-info-sign "></a>
                                             <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
                                         </td>
 

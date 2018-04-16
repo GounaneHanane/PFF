@@ -96,6 +96,7 @@ $(document).ready(function(){
         var id = $('.body').attr('alt');
 
         $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
+
             $('#tableBody *').remove();
             $('#tableBody').prepend(data);
 
