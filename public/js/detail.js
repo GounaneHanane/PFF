@@ -78,9 +78,7 @@ $(document).ready(function(){
 
     $("#AddDetailModal").click(function(){
 
-        /*
 
-*/
         document.getElementById('add_dialog').showModal();
         $("#vehicules").val("0");
         $("#AddingDate").val();

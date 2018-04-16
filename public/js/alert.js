@@ -14,6 +14,21 @@
     });
 
 
+
+    $("#BtnAlertCancel").click(function()
+    {
+            document.getElementById('add_dialog').close();
+             $.get("/alert/refresh/", {}, function (data, status) {
+
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+
+        });
+
+    });
+
+
+
     $('#AllIn').click(function () {
         var vehicles=$('#OldVehicles option');
         for(var i=0;i<vehicles.length;i++)
@@ -97,7 +112,6 @@
 
 
 
-
                      $.ajax({
                              headers: {
                                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -111,6 +125,12 @@
 
                         ,
                         success: function (data, status) {
+                                                $.get("/alert/refresh/", {}, function (data, status) {
+
+                            $('tbody *').remove();
+                            $('tbody').prepend(data);
+
+                        });
 
 
                  }});

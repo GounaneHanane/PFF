@@ -9,7 +9,6 @@
 
     <script src="/js/alert.js"></script>
     <link rel="stylesheet" href="/css/alerte.css"/>
-    <script  src="/js/chart.js"></script>
 @endsection
 
 
@@ -167,7 +166,7 @@
 
                             <center><button class="btn btn-info" type="button" id="AddRenGamme" >Enregistrer</button></center>
                         </form>
-                        <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
+                        <center> <button class="btn btn-info" id="BtnAlertCancel" >Cancel</button></center>
                     </div>
 
 
