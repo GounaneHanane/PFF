@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    ////
+    //// Menu
+    ////
+    $('.submenu-toggle').click(function () {
+        $(this).parent().children('ul.submenu').toggle(200);
+    });
 
     ////
     //// Calcul de prix (model ajouter)

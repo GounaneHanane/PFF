@@ -24,6 +24,7 @@
     @if($c->status == 1)
             <td class="text-center" style="width: 15%">
 
+
                 <a class="btn btn-danger" onclick="disableContract({{$c->id_detail}})"  >
                     <span class="glyphicon glyphicon-trash edit trash " ></span>
                 </a>
@@ -36,6 +37,7 @@
                 <a onclick="renewal({{ $c->id_detail }})">
                     <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;width: 40px;"></span>
                 </a>
+
             </td>
     @else
          <td class="text-center" style="width:12.5%">
