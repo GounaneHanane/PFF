@@ -27,6 +27,10 @@
         "  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
 
                 <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_contract}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
+
+                  <a onclick="renewal({{ $c->id_detail }})">
+                                                <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;"></span>
+                                            </a>
             </td>
     @else
          <td class="text-center" style="width:12.5%">

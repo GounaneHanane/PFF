@@ -77,7 +77,6 @@ $(document).ready(function(){
     ////
     $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
 
-        alert('hola');
            var status = $("#status").attr('alt');
         $.get("/contrat/refresh/"+status,{},function(data,status){
             $('tbody *').remove();

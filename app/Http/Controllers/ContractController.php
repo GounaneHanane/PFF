@@ -9,48 +9,15 @@ use App\Models\Detail;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\info_detail_contract;
+
 
 use Response;
 use Validator;
 use Illuminate\Support\Facades\DB;
 class ContractController extends Controller
 {
-    public function dateContract($dateC)
-    {
-
-        if ($dateC)
-            $date_start_contract = $dateC;
-        else
-            $date_start_contract = date("Y-m-d");
-
-
-        $date = explode('-', $date_start_contract);
-
-        if ($date[2] > 1 and $date[2] < 15) {
-            $date[2] = '15';
-        }
-        if ($date[2] > 15) {
-            $time = strtotime($date_start_contract);
-            $date = date("Y-m-d", strtotime("+1 month", $time));
-            $date = explode('-', $date);
-            $date[2] = '1';
-
-
-        }
-
-        $date = implode('-', $date);
-
-        $date_start_contract = $date;
-
-        $time = strtotime($date_start_contract);
-        $date_end_contract = date("Y-m-d", strtotime("+1 year", $time));
-
-        $contratDated = array();
-        $contratDated[0] = $date_start_contract;
-        $contratDated[1] = $date_end_contract;
-        return $contratDated;
-
-    }
+   
 
     public  function verifyType($idDetail,$idType)
     {
@@ -295,6 +262,36 @@ class ContractController extends Controller
         return view('ContractLines', ['contracts' => $c] );
     }
 
+    public function CountVehicles($idCustomer)
+    {
+        $vehciles = DB::table('vehicles')->where('vehicles.customer_id','=',$idCustomer)->get()->count();
+
+        return response($vehciles);
+    }
+
+    public function getPrice($idClient)
+    {
+        $idTypeCustomer = DB::table('customers')->where('customers.id', '=', $idClient)->select('customers.id_type_customer')->
+        pluck('id_type_customer')->first();
+
+
+
+        $priceSimple = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+            ->where('type_customers_subscribes.id_type_subscribe', '=', '1')->select('type_customers_subscribes.price')
+            ->pluck('price')->first();
+        $priceAvance = DB::table('type_customers_subscribes')->where('type_customers_subscribes.id_type_customer', '=', $idTypeCustomer)
+            ->where('type_customers_subscribes.id_type_subscribe', '=', '2')->select('type_customers_subscribes.price')
+            ->pluck('price')->first();
+
+
+        $nbVehicles = DB::table('vehicles')->where('vehicles.customer_id','=',$idClient)
+            ->count();
+
+
+        return response()->json(['priceSimple' => $priceSimple , 'priceAvance'=>$priceAvance,'nbVehicles'=>$nbVehicles]);
+
+    }
+
     public function searchContrat(Request $request)
     {
         $matricule = ($request->input('matricule') == null) ? null : $request->input('matricule');
@@ -385,6 +382,37 @@ class ContractController extends Controller
             
 
         return view('DetailsLines',[ 'details'=>$details , "contract"=>$contract ]);
+    }
+    public function vehicleRenewal(Request $request)
+    {
+        $id=$request->input('id_detail');
+        $contract_id=DB::table('detail_contract')->where('id','=',$id)->select('id_contract')->pluck('id_contract')->first();
+        $new_id=DB::table('detail_contract')->where('id_contract','=',$contract_id)->where('status','=','1')->select('id')->pluck('id')->first();
+        $date = $request->input("dated");
+        $contractDate = $this->dateContract($date);
+        $start_datee = $contractDate[0];
+        $vehicles=$request->input('NewVehicles');
+
+        foreach($vehicles as $v)
+        {
+
+            $idVehicle=DB::table('vehicles')->where('imei','=',$v)->select('vehicles.id')->pluck('id')->first();
+            $idTypeCustomerSubscribe=DB::table('info_detail_contract')->where('id_detail','=',$id)->select('id_type_customer_subscribe')->pluck('id_type_customer_subscribe')->first();
+            $price=DB::table('type_customers_subscribes')->where('id','=',$idTypeCustomerSubscribe)->select('price')->pluck('price')->first();
+            $info_detail_contract = new info_detail_contract();
+            $info_detail_contract->id_detail = $new_id;
+            $info_detail_contract->id_vehicle = $idVehicle;
+            $info_detail_contract->id_type_customer_subscribe = $idTypeCustomerSubscribe ;
+            $info_detail_contract->price = $price;
+            $info_detail_contract->offer = 0;
+            $info_detail_contract->AddingDate=$start_datee;
+            $info_detail_contract->save();
+
+        }
+
+
+        return response()->json($info_detail_contract);
+        //return response($id_contract);
     }
 
 }

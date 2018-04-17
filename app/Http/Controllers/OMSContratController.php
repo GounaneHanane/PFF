@@ -393,7 +393,6 @@ class OMSContratController extends Controller
 
 
         return response()->json(['priceSimple' => $priceSimple , 'priceAvance'=>$priceAvance,'nbVehicles'=>$nbVehicles]);
-      //  return response()->json(['idtc'=>$idClient]);
 
     }
 
