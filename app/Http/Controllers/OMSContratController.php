@@ -609,10 +609,12 @@ class OMSContratController extends Controller
 
              $critiere[0]  = ['detail_contract.id','=',$idContract];
 
+              $i++;
 
            if ($imei != null) {
                $critiere[$i] = ['vehicles.imei', 'like', '%'.$imei.'%'];
                $i++;
+
 
            }
 
@@ -638,7 +640,7 @@ class OMSContratController extends Controller
                $i++;
 
            }
-
+           
            $QueryDetails = $details
                ->join('detail_contract','detail_contract.id','info_detail_contract.id_detail')
                ->join('vehicles','vehicles.id','info_detail_contract.id_vehicle')
@@ -652,9 +654,15 @@ class OMSContratController extends Controller
 
                ->get();
 
+                 $contract = DB::table('detail_contract')->
+             select(DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","detail_contract.id_contract as idContract")
+                 ->where('detail_contract.id','=',$idContract)
 
+                 ->first();
+            
 
-           return view('DetailsLines',[ 'details'=>$QueryDetails ]);
+        return view('DetailsLines',[ 'details'=>$QueryDetails , "contract"=>$contract]);
+              
        }
 
 

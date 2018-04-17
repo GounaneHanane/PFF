@@ -278,11 +278,11 @@ class ContractController extends Controller
         return response(strlen($id));
     }
 
-    public function refresh()
+    public function refresh($status)
     {
         $c = DB::table('detail_contract')
             ->where('detail_contract.isActive', '=', '1')
-            ->where('detail_contract.status','=','1')
+            ->where('detail_contract.status','=',$status)
             ->join('contracts','contracts.id','detail_contract.id_contract')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
@@ -292,7 +292,7 @@ class ContractController extends Controller
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
 
-        return view('ContractLines', ['contracts' => $c]);
+        return view('ContractLines', ['contracts' => $c] );
     }
 
     public function searchContrat(Request $request)
@@ -305,8 +305,12 @@ class ContractController extends Controller
         $critiere = [];
         $i = 0;
 
+        $status = $request->input('status');
+
+
+
         $contracts = DB::table('detail_contract')->where('detail_contract.isActive', '=', '1')->
-            where('detail_contract.status','=','1');
+            where('detail_contract.status','=',$status);
 
         if ($matricule != null) {
             $critiere[$i] = ['detail_contract.matricule', 'like', $matricule];
@@ -335,23 +339,23 @@ class ContractController extends Controller
 
         }
 
-
         $QueryContracts = $contracts
             ->join('contracts','contracts.id','detail_contract.id_contract')
             ->join('customers', 'customers.id', '=', 'contracts.id_customer')
             ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
 
             ->join('contract_warning','contract_warning.id','detail_contract.id')
-
-            ->where($critiere)
             ->select('contracts.*', 'customers.*', 'contracts.id as id_contract', 'types_customers.type as type_customer',
                 'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
                 'contract_warning.count as count',
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
+            ->where($critiere)
+
             ->get();
 
+      return view('ContractLines', ['contracts' => $QueryContracts]);
 
-        return view('ContractLines', ['contracts' => $QueryContracts]);
+
     }
 
     public function DisableContract($id)
@@ -369,7 +373,15 @@ class ContractController extends Controller
             ->select('info_detail_contract.*','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
             ->get();
 
-        return view('DetailsLines',[ 'details'=>$details ]);
+
+                 $contract = DB::table('detail_contract')->
+             select(DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","detail_contract.id_contract as idContract")
+                 ->where('detail_contract.id','=',$idContract)
+
+                 ->first();
+            
+
+        return view('DetailsLines',[ 'details'=>$details , "contract"=>$contract ]);
     }
 
 }

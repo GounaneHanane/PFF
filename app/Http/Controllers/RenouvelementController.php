@@ -31,7 +31,21 @@ class RenouvelementController extends Controller
         $nb=DB::table('alerte')
             ->select(DB::raw('count(*) as nb'))->get();
 
-        return view('Renouvelement',['nb'=>$nb,'archive'=>$archive]);
+        $hasContrat = DB::table('customers')
+            ->whereIn('customers.id',function($q){
+                $q->select('contracts.id_customer')->from('contracts');
+            })
+            ->select('customers.id', 'customers.name')->get();
+
+               $ClientType = DB::table('types_customers')
+            ->select('types_customers.type as ClientType', 'types_customers.id as ClientTypeId')->get();
+
+
+
+
+        return view('Renouvelement',['nb'=>$nb,'archive'=>$archive, 'clientTypes' => $ClientType ,
+            "Customers"=>$hasContrat
+    ]);
     }
 
 
