@@ -1,5 +1,9 @@
  $(document).ready(function() {
 
+    ////
+    //// periode de l'alerte
+    ////
+
     $("#alert").change(function () {
 
         var id = $("#alert").val();
@@ -14,10 +18,13 @@
     });
 
 
+     ////
+     //// Fermer le model
+     ////
 
     $("#BtnAlertCancel").click(function()
     {
-            document.getElementById('add_dialog').close();
+            document.getElementById('add_dialog_ren').close();
              $.get("/alert/refresh/", {}, function (data, status) {
 
             $('tbody *').remove();
@@ -27,7 +34,9 @@
 
     });
 
-
+     ////
+     //// >>
+     ////
 
     $('#AllIn').click(function () {
         var vehicles=$('#OldVehicles option');
@@ -37,6 +46,11 @@
         }
 
     });
+
+     ////
+     //// <<
+     ////
+
      $('#AllOut').click(function () {
          var vehicles=$('#NewVehicles option');
          for(var i=0;i<vehicles.length;i++)
@@ -44,6 +58,11 @@
              $('#OldVehicles').append(vehicles[i]);
          }
      });
+
+     ////
+     //// <
+     ////
+
      $('#OneOut').click(function () {
          $( "#NewVehicles option:selected" ).each(function() {
 
@@ -53,6 +72,11 @@
              $(this).remove();
          });
      });
+
+     ////
+     //// >
+     ////
+
      $('#OneIn').click(function () {
          $( "#OldVehicles option:selected" ).each(function() {
 
@@ -60,6 +84,11 @@
              $(this).remove();
          });
      });
+
+     ////
+     //// Ajouter un renouvelement
+     ////
+
      $('#AddRenGamme').click(function () {
         var id_detail=$('#id_detail').val();
          var nbVehiclesSimple = $('#nbVehiclesSimple').val();
@@ -100,7 +129,7 @@
 
              success: function (data, status) {
 
-                 document.getElementById('add_dialog').close();
+                 document.getElementById('add_dialog_ren').close();
                  var NewVehicles=[];
          $('#NewVehicles option').each(function(){
              NewVehicles.push($(this).val());
@@ -141,9 +170,14 @@
      }});
 });
  });
+
+ ////
+ //// Afficher le model de renouvler
+ ////
+
 function renewal(id)
 {
-    document.getElementById('add_dialog').showModal();
+    document.getElementById('add_dialog_ren').showModal();
     $.get("/alerte/renv/" + id, {}, function (data, status) {
 
       var detail_contract=data["info"];
@@ -157,7 +191,7 @@ function renewal(id)
         $('#priceVehiclesSimple').val(detail_contract.defaultSimple*detail_contract.nbSimple);
         $('#priceVehiclesAdvanced').val(detail_contract.defaultAvance*detail_contract.nbAvance);
 
-
+        $('#NewVehicles option').remove();
             for(var  i = 0; i < vehicles.length; i++)
             {
                 $('#NewVehicles').append("<option>"+vehicles[i].imei+"</option>");

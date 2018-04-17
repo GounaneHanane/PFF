@@ -5,7 +5,7 @@
 @section('import')
     @parent
     <link rel="stylesheet" href="/css/form.css" />
-    <script  src="/js/search.js"></script>
+    <script  src="/js/contract.js"></script>
 
     <script src="/js/alert.js"></script>
     <link rel="stylesheet" href="/css/alerte.css"/>
@@ -68,6 +68,9 @@
                                 <a onclick="renewal({{ $a->id }})">
                                 <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;"></span>
                                 </a>
+                                <a onclick="disableContract({{$a->id}})">
+                                    <span class="btn btn-danger glyphicon glyphicon-trash"  style=" float: inherit;"></span>
+                                </a>
                             </td>
                         </tr>
                             @endforeach
@@ -77,7 +80,7 @@
             </div>
         </div>
     </div>
-    <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
+    <dialog id="add_dialog_ren"  class="abonnement_dialog add_dialog ">
 
         <div class="container-fluid body">
             <div class="panel">

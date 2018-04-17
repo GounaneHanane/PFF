@@ -1,6 +1,10 @@
 $(document).ready(function(){
 
-    $("#AddingDate,#types").click(function () {
+    ////
+    //// Calcul de prix (model ajouter)
+    ////
+
+    $("#types,#AddingDate").change(function () {
 
         var date = $("#AddingDate").val();
         var imei = $("#vehicules").val();
@@ -33,7 +37,9 @@ $(document).ready(function(){
 
 
     });
-
+    ////
+    //// Calcul de prix ( model modifier)
+    ////
     $("#typesEdit,#AddingDateEdit").change(function () {
 
         var date = $("#AddingDateEdit").val();
@@ -70,17 +76,15 @@ $(document).ready(function(){
 
     });
 
-    $("#edit_detail").click(function(){
-
-
-        });
-
+    ////
+    //// Afficher model ajouter
+    ////
 
     $("#AddDetailModal").click(function(){
 
 
         document.getElementById('add_dialog').showModal();
-        $("#vehicules").val("0");
+        $("#vehicules").val("");
         $("#AddingDate").val();
         $("#types").val("0");
         $("#priceVehicles").val("");
@@ -89,18 +93,23 @@ $(document).ready(function(){
 
     });
 
+    ////
+    //// refresh
+    ////
+
     $("#refreshDetail,#editVehicleBtn,#CancelEditModel,#addVehicleBtn2").click(function(){
 
         var id = $('.body').attr('alt');
 
         $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
-
             $('#tableBody *').remove();
             $('#tableBody').prepend(data);
-
         });
 
     });
+    ////
+    //// Modifier un vehicule
+    ////
     $("#editVehicleBtn").click(function(){
         var date = $("#AddingDateEdit").val();
         var imei = $("#imeiId").val();
@@ -125,11 +134,24 @@ $(document).ready(function(){
             type: 'POST',
 
             success: function (data, status) {
+                var id = $('.body').attr('alt');
+
+                $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
+                    $('#tableBody *').remove();
+                    $('#tableBody').prepend(data);
+                });
+
+                document.getElementById('edit_dialog').close();
             }
 
         });
 
     });
+
+    ////
+    //// Recherche multicritere
+    ////
+
     $("#ContratInfosearch").click(function(){
         var model = $("#model").val();
         var marque = $("#marque").val();
@@ -175,9 +197,10 @@ $(document).ready(function(){
 
 
     });
-
 });
-
+    ////
+    //// Afficher model modifier
+    ////
 
     function editDetail(id) {
 
@@ -198,5 +221,147 @@ $(document).ready(function(){
 
     }
 
+    ////
+    //// Ajouter un vehicule
+    ////
+
+    function AddVeihcles(idDetail) {
+        if($("#vehicules").val()!= '' && $("#types").val()!='' && $("#priceVehicles").val()!='' && $('#AddingDate').val()!='')
+        {
+            var idType=$('#types').val();
+
+            $.get("/contrat/detail/verifyType/"+idDetail+"/"+idType,{},function (data,status) {
+                if(data==0)
+                {
+                    alert("Merci de changer le type");
+                }
+                else {
 
 
+                    var imei = $("#vehicules").val();
+                    var typeSubscribe=$("#types").val();
+                    var price=$("#priceVehicles").val();
+                    var date=$('#AddingDate').val();
+                    var  inputs = [ 'vehicles','types','priceVehicles','addingDate'];
+                    for(var j = 0;j<inputs.length;j++)
+                    {
+
+
+                        if ($('#Err' + inputs[j]).length) {
+
+
+                            $('#Err' + inputs[j]).remove();
+
+                        }
+
+
+
+
+
+                    }
+
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: 'http://127.0.0.1:8000/contract/addVehicule/',
+                        type: 'POST',
+                        data: {
+                            vehicules: imei,
+                            types: typeSubscribe,
+                            priceVehicles: price,
+                            AddingDate:date,
+                            _token : $('#VehicleToken').attr('value')
+                        },
+                        success: function (data, status) {
+                            var id = $('.body').attr('alt');
+
+
+                            document.getElementById('add_dialog').close();
+                            var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
+                            console.log(data.dated);
+                            for(var j = 0;j<inputs.length;j++)
+                            {
+
+
+                                if ($('#Err' + inputs[j]).length) {
+
+
+                                    $('#Err' + inputs[j]).remove();
+
+                                }
+
+
+                                $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
+
+                                    $('#tableBody *').remove();
+                                    $('#tableBody').prepend(data);
+
+                                });
+
+
+
+
+                            }
+
+
+
+                        },
+                        error: function (jqXhr) {
+                            if (jqXhr.status === 422) {
+                                var errors = jqXhr.responseJSON;
+
+                                console.log(errors);
+
+                                var l = 0;
+                                $.each(errors.message, function (key, value) {
+                                    // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                                    if ($('#Err' + key).length) {
+                                        //$('#Err' + key).html(value);
+
+                                        $('#Err' + key).text(value);
+                                    }
+                                    else {
+                                        $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+                                        l++;
+
+                                    }
+                                });
+
+
+                                // $( '#form-errors' ).html( errorsHtml );
+
+                            }
+                        }
+
+                    })
+
+
+
+                }
+            })
+        }
+        else
+            alert('Merci de renseigner tous les champs !! ');
+    }
+
+    ////
+    //// Supprimer un vehicule
+    ////
+
+function disableDetail(idDet,idCon)
+{
+
+    $.get("/detail/delete/"+idDet,{},function(data, status){
+
+
+        $("#Detail"+idDet).remove();
+        /* $.get("/contrat/detail/refresh/"+idCon, {}, function (data, status) {
+             console.log(data);
+             $('tbody *').remove();
+             $('tbody').prepend(data);
+         });*/
+    });
+}
