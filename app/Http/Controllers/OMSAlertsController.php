@@ -22,7 +22,7 @@ class OMSAlertsController extends Controller
 
 
 
-      $a= DB::table('contracts')->where(DB::raw('to_days(detail_contract.end_contract) - to_days(curdate())'),'<',$amount)->where('detail_contract.status','=','1')
+      $a= DB::table('contracts')->where(DB::raw('to_days(detail_contract.end_contract) - to_days(curdate())'),'<',$amount)->where('detail_contract.status','=','1')->where('detail_contract.isActive','=','1')
            ->join('detail_contract','detail_contract.id_contract','contracts.id')
            ->join('customers','customers.id','contracts.id_customer')
            ->select('detail_contract.*',DB::raw('(detail_contract.nbAvance + detail_contract.nbSimple) as park'),'customers.*')->get();

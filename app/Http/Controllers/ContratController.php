@@ -434,7 +434,7 @@ class ContratController extends Controller
      //   $count=str_pad($count,2,0,STR_PAD_LEFT);
 
 
-       $total = $request->input('defaultAdvanced')* $request->input('nbVehiclesAdvanced') +$request->input('nbVehiclesSimple')*$request->input('defaultSimple') ;
+       $total = $request->input('defaultAdvancedR')* $request->input('nbVehiclesAdvancedR') +$request->input('nbVehiclesSimpleR')*$request->input('defaultSimpleR') ;
 
        $date = $request->input("dated");
 
@@ -450,13 +450,13 @@ class ContratController extends Controller
         $detail_contrat->end_contract=$end_date;
         $detail_contrat->urlPdf='/pdf/'.$matricule_detail;
         $detail_contrat->matricule=$matricule_detail;
-       $detail_contrat->nbAvance=$request->input('nbVehiclesAdvanced');
-       $detail_contrat->nbSimple=$request->input('nbVehiclesSimple');
-       $detail_contrat->defaultAvance=$request->input('defaultAdvanced');
+       $detail_contrat->nbAvance=$request->input('nbVehiclesAdvancedR');
+       $detail_contrat->nbSimple=$request->input('nbVehiclesSimpleR');
+       $detail_contrat->defaultAvance=$request->input('defaultAdvancedR');
        $detail_contrat->price=$total;
        $detail_contrat->status=1;
        $detail_contrat->isActive=1;
-       $detail_contrat->defaultSimple=$request->input('defaultSimple');
+       $detail_contrat->defaultSimple=$request->input('defaultSimpleR');
        $detail_contrat->save();
       DB::table('detail_contract')->where('id','=',$id)->update(['status'=>0]);
 
@@ -476,7 +476,7 @@ class ContratController extends Controller
 
         foreach($vehicles as $v)
         {
-           
+
             $idVehicle=DB::table('vehicles')->where('imei','=',$v)->select('vehicles.id')->pluck('id')->first();
             $idTypeCustomerSubscribe=DB::table('info_detail_contract')->where('id_detail','=',$id)->select('id_type_customer_subscribe')->pluck('id_type_customer_subscribe')->first();
             $price=DB::table('type_customers_subscribes')->where('id','=',$idTypeCustomerSubscribe)->select('price')->pluck('price')->first();

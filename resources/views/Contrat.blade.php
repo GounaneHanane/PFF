@@ -9,11 +9,11 @@
 
     <link rel="stylesheet" href="/css/form.css" />
     <link rel="stylesheet" href="/css/select.css" />
-    <script  src="/js/delete.js"></script>
+    <script  src="/js/contract.js"></script>
 
     <script  src="/js/select.js"></script>
-    <script  src="/js/chosen.js"></script>
-
+    <script  src="/js/alert.js"></script>
+    <link rel="stylesheet" href="/css/alerte.css"/>
 
     <style>
         #search_input
@@ -133,10 +133,18 @@
                                         <td class="text-center" style="width:9.09%">{{$c->price}}</td>
                                         <td class="text-center" style="width: 15%">
 
-                                            <a class="btn btn-danger" onclick="disableContract({{$c->id_detail}})"   > <span class="glyphicon glyphicon-trash edit trash " ></span></a><a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;">
-
-                                            <span class="glyphicon glyphicon-info-sign "></a>
-                                            <a   class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})"><span class="glyphicon glyphicon-pencil edit edit_pencil "></span></a>
+                                            <a class="btn btn-danger" onclick="disableContract({{$c->id_detail}})"  >
+                                                <span class="glyphicon glyphicon-trash edit trash " ></span>
+                                            </a>
+                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;">
+                                                <span class="glyphicon glyphicon-info-sign "></span>
+                                            </a>
+                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})">
+                                                <span class="glyphicon glyphicon-pencil edit edit_pencil "></span>
+                                            </a>
+                                            <a onclick="renewal({{ $c->id_detail }})">
+                                                <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;"></span>
+                                            </a>
                                         </td>
 
 
@@ -334,7 +342,109 @@
 
 
                             </dialog>
+                            <dialog id="add_dialog_ren"  class="abonnement_dialog add_dialog ">
 
+                                <div class="container-fluid body">
+                                    <div class="panel">
+                                        <div id="add_title">
+                                            <h4>Ajouter un Contrat</h4>
+                                        </div>
+
+
+
+                                        <div class="panel-body">
+                                            <div class="form" >
+
+                                                <form id="contrat" method="POST">
+                                                    <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
+                                                    <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
+                                                    <div>
+                                                        <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
+                                                    </div>
+                                                    <div class="form-group" style="    width: 41%;margin-top: 3%">
+                                                        <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" style="     margin-left: 43%; margin-top: -37%;" >
+                                                        <button type="button" class="form-control" id="AllOut" style="width: 17%"><<</button>
+                                                        <button type="button" class="form-control" id="OneOut" style="width:17%"><</button>
+                                                        <button type="button" class="form-control" id="OneIn" style="width: 17%">></button>
+                                                        <button type="button" class="form-control" href="#" id="AllIn" style="width: 17%">>></button>
+                                                    </div>
+
+                                                    <div class="form-group" style="    width: 37%;margin-left: 57%;margin-top: -33%;">
+                                                        <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control">
+                                                        </select>
+                                                    </div>
+
+                                                    <span >Nombre de Vehicules :</span>
+                                                    <span id="NbVehicles" alt="" ></span>
+
+                                                </form>
+
+                                                <form id="vehicles" method="POST">
+
+                                                    <div >
+
+                                                        <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
+                                                            <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                            <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvancedR" value="0" min="0" step="1" >
+
+
+                                                        </div>
+
+                                                        <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
+
+                                                            <input type="text" id="defaultAdvancedR"  name="defaultAdvancedR" class="form-control"  placeholder="Defaut" >
+
+                                                        </div>
+                                                        <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                                            <input type="text"  class="form-control" id="priceVehiclesAdvancedR" name="priceVehiclesAdvancedR"  placeholder="Prix" >
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div  style="margin-bottom: 11%;">
+
+                                                        <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
+                                                            <input type="Text" value="simple" id="Simple" disabled class="form-control">
+
+                                                        </div>
+
+                                                        <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                            <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimpleR"  value="0" placeholder="Nombre des vehicules" >
+
+                                                        </div>
+                                                        <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
+
+                                                            <input type="text" id="defaultSimpleR" class="form-control"  placeholder="Defaut" >
+                                                        </div>
+                                                        <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                                            <input type="text"  class="form-control" id="priceVehiclesSimpleR"  placeholder="Prix" >
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <center><button class="btn btn-info" type="button" id="AddRenGamme" >Enregistrer</button></center>
+                                                </form>
+                                                <center> <button class="btn btn-info" id="BtnAlertCancel" >Cancel</button></center>
+                                            </div>
+
+
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+
+
+                            </dialog>s
                         </div>
                     </div>
                 </div>

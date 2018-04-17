@@ -5,7 +5,7 @@
 @section('import')
     @parent
     <link rel="stylesheet" href="/css/form.css" />
-    <script  src="/js/search.js"></script>
+    <script  src="/js/contract.js"></script>
 
     <script src="/js/alert.js"></script>
     <link rel="stylesheet" href="/css/alerte.css"/>
@@ -68,6 +68,9 @@
                                 <a onclick="renewal({{ $a->id }})">
                                 <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;"></span>
                                 </a>
+                                <a onclick="disableContract({{$a->id}})">
+                                    <span class="btn btn-danger glyphicon glyphicon-trash"  style=" float: inherit;"></span>
+                                </a>
                             </td>
                         </tr>
                             @endforeach
@@ -77,7 +80,7 @@
             </div>
         </div>
     </div>
-    <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
+    <dialog id="add_dialog_ren"  class="abonnement_dialog add_dialog ">
 
         <div class="container-fluid body">
             <div class="panel">
@@ -126,18 +129,18 @@
                                 </div>
 
                                 <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                    <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
+                                    <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvancedR" value="0" min="0" step="1" >
 
 
                                 </div>
 
                                 <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                    <input type="text" id="defaultAdvanced"  name="defaultAdvanced" class="form-control"  placeholder="Defaut" >
+                                    <input type="text" id="defaultAdvancedR"  name="defaultAdvancedR" class="form-control"  placeholder="Defaut" >
 
                                 </div>
                                 <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                    <input type="text"  class="form-control" id="priceVehiclesAdvanced" name="priceVehiclesAdvanced"  placeholder="Prix" >
+                                    <input type="text"  class="form-control" id="priceVehiclesAdvancedR" name="priceVehiclesAdvancedR"  placeholder="Prix" >
 
                                 </div>
 
@@ -150,15 +153,15 @@
                                 </div>
 
                                 <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                    <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
+                                    <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimpleR"  value="0" placeholder="Nombre des vehicules" >
 
                                 </div>
                                 <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                    <input type="text" id="defaultSimple" class="form-control"  placeholder="Defaut" >
+                                    <input type="text" id="defaultSimpleR" class="form-control"  placeholder="Defaut" >
                                 </div>
                                 <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                    <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >
+                                    <input type="text"  class="form-control" id="priceVehiclesSimpleR"  placeholder="Prix" >
 
                                 </div>
 

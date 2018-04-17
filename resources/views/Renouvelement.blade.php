@@ -11,7 +11,7 @@
     <script  src="/js/delete.js"></script>
     <script  src="/js/abonnement.js"></script>
     <script  src="/js/select.js"></script>
-    <script  src="/js/add_contract.js"></script>
+    <script  src="/js/contract.js"></script>
 
     <script  src="/js/chosen.js"></script>
 

@@ -184,17 +184,15 @@
                                                                     </select>
                                                                 </div>
 
-                                                                <div class="form-group" style="  width: 91%;margin-top: 64px;">
+                                                                <div class="form-group" style="margin-top: 64px;">
 
                                                                     <input type="text" id="priceVehicles" class="form-control" value="0" placeholder="Prix" >
 
                                                                 </div>
-                                                                <div class="form-group" style="      width: 39%;margin-left: 55%;margin-top: -48px;">
-                                                                    <a id="ValidatePrice"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                                </div>
+
                                                             </form>
 
-                                                            <center style="      margin-top: 6%;"><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            <center ><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button"  >Enregistrer</button></center>
                                                             </form>
 
                                                             <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
@@ -228,14 +226,12 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-                                                                <div class="form-group" style="  width: 91%;margin-top: 64px;">
+                                                                <div class="form-group" style=" margin-top: 64px;">
                                                                     <input type="text" id="priceVehiclesEdit" class="form-control" value="0" placeholder="Prix" >
                                                                 </div>
-                                                                <div class="form-group" style="      width: 39%;margin-left: 55%;margin-top: -48px;">
-                                                                    <a id="ValidatePriceEdit"><span class="btn btn-success glyphicon glyphicon-ok" ></span></a>
-                                                                </div>
+
                                                             </form>
-                                                            <center style="      margin-top: 6%;"><button id="editVehicleBtn" class="btn btn-info" type="button" style="      margin-top: 9%; margin-left: 12%;" >Enregistrer</button></center>
+                                                            <center style="      margin-top: 6%;"><button id="editVehicleBtn" class="btn btn-info" type="button"  >Enregistrer</button></center>
                                                         </form>
                                                         <center> <button class="btn btn-info" id="" onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
                                                     </div>
