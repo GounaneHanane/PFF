@@ -110,7 +110,7 @@ $(document).ready(function(){
                 },
 
                 success: function (data, status) {
-                    console.log(data);
+
                     document.getElementById('add_dialog').close();
 
                     $.get("/contrat/refresh/", {}, function (data, status) {
@@ -179,7 +179,7 @@ $(document).ready(function(){
         var result = defaultSimple * nbVS;
 
         $("#priceVehiclesSimple").val(result);
-        console.log(defaultSimple + " "+ nbVS + " " + result);
+
 
     });
 
@@ -211,7 +211,7 @@ $(document).ready(function(){
 
 
         $("#ModifyPriceSimple").val(result);
-        //  console.log(defaultSimple + " "+ nbVS + " " + result);
+
 
     });
 
@@ -231,7 +231,7 @@ $(document).ready(function(){
 
         var datedModify = $("#datedModify").val();
 
-        alert
+
 
 
         var client = $("#clientMaj").val();
@@ -305,7 +305,7 @@ function editContratDialog(id) {
         $("#ModifyNbVehicles").text(contracts.nbVehicles);
 
 
-        console.log(contracts.nbVehicles);
+
 
 
 

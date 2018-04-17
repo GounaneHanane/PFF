@@ -7,9 +7,9 @@
     $("#alert").change(function () {
 
         var id = $("#alert").val();
-//console.log(id);
+
         $.get("/alert/" + id, {}, function (data, status) {
-            console.log(data);
+
             $("tbody *").remove();
             $("tbody ").append(data);
 
@@ -117,7 +117,6 @@
          var result = defaultSimple * nbVS;
 
          $("#priceVehiclesSimpleR").val(result);
-         console.log(defaultSimple + " "+ nbVS + " " + result);
 
      });
 
@@ -233,7 +232,6 @@ function renewal(id)
                 $('#NewVehicles').append("<option>"+vehicles[i].imei+"</option>");
             }
 
-         //   console.log(table);
 
 
     });

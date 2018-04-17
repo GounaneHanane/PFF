@@ -29,7 +29,6 @@ $(document).ready(function(){
             },
 
             success: function (data, status) {
-                console.log(data);
                 $("#priceVehicles").val(data);
             }
 
@@ -359,7 +358,7 @@ function disableDetail(idDet,idCon)
 
         $("#Detail"+idDet).remove();
         /* $.get("/contrat/detail/refresh/"+idCon, {}, function (data, status) {
-             console.log(data);
+
              $('tbody *').remove();
              $('tbody').prepend(data);
          });*/
