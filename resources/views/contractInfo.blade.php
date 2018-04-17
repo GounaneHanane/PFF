@@ -100,9 +100,15 @@
                                 </tr>
                             </table>
 
+
+
+                                   @if( $contract->status  == 1)
+                                      
                                 <div class="pull-right col-md-2 col-lg-3"><br>
                                 <a id="AddDetailModal"  class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU VEHICULE</a>
                             </div>
+                                    @endif    
+
                         </div>
                         <div class="panel-body">
                             <table class="table table-bordered">
@@ -115,7 +121,10 @@
                                     <th class="text-center" style="width: 9.09%">TYPE D'ABONNEMENT</th>
                                     <th class="text-center" style="width: 9.09%">PRIX</th>
 
-                                    <th class="text-center" style="width: 9.09%">ACTIONS</th>
+
+                                    @if( $contract->status  == 1)
+                                        <th class="text-center" style="width: 9.09%">ACTIONS</th>
+                                    @endif    
                                 </tr>
                                 </thead>
                                 <tbody id="tableBody">

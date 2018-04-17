@@ -14,6 +14,10 @@ $(document).ready(function(){
         var typeClient = $('#typeClient').val();
 
         critiere = {};
+        var status = $("#status").attr('alt');
+
+
+
 
         if (matricule != "" && matricule != null)
             critiere['matricule'] = matricule;
@@ -29,6 +33,9 @@ $(document).ready(function(){
 
         if (typeClient != "" && typeClient != '0')
             critiere['typeClient'] = typeClient;
+
+                critiere['status'] = status;
+
 
 
         $.get("/contrat/search/",
@@ -69,7 +76,10 @@ $(document).ready(function(){
     ////Refresh sur tous les boutons
     ////
     $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
-        $.get("/contrat/refresh/",{},function(data,status){
+
+        alert('hola');
+           var status = $("#status").attr('alt');
+        $.get("/contrat/refresh/"+status,{},function(data,status){
             $('tbody *').remove();
             $('tbody').prepend(data);
         });

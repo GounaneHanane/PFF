@@ -365,6 +365,9 @@ $(document).ready(function() {
         var fin_contrat = $('#fin_contrat').val();
         var typeClient = $('#typeClient').val();
 
+        var status = $("#status").attr('alt');
+
+
         critiere = {};
 
         if (matricule != "" && matricule != null)
@@ -382,12 +385,15 @@ $(document).ready(function() {
         if (typeClient != "" && typeClient != '0')
             critiere['typeClient'] = typeClient;
 
+        critiere['status'] = status;
+
 
         $.get("/contrat/search/",
             critiere
             ,
 
             function (data, status) {
+
 
                 $('tbody *').remove();
                 $('tbody').prepend(data);
@@ -420,7 +426,11 @@ $(document).ready(function() {
 
 
     $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
-        $.get("/contrat/refresh/",{},function(data,status){
+
+                                var status = $("#status").attr('alt');
+
+        $.get("/contrat/refresh/"+status,{},function(data,status){
+
             $('tbody *').remove();
             $('tbody').prepend(data);
         });
@@ -476,7 +486,22 @@ $(document).ready(function() {
 
 
 
+<<<<<<< HEAD
+            success: function (data, status) {
+                console.log(data);
+                document.getElementById('add_dialog').close();
+                        var status = $("#status").attr('alt');
 
+
+                $.get("/contrat/refresh/"+status, {}, function (data, status) {
+                    $('tbody *').remove();
+                    $('tbody').prepend(data);
+                });
+            }
+        });
+=======
+
+>>>>>>> d03502b6e1bfbfc43f5f677e84cfa9bd5affc2d7
 
 
 

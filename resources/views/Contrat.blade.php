@@ -43,7 +43,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
-                            <div class="row">
+                            <div class="row" id="status" alt="1">
                                 <form>
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">

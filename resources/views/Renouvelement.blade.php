@@ -5,8 +5,16 @@
 @section('import')
     @parent
     <link rel="stylesheet" href="/css/form.css" />
+        <link rel="stylesheet" href="/css/select.css" />
+
+
     <script  src="/js/delete.js"></script>
     <script  src="/js/abonnement.js"></script>
+    <script  src="/js/select.js"></script>
+    <script  src="/js/contract.js"></script>
+
+    <script  src="/js/chosen.js"></script>
+
 
 @endsection
 
@@ -30,8 +38,46 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
-                            <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a href="#" id="showmodal" class="btn btn-primary" id="add_abonnement"  onclick="addType();"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU ABONNEMENT</a>
+                             <div class="row" id="status" alt="0">
+                                <form>
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">N°CONTRAT</label>
+                                            <input id="mat" type="text" class="form-control" name="matricule_searsh" placeholder="N°Contrat" value="">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">CLIENT</label>
+                                            <select id="customer" name="costumer_search" data-live-search="true" class="selectpicker" style="">
+                                                <option class="bs-title-option" value="">Veuillez selectionner un client</option>
+                                                    @foreach($Customers as $customer)
+                                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                                        @endforeach
+                                            </select>
+                                        </div>
+                                        <div  class="form-group col-md-3">
+                                            <label class="control-label">DATE DE DEBUT</label>
+                                            <input id="debut_contrat" type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">DATE DE FIN</label>
+                                            <input id="fin_contrat" type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label class="control-label">TYPE DE CLIENT</label>
+                                            <select id="typeClient" name="costumer_search" class="form-control chosen-select" style="">
+                                                <option value="0">Veuillez selectionner un type</option>
+                                                @foreach($clientTypes as $clientType)
+                                                    <option value="{{ $clientType->ClientTypeId  }}">{{ $clientType->ClientType }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 pull-right" style="text-align: right; margin-right: 30px;">
+                                            <button id="recheche" type="button" class="btn btn-primary"><i class="fa fa fa-search" aria-hidden="true"></i> RECHERCHER</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="panel-body">

@@ -77,7 +77,6 @@ class ContratController extends Controller
    }
     public function showInfo($idContrat)
     {
-        //$typesSubscribes = DB::table('types_subscribes')->get();
 
 
        $types_subscribes = DB::table('types_subscribes')->select('types_subscribes.*')->get();
@@ -113,16 +112,14 @@ class ContratController extends Controller
         join('contracts','customers.id','contracts.id_customer')->
         join('detail_contract','detail_contract.id_contract','contracts.id')->
         select('vehicles.*')->get();
-        $client=DB::table('contracts')->where([['detail_contract.id','=',$idContrat],['contracts.isactive','=','1'],['status','=','1']])->
+        $client=DB::table('contracts')->where([['detail_contract.id','=',$idContrat],['contracts.isactive','=','1']])->
             join('customers','customers.id','contracts.id_customer')->
         join('detail_contract','detail_contract.id_contract','contracts.id')->
             select('customers.name','detail_contract.*')->get();
         $nb=DB::table('alerte')
             ->select(DB::raw('count(*) as nb'))->get();
-       return view('contractInfo',['details'=>$details,  "types_subscribes"=>$types_subscribes ,"contract"=>$contract,'types'=>$type  ,"nb"=>$nb,'vehicles'=>$vehicle,'cli'=>$client ,"idContrat"=>$idContrat]);
+             return view('contractInfo',['details'=>$details,  "types_subscribes"=>$types_subscribes ,"contract"=>$contract,'types'=>$type  ,"nb"=>$nb,'vehicles'=>$vehicle,'cli'=>$client ,"idContrat"=>$idContrat]);
 
-
-        return response()->json($details);
 
 
     }
@@ -137,7 +134,15 @@ class ContratController extends Controller
             ->select('info_detail_contract.*','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
             ->get();
 
-        return view('DetailsLines',[ 'details'=>$details ]);
+            $contract = DB::table('detail_contract')->
+             select(DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","detail_contract.id_contract as idContract")
+                 ->where('detail_contract.id','=',$idContrat)
+
+                 ->first();
+
+
+
+        return view('DetailsLines',[ 'details'=>$details , "contract"=>$contract]);
 
 
 
