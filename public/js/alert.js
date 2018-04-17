@@ -84,6 +84,42 @@
              $(this).remove();
          });
      });
+     ////
+     ////Prix de type avancé (model d'ajouter)
+     ////
+     $('#nbVehiclesAdvancedR,#defaultAdvancedR').change(function () {
+         var defaultAvance = $("#defaultAdvancedR").val();
+         var nbVAd = $("#nbVehiclesAdvancedR").val();
+         var baseVehicles =  $("#NbVehicles").text();
+
+
+
+
+         var result = defaultAvance * nbVAd;
+
+
+
+         $("#priceVehiclesAdvancedR").val(result);
+
+     });
+
+     ////
+     ////Prix de type simple (model d'ajouter)
+     ////
+
+     $('#nbVehiclesSimpleR,#defaultSimpleR').change(function () {
+         var defaultSimple = $("#defaultSimpleR").val();
+         var nbVS = $("#nbVehiclesSimpleR").val();
+
+
+
+
+         var result = defaultSimple * nbVS;
+
+         $("#priceVehiclesSimpleR").val(result);
+         console.log(defaultSimple + " "+ nbVS + " " + result);
+
+     });
 
      ////
      //// Ajouter un renouvelement
@@ -91,13 +127,13 @@
 
      $('#AddRenGamme').click(function () {
         var id_detail=$('#id_detail').val();
-         var nbVehiclesSimple = $('#nbVehiclesSimple').val();
-         var nbVehiclesAdvanced = $('#nbVehiclesAdvanced').val();
+         var nbVehiclesSimple = $('#nbVehiclesSimpleR').val();
+         var nbVehiclesAdvanced = $('#nbVehiclesAdvancedR').val();
          var date = $('#dated').val();
-         var priceVehiclesSimple =  $('#priceVehiclesSimple').val();
-         var priceVehiclesAdvanced =  $('#priceVehiclesAdvanced').val();
-         var defaultSimple = $("#defaultSimple").val();
-         var defaultAdvanced = $("#defaultAdvanced").val();
+         var priceVehiclesSimple =  $('#priceVehiclesSimpleR').val();
+         var priceVehiclesAdvanced =  $('#priceVehiclesAdvancedR').val();
+         var defaultSimple = $("#defaultSimpleR").val();
+         var defaultAdvanced = $("#defaultAdvancedR").val();
 
 
       /*   $('#NewVehicles option').each(function () {
@@ -117,12 +153,12 @@
              type: 'POST',
              data: {
                  id_detail: id_detail,
-                 nbVehiclesSimple: nbVehiclesSimple,
-                 nbVehiclesAdvanced : nbVehiclesAdvanced,
-                 defaultSimple : defaultSimple,
-                 defaultAdvanced : defaultAdvanced,
-                 priceVehiclesSimple : priceVehiclesSimple,
-                 priceVehiclesAdvanced : priceVehiclesAdvanced,
+                 nbVehiclesSimpleR: nbVehiclesSimple,
+                 nbVehiclesAdvancedR : nbVehiclesAdvanced,
+                 defaultSimpleR : defaultSimple,
+                 defaultAdvancedR : defaultAdvanced,
+                 priceVehiclesSimpleR : priceVehiclesSimple,
+                 priceVehiclesAdvancedR : priceVehiclesAdvanced,
                  dated :date,
                  _token: $('#GammeToken').attr('value')
              },
@@ -184,12 +220,12 @@ function renewal(id)
         var vehicles=data["vehicles"];
         $('#id_detail').val(id);
         $('#dated').val(detail_contract.end_contract);
-      $('#nbVehiclesAdvanced').val(detail_contract.nbAvance);
-        $('#nbVehiclesSimple').val(detail_contract.nbSimple);
-        $('#defaultAdvanced').val(data["advancedPrice"].price);
-        $('#defaultSimple').val(data["simplePrice"].price);
-        $('#priceVehiclesSimple').val(detail_contract.defaultSimple*detail_contract.nbSimple);
-        $('#priceVehiclesAdvanced').val(detail_contract.defaultAvance*detail_contract.nbAvance);
+      $('#nbVehiclesAdvancedR').val(detail_contract.nbAvance);
+        $('#nbVehiclesSimpleR').val(detail_contract.nbSimple);
+        $('#defaultAdvancedR').val(data["advancedPrice"].price);
+        $('#defaultSimpleR').val(data["simplePrice"].price);
+        $('#priceVehiclesSimpleR').val(detail_contract.defaultSimple*detail_contract.nbSimple);
+        $('#priceVehiclesAdvancedR').val(detail_contract.defaultAvance*detail_contract.nbAvance);
 
         $('#NewVehicles option').remove();
             for(var  i = 0; i < vehicles.length; i++)

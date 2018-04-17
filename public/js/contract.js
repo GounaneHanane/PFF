@@ -146,7 +146,9 @@ $(document).ready(function(){
         });
     });
 
-
+    ////
+    ////Prix de type avancé (model d'ajouter)
+    ////
     $('#nbVehiclesAdvanced,#defaultAdvanced,#client option').change(function () {
         var defaultAvance = $("#defaultAdvanced").val();
         var nbVAd = $("#nbVehiclesAdvanced").val();
@@ -164,7 +166,7 @@ $(document).ready(function(){
     });
 
     ////
-    ////Prix de type avancé (model d'ajouter)
+    ////Prix de type simple (model d'ajouter)
     ////
 
     $('#nbVehiclesSimple,#defaultSimple').change(function () {

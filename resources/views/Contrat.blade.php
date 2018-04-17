@@ -13,7 +13,7 @@
 
     <script  src="/js/select.js"></script>
     <script  src="/js/alert.js"></script>
-
+    <link rel="stylesheet" href="/css/alerte.css"/>
 
     <style>
         #search_input
@@ -362,7 +362,7 @@
                                                         <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                     </div>
                                                     <div class="form-group" style="    width: 41%;margin-top: 3%">
-                                                        <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control selectpicker">
+                                                        <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
                                                         </select>
                                                     </div>
                                                     <div class="form-group" style="     margin-left: 43%; margin-top: -37%;" >
@@ -373,12 +373,12 @@
                                                     </div>
 
                                                     <div class="form-group" style="    width: 37%;margin-left: 57%;margin-top: -33%;">
-                                                        <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control selectpicker">
+                                                        <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control">
                                                         </select>
                                                     </div>
 
                                                     <span >Nombre de Vehicules :</span>
-                                                    <span id="NbVehicles" alt=""></span>
+                                                    <span id="NbVehicles" alt="" ></span>
 
                                                 </form>
 
@@ -391,18 +391,18 @@
                                                         </div>
 
                                                         <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                            <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
+                                                            <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvancedR" value="0" min="0" step="1" >
 
 
                                                         </div>
 
                                                         <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                            <input type="text" id="defaultAdvanced"  name="defaultAdvanced" class="form-control"  placeholder="Defaut" >
+                                                            <input type="text" id="defaultAdvancedR"  name="defaultAdvancedR" class="form-control"  placeholder="Defaut" >
 
                                                         </div>
                                                         <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                            <input type="text"  class="form-control" id="priceVehiclesAdvanced" name="priceVehiclesAdvanced"  placeholder="Prix" >
+                                                            <input type="text"  class="form-control" id="priceVehiclesAdvancedR" name="priceVehiclesAdvancedR"  placeholder="Prix" >
 
                                                         </div>
 
@@ -415,15 +415,15 @@
                                                         </div>
 
                                                         <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                            <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
+                                                            <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimpleR"  value="0" placeholder="Nombre des vehicules" >
 
                                                         </div>
                                                         <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                            <input type="text" id="defaultSimple" class="form-control"  placeholder="Defaut" >
+                                                            <input type="text" id="defaultSimpleR" class="form-control"  placeholder="Defaut" >
                                                         </div>
                                                         <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                            <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >
+                                                            <input type="text"  class="form-control" id="priceVehiclesSimpleR"  placeholder="Prix" >
 
                                                         </div>
 
