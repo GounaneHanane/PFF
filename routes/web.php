@@ -52,4 +52,4 @@ Route::post("/contrat/detail/price/calcul","DetailController@getPrice");
 Route::post('/contract/addVehicule/','DetailController@addVehicule');
 Route::post("/contrat//detail/price/calculEdit","DetailController@getPriceEdit");
 
-
+Route::post('/contract/detail/Modify','DetailController@updateVehicule');

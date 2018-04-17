@@ -408,5 +408,46 @@ class DetailController extends Controller
 
        return response($price);
     }
+     public function updateVehicule(Request $request)
+    {
+  if ($request->input('AddingDateEdit'))
+            $AddingDate = $request->input('AddingDateEdit');
+        else
+            $AddingDate = date("Y-m-d");
+
+
+        $date = explode('-', $AddingDate);
+
+        if ($date[2] > 1 and $date[2] < 15) {
+            $date[2] = '15';
+        }
+        if ($date[2] > 15) {
+            $time = strtotime($AddingDate);
+            $date = date("Y-m-d", strtotime("+1 month", $time));
+            $date = explode('-', $date);
+            $date[2] = '1';
+
+
+        }
+
+        $date = implode('-', $date);
+
+        $AddingDate=$date;
+        $idTypeCustomer = DB::table('vehicles')->where('vehicles.imei', '=', $request->input('imeiId'))->
+        join('customers', 'customers.id', 'vehicles.customer_id')->
+        join('types_customers', 'types_customers.id', 'customers.id_type_customer')->
+        select('types_customers.id')->pluck('id')->first();
+
+        $TypeCustomerSubscribe = DB::table('type_customers_subscribes')->where('id_type_subscribe', '=', $request->input('typesEdit'))
+            ->where('id_type_customer', '=', $idTypeCustomer)->select('type_customers_subscribes.id')->pluck('id')->first();
+        $contract = DB::table('vehicles')->where('imei','=',$request->input('imeiId'))
+            ->join('info_detail_contract','info_detail_contract.id_vehicle','vehicles.id')
+            ->update(['id_type_customer_subscribe'=>$TypeCustomerSubscribe , 'price'=>$request->input('priceVehiclesEdit'),
+                'AddingDate'=>$AddingDate ]
+            );
+        return response()->json([(['id_type_customer_subscribe'=>$TypeCustomerSubscribe , 'price'=>$request->input('priceVehiclesEdit'),
+            'AddingDate'=>$AddingDate
+    ])]);
+    }
 
 }

@@ -40,7 +40,7 @@ class RenouvelementController extends Controller
             })
             ->select('customers.id', 'customers.name')->get();
 
-               $ClientType = DB::table('types_customers')
+        $ClientType = DB::table('types_customers')
             ->select('types_customers.type as ClientType', 'types_customers.id as ClientTypeId')->get();
 
 
@@ -82,16 +82,16 @@ class RenouvelementController extends Controller
 
        $contractDate = $this->dateContract($date);
 
-      $start_datee = $contractDate[0];
-       $end_date = $contractDate[1];
+        $start_datee = $contractDate[0];
+        $end_date = $contractDate[1];
 
        $matricule_detail = "CR".$yy.$mm."-".($count+1)."-".$gid;
        $detail_contrat=new detail_contract();
-         $detail_contrat->id_contract=$id_contract;
-        $detail_contrat->start_contract=$start_datee;
-        $detail_contrat->end_contract=$end_date;
-        $detail_contrat->urlPdf='/pdf/'.$matricule_detail;
-        $detail_contrat->matricule=$matricule_detail;
+       $detail_contrat->id_contract=$id_contract;
+       $detail_contrat->start_contract=$start_datee;
+       $detail_contrat->end_contract=$end_date;
+       $detail_contrat->urlPdf='/pdf/'.$matricule_detail;
+       $detail_contrat->matricule=$matricule_detail;
        $detail_contrat->nbAvance=$request->input('nbVehiclesAdvancedR');
        $detail_contrat->nbSimple=$request->input('nbVehiclesSimpleR');
        $detail_contrat->defaultAvance=$request->input('defaultAdvancedR');
@@ -104,7 +104,6 @@ class RenouvelementController extends Controller
 
 
        return response()->json($id_contract);
-      //return response($id_contract);
    }
 
 

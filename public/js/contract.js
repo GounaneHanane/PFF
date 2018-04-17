@@ -79,6 +79,7 @@ $(document).ready(function(){
 
 
            var status = $("#status").attr('alt');
+
         $.get("/contrat/refresh/"+status,{},function(data,status){
             $('tbody *').remove();
             $('tbody').prepend(data);
@@ -129,11 +130,14 @@ $(document).ready(function(){
                 success: function (data, status) {
 
                     document.getElementById('add_dialog').close();
+                    
+                                       var status = $("#status").attr('alt');
 
-                    $.get("/contrat/refresh/", {}, function (data, status) {
-                        $('tbody *').remove();
-                        $('tbody').prepend(data);
-                    });
+                                    $.get("/contrat/refresh/"+status,{},function(data,status){
+                                        $('tbody *').remove();
+                                        $('tbody').prepend(data);
+                                    });
+
                 }
             });
         }
