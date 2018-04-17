@@ -239,7 +239,7 @@ class ContractController extends Controller
 
 
 
-        $matricule_detail = "CR".$yy.$mm."-"."01-".$gid;
+        $matricule_detail = "CR".$yy.$mm."-"."1-".$gid;
         $matricule_contract = "CR".$yy.$mm."-".$gid;
 
         $contract =  \DB::table('contracts')->insert([

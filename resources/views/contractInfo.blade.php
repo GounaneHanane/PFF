@@ -6,7 +6,7 @@
     @parent
     <link rel="stylesheet" href="/css/form.css" />
     <script  src="/js/delete.js"></script>
-    <script  src="/js/abonnement.js"></script>
+    <script  src="/js/contract.js"></script>
 
     <script src="/js/detail.js"></script>
     <script  src="/js/select.js"></script>

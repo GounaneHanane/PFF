@@ -97,7 +97,7 @@
                             <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
                             <div>
-                                <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
+                                <input type="date" class="form-control" id="datedR" name="datedR" value="{{date('Y-m-d')}}">
                             </div>
                             <div class="form-group" style="    width: 41%;margin-top: 3%">
                                 <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control selectpicker">

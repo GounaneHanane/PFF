@@ -124,11 +124,11 @@
      //// Ajouter un renouvelement
      ////
 
-     $('#AddRenGamme').click(function () {
+     $('#AddRenGamme,#AddRenGammeC').click(function () {
         var id_detail=$('#id_detail').val();
          var nbVehiclesSimple = $('#nbVehiclesSimpleR').val();
          var nbVehiclesAdvanced = $('#nbVehiclesAdvancedR').val();
-         var date = $('#dated').val();
+         var date = $('#datedR').val();
          var priceVehiclesSimple =  $('#priceVehiclesSimpleR').val();
          var priceVehiclesAdvanced =  $('#priceVehiclesAdvancedR').val();
          var defaultSimple = $("#defaultSimpleR").val();
@@ -158,7 +158,7 @@
                  defaultAdvancedR : defaultAdvanced,
                  priceVehiclesSimpleR : priceVehiclesSimple,
                  priceVehiclesAdvancedR : priceVehiclesAdvanced,
-                 dated :date,
+                 datedR :date,
                  _token: $('#GammeToken').attr('value')
              },
 
@@ -218,7 +218,7 @@ function renewal(id)
       var detail_contract=data["info"];
         var vehicles=data["vehicles"];
         $('#id_detail').val(id);
-        $('#dated').val(detail_contract.end_contract);
+        $('#datedR').val(detail_contract.end_contract);
       $('#nbVehiclesAdvancedR').val(detail_contract.nbAvance);
         $('#nbVehiclesSimpleR').val(detail_contract.nbSimple);
         $('#defaultAdvancedR').val(data["advancedPrice"].price);

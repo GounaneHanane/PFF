@@ -75,9 +75,9 @@ $(document).ready(function(){
     ////
     ////Refresh sur tous les boutons
     ////
-    $('#refresh,#AddDetail,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
+    $('#refresh,#AddDetail,#AddRenGammeC,#BtnAlertCancelC,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
 
-        alert('hola');
+
            var status = $("#status").attr('alt');
         $.get("/contrat/refresh/"+status,{},function(data,status){
             $('tbody *').remove();

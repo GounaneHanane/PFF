@@ -136,14 +136,14 @@
                                             <a class="btn btn-danger" onclick="disableContract({{$c->id_detail}})"  >
                                                 <span class="glyphicon glyphicon-trash edit trash " ></span>
                                             </a>
-                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;">
+                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 40px;">
                                                 <span class="glyphicon glyphicon-info-sign "></span>
                                             </a>
                                             <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})">
                                                 <span class="glyphicon glyphicon-pencil edit edit_pencil "></span>
                                             </a>
                                             <a onclick="renewal({{ $c->id_detail }})">
-                                                <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;"></span>
+                                                <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;width: 40px;"></span>
                                             </a>
                                         </td>
 
@@ -359,7 +359,7 @@
                                                     <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
                                                     <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
                                                     <div>
-                                                        <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
+                                                        <input type="date" class="form-control" id="datedR" name="datedR" value="{{date('Y-m-d')}}">
                                                     </div>
                                                     <div class="form-group" style="    width: 41%;margin-top: 3%">
                                                         <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
@@ -429,9 +429,9 @@
 
                                                     </div>
 
-                                                    <center><button class="btn btn-info" type="button" id="AddRenGamme" >Enregistrer</button></center>
+                                                    <center><button class="btn btn-info" type="button" id="AddRenGammeC" >Enregistrer</button></center>
                                                 </form>
-                                                <center> <button class="btn btn-info" id="BtnAlertCancel" >Cancel</button></center>
+                                                <center> <button class="btn btn-info" id="BtnAlertCancelC" onclick=" document.getElementById('add_dialog_ren').close();">Cancel</button></center>
                                             </div>
 
 
@@ -444,7 +444,7 @@
                                 </div>
 
 
-                            </dialog>s
+                            </dialog>
                         </div>
                     </div>
                 </div>
