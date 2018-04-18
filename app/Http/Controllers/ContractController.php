@@ -295,6 +295,7 @@ class ContractController extends Controller
 
     }
 
+
     public function searchContrat(Request $request)
     {
         $matricule = ($request->input('matricule') == null) ? null : $request->input('matricule');
