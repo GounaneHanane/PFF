@@ -32,13 +32,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="pull-left">Renouvelement</h3>
-                    <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
+                    <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
+                        <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
+                        <a  id="Rechercher" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-search"></span> </a>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
                              <div class="row" id="status" alt="0">
-                                <form>
+                                <form id="search_form" style="display: none;">
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">N°CONTRAT</label>
@@ -83,37 +86,35 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr style="color: #2a4f7d;">
-                                    <th class="text-center" style="width: 9.09%" >N°CONTRAT</th>
-                                    <th class="text-center" style="width: 9.09%">DATE DE DEBUT</th>
-                                    <th class="text-center" style="width: 9.09%">DATE DE FIN</th>
-                                    <th class="text-center" style="width: 9.09%">NOM</th>
-                                    <th class="text-center" style="width: 9.09%">TYPE DE CLIENT</th>
-                                    <th class="text-center" style="width: 9.09%">CONTACT</th>
-                                    <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
-                                    <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULE</th>
-                                    <th class="text-center" style="width: 9.09%">NOMBRE DE SIMPLE</th>
-                                    <th class="text-center" style="width: 9.09%">NOMBRE D'AVANCE</th>
-                                    <th class="text-center" style="width: 9.09%">PRICE</th>
-                                    <th class="text-center" style="width: 9.09%">Renouveler</th>
+                                    <th class="text-center" style="width: 12%" >N°CONTRAT</th>
+                                    <th class="text-center" style="width: 9%">DATE DE DEBUT</th>
+                                    <th class="text-center" style="width: 9%">DATE DE FIN</th>
+                                    <th class="text-center" style="width: 0%">NOM</th>
+                                    <th class="text-center" style="width: 0%">TYPE DE CLIENT</th>
+                                    <th class="text-center" style="width: 13%">TEL CONTACT</th>
+                                    <th class="text-center" style="width: 0%">N VEHICULE</th>
+                                    <th class="text-center" style="width: 0%">N SIMPLE</th>
+                                    <th class="text-center" style="width: 0%">N AVANCE</th>
+                                    <th class="text-center" style="width: 0%">PRIX</th>
+                                    <th class="text-center" style="width:1%">ACTIONS</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 @foreach($archive as $a)
                                     <tr>
-                                        <td class="text-center" style="width: 9.09%" >{{$a ->detail_matricule}}</td>
+                                        <td class="text-center"  >{{$a ->detail_matricule}}</td>
 
-                                        <td class="text-center" style="width: 9.09%">{{$a->start_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$a->end_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$a->name}}</td>
-                                        <td class="text-center" style="width:9.09%">{{ $a->type_customer}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$a->contact}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$a->phone_number}}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $a->nbVehicles }}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $a->nbSimple }}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $a->nbAvance }}</td>
-                                        <td class="text-center" style="width:9.09%">{{$a->price}}</td>
-                                        <td class="text-center" style="width:12.5%">
+                                        <td class="text-center" >{{$a->start_contract}}</td>
+                                        <td class="text-center" >{{$a->end_contract}}</td>
+                                        <td class="text-center" >{{$a->name}}</td>
+                                        <td class="text-center" >{{ $a->type_customer}}</td>
+                                        <td class="text-center" >{{$a->phone_number}}</td>
+                                        <td class="text-center"  class="nbvehicle">{{ $a->nbVehicles }}</td>
+                                        <td class="text-center"  class="nbvehicle">{{ $a->nbSimple }}</td>
+                                        <td class="text-center"  class="nbvehicle">{{ $a->nbAvance }}</td>
+                                        <td class="text-center" >{{$a->price}}</td>
+                                        <td class="text-center" >
                                             <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$a->id_detail}}','_self')" style="    width: 51%;
 "  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
                                         </td>
@@ -129,61 +130,6 @@
         </div>
     </div>
 
-    <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
 
-        <div class="container-fluid body">
-            <div class="panel">
-                <div id="add_title">
-                    <h4>Ajouter un abonnement</h4>
-                </div>
 
-                <div id="edit_title">
-                    <h4>Modifier un abonnement</h4>
-                </div>
-
-                <div class="panel-body">
-                    <div class="form" >
-
-                        <form id="addOrEdit" method="POST" action="" >
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
-                                <select id="type_abonnement" name="type_abonnement" class="form-control">
-                                    <option disabled selected id="defaultAbo">Type d'abonnement</option>
-
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select id="type_client" name="type_client" class="form-control">
-                                    <option disabled selected id="defaultCli">Type de client</option>
-
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="price" placeholder="Prix" name="price">
-                            </div>
-                            <center><button class="btn btn-info" id="addOrEditButton" onclick="addOrEdit();">Ajouter</button>
-
-                            </center>
-                        </form>
-                        <center> <button class="btn btn-info" onclick="closeDialog()">Cancel</button></center>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </dialog>
-
-    <script>
-
-        var x = document.getElementById("add_dialog");
-
-        function showDialog() {
-            x.show();
-        }
-
-        function closeDialog() {
-            x.close();
-        }
-    </script>
 @endsection

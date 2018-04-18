@@ -5,7 +5,7 @@
 @section('import')
     @parent
     <link rel="stylesheet" href="/css/form.css" />
-    <script  src="/js/delete.js"></script>
+    <link rel="stylesheet" href="/css/modal.css" />
     <script  src="/js/contract.js"></script>
 
     <script src="/js/detail.js"></script>
@@ -38,14 +38,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="pull-left">Vehicules</h3>
-                    <a  class="btn btn-primary pull-right" id="refreshDetail"><span class="glyphicon glyphicon-refresh" ></span></a>
+                    <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
+                        <a  class="btn btn-primary pull-right" id="refreshDetail"><span class="glyphicon glyphicon-refresh" ></span></a>
+                        @if( $contract->status  == 1)
+                            <a id="AddDetailModal" type="button" data-toggle="modal" data-target="#addVehicleModal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"><span class="	glyphicon glyphicon-plus"></span></i></a>
+                        @endif
+                        <a  id="Rechercher" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-search"></span> </a>
+                    </div>
                 </div>
 
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
                             <div class="row">
-                                <form>
+                                <form id="search_form" style="display: none;">
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">IMEI</label>
@@ -94,20 +100,15 @@
                                 @endforeach
 
                                 <tr>
-                                    <td><B>NombreVehicule : <span>{{ $contract->nbVehicles }}</span></b></td>
-                                    <td><b>NombreAvance : <span>{{ $contract->nbAvance }}</span></b></td>
-                                    <td><b>NombreSimple : <span>{{ $contract->nbSimple }}</span></b></td>
+                                    <td><B>Total Vehicules : <span>{{ $contract->nbVehicles }}</span></b></td>
+                                    <td><b>Nombre Avancé : <span>{{ $contract->nbAvance }}</span></b></td>
+                                    <td><b>Nombre Simple : <span>{{ $contract->nbSimple }}</span></b></td>
                                 </tr>
                             </table>
 
 
 
-                                   @if( $contract->status  == 1)
-                                      
-                                <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a id="AddDetailModal"  class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU VEHICULE</a>
-                            </div>
-                                    @endif    
+
 
                         </div>
                         <div class="panel-body">
@@ -138,7 +139,7 @@
                                         <td id="Detail{{$details->id}}price" class="text-center" style="width: 9.09%">{{$details -> price}}</td>
                                         <?php if($details->status==1)
                                            echo "<td class='text-center' style='width: 9.09%'><a class='btn btn-danger' onclick='disableDetail(".$details->id.")' > <span class='glyphicon glyphicon-trash edit trash '  ></span></a>
-                                            <a class=' btn btn-primary' id='edit_detail' onclick='editDetail(".$details->id.")' ><span class='glyphicon glyphicon-pencil edit edit_pencil '></span></a>
+                                            <a class=' btn btn-primary' id='edit_detail'data-toggle='modal' data-target='#editVehicleModal' onclick='editDetail(".$details->id.")' ><span class='glyphicon glyphicon-pencil edit edit_pencil '></span></a>
                                         </td>
                                     ";?></tr>
                                 @endforeach
@@ -147,98 +148,115 @@
 
 
 
-
-                            <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
-                                            <div class="container-fluid body">
-                                                <div class="panel">
-                                                    <div id="add_title">
-                                                        <h4>Ajouter un vehicule</h4>
-                                                    </div>
-
-
-
-                                                    <div class="panel-body">
-                                                        <div class="form" >
-
-                                                            <form id="contrat" method="POST" >
-                                                                <input type="hidden" id="VehicleToken"   name="_token" value="{{ csrf_token() }}">
-
-
-                                                                <div class="form-group">
-                                                                    <select id="vehicules" name="vehicules" data-live-search="true" class="form-control selectpicker">
-                                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un vehicule</option>
-                                                                        @foreach($vehicles as $vehicle)
-                                                                            <option value="{{$vehicle->id}}">{{$vehicle->imei}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input type="date" class="form-control" name="AddingDate" value="{{ $date =  date('Y-m-d') }}" id="AddingDate" >
-                                                                </div>
-                                                                <div class="form-group"  style=" margin-bottom: -49px;">
-                                                                    <select id="types" name="types" class="form-control">
-                                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
-                                                                        @foreach($types as $type)
-                                                                            <option value="{{$type->id}}">{{$type->type}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-
-                                                                <div class="form-group" style="margin-top: 64px;">
-
-                                                                    <input type="text" id="priceVehicles" class="form-control" value="0" placeholder="Prix" >
-
-                                                                </div>
-
-                                                            </form>
-
-                                                            <center ><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button"  >Enregistrer</button></center>
-                                                            </form>
-
-                                                            <center> <button class="btn btn-info" id="CancelEditModel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </dialog>
-                                        <dialog id="edit_dialog"  class="abonnement_dialog add_dialog ">
-
-                                            <div class="container-fluid body">
-                                                <div class="panel">
-                                                    <div id="add_title">
-                                                        <h4>Modifier un vehicule</h4>
-                                                    </div>
-                                                    <div class="panel-body">
-                                                        <div class="form" >
-                                                            <form id="contrat" method="POST" >
-                                                                <input type="hidden" id="EditVehicleToken"   name="_token" value="{{ csrf_token() }}">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control" id="imeiId" name="imeiId" disabled >
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <input type="date" class="form-control" name="AddingDateEdit" id="AddingDateEdit" >
-                                                                </div>
-                                                                <div class="form-group"  style=" margin-bottom: -49px;">
-                                                                    <select id="typesEdit" name="typesEdit" class="form-control">
-                                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
-                                                                        @foreach($types as $type)
-                                                                            <option value="{{$type->id}}">{{$type->type}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group" style=" margin-top: 64px;">
-                                                                    <input type="text" id="priceVehiclesEdit" class="form-control" value="0" placeholder="Prix" >
-                                                                </div>
-
-                                                            </form>
-                                                            <center style="      margin-top: 6%;"><button id="editVehicleBtn" class="btn btn-info" type="button"  >Enregistrer</button></center>
-                                                        </form>
-                                                        <center> <button class="btn btn-info" id="" onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <div class="modal fade" id="editVehicleModal" tabindex="-1" role="dialog" aria-labelledby="editVehicleModalTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h5 class="modal-title" id="editVehicleModalTitles">Modifier un vehicule</h5>
                                         </div>
-                                </dialog>
+                                        <div class="modal-body">
+                                            <form id="contrat" method="POST" class="form-horizontal">
+                                                <input type="hidden" id="EditVehicleToken"   name="_token" value="{{ csrf_token() }}">
+                                                <div class="form-group">
+
+                                                        <label class="col-md-4 control-label">imei : </label>
+                                                        <div class="col-md-6">
+                                                    <input type="text" class="form-control" id="imeiId" name="imeiId" disabled >
+                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">date : </label>
+                                                    <div class="col-md-6">
+                                                    <input type="date" class="form-control" name="AddingDateEdit" id="AddingDateEdit" >
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"  style=" margin-bottom: -49px;">
+                                                    <label class="col-md-4 control-label">type : </label>
+                                                    <div class="col-md-6">
+                                                    <select id="typesEdit" name="typesEdit" class="form-control">
+                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
+                                                        @foreach($types as $type)
+                                                            <option value="{{$type->id}}">{{$type->type}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin-top: 64px;" >
+                                                    <label class="col-md-4 control-label">prix : </label>
+                                                    <div class="col-md-6">
+                                                    <input type="text" id="priceVehiclesEdit" class="form-control" value="0" placeholder="Prix" >
+                                                    </div>
+                                                </div>
+
+                                                <center style="      margin-top: 6%;"><button id="editVehicleBtn" class="btn btn-info" type="button"  >Enregistrer</button></center>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <div class="modal fade" id="addVehicleModal" tabindex="-1" role="dialog" aria-labelledby="addVehicleModalTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">Ajouter un vehicule</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="contrat" class="form-horizontal" role="form" method="POST" >
+                                            <input type="hidden" id="VehicleToken"   name="_token" value="{{ csrf_token() }}">
+
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">imei : </label>
+                                                <div class="col-md-6">
+                                                    <select id="vehicules" name="vehicules" data-live-search="true" class="form-control  selectpicker">
+                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un vehicule</option>
+                                                        @foreach($vehicles as $vehicle)
+                                                            <option value="{{$vehicle->id}}">{{$vehicle->imei}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">date d'ajout : </label>
+                                                <div class="col-md-6">
+                                                    <input type="date" class="form-control" name="AddingDate" value="{{ $date =  date('Y-m-d') }}" id="AddingDate" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group"  style=" margin-bottom: -49px;">
+                                                <label class="col-md-4 control-label">type : </label>
+                                                <div class="col-md-6">
+                                                    <select id="types" name="types" class="form-control">
+                                                        <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un type</option>
+                                                        @foreach($types as $type)
+                                                            <option value="{{$type->id}}">{{$type->type}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" style="margin-top: 64px;">
+                                                <label class="col-md-4 control-label">prix : </label>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="priceVehicles" class="form-control" value="0" placeholder="Prix" >
+                                                </div>
+                                            </div>
+                                            <center ><button id="addVehicleBtn2" class="btn btn-info" onclick="AddVeihcles({{ $idContrat}})" type="button"  >Enregistrer</button></center>
+
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>

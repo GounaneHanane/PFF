@@ -10,9 +10,9 @@
 }
 .btn-info
 {
-	width: 62%;
+
 	position: inherit;
-	margin-bottom: 2%;
+
 }
 .glyphicon
 {
@@ -32,21 +32,13 @@
 	cursor: pointer;
 	margin-right: 81%;
 }
-.edit
-{
-	margin-bottom: 4%;
-	/*margin-top: 1%;*/
-	margin-top: -1%;
-}
-.abonnement_dialog .form
-{
-	margin-left: -95%;
-	margin-right: -59%;
 
-}
+
 body
 {
 	background: #f1f2f7;
+	font-size: 14px;
+
 }
 .panel
 {
@@ -106,15 +98,12 @@ h3
 }
 .add_dialog
  {
-	padding-left: 3%;
-	 padding-right: 12%;
+
 	 border: none;
 	 box-shadow:20px 20px 50px 15px grey
  }
 .edit_dialog
 {
-	padding-left: 12%;
-	padding-right: 12%;
 	border: none;
 	box-shadow:20px 20px 50px 15px grey
 }
@@ -298,6 +287,13 @@ a {
 	max-height: 240px;
 	-webkit-overflow-scrolling: touch;
 }
+.menu-btn
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-right: 5px;
+
+}
 .btn-primary {
 	background-color: #2a4f7d;
 	border-color: #2a4f7d;
@@ -307,6 +303,7 @@ a {
 	-webkit-box-shadow: none;
 	box-shadow: none;
 	border: 1px solid transparent;
+
 }
 
 .btn {
@@ -315,9 +312,7 @@ a {
 	-moz-transition: all 300ms ease-in-out;
 	transition: all 300ms ease-in-out;
 }
-.btn {
-	border-radius: 0px;
-}
+
 body {
 	background: #f1f2f7;
 

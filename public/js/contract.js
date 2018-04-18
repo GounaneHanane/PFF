@@ -69,13 +69,12 @@ $(document).ready(function(){
         $("#priceVehiclesSimple").val("");
         $("#NbVehicles").text("");
 
-        document.getElementById('add_dialog').showModal();
 
     });
     ////
     ////Refresh sur tous les boutons
     ////
-    $('#refresh,#AddDetail,#BtnAlertCancelC,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
+  /*  $('#refresh,#AddDetail,#BtnAlertCancelC,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
 
 
            var status = $("#status").attr('alt');
@@ -86,7 +85,7 @@ $(document).ready(function(){
             $('tbody').prepend(data);
         });
     });
-
+*/
 
     $("#AddRenGammeCC").click(function(){
 
@@ -128,7 +127,7 @@ $(document).ready(function(){
 
             success: function (data, status) {
 
-                document.getElementById('add_dialog_ren').close();
+
                 var NewVehicles=[];
                 $('#NewVehicles option').each(function(){
                     NewVehicles.push($(this).val());
@@ -153,13 +152,9 @@ $(document).ready(function(){
 
                     ,
                     success: function (data, status) {
+                        document.getElementById('add_dialog_ren').close();
+                        location.reload();
 
-                        var status = $("#status").attr('alt');
-
-                        $.get("/contrat/refresh/"+status,{},function(data,status){
-                            $('tbody *').remove();
-                            $('tbody').prepend(data);
-                        });
                     }});
                 //   }
 
@@ -174,7 +169,14 @@ $(document).ready(function(){
     $('.submenu-toggle').click(function () {
         $(this).parent().children('ul.submenu').toggle(200);
     });
-
+    ////
+    //// Afficher le form de recherche
+    ////
+    $('#Rechercher').click(function () {
+        if ($('#search_form').css('display')=='block')
+            $('#search_form').css('display','none');
+        else $('#search_form').css('display','block');
+    });
     ////
     ////Ajouter un contrat
     ////
@@ -212,14 +214,7 @@ $(document).ready(function(){
 
                 success: function (data, status) {
 
-                    document.getElementById('add_dialog').close();
-                    
-                                       var status = $("#status").attr('alt');
-
-                                    $.get("/contrat/refresh/"+status,{},function(data,status){
-                                        $('tbody *').remove();
-                                        $('tbody').prepend(data);
-                                    });
+                    location.reload();
 
                 }
             });
@@ -364,10 +359,7 @@ $(document).ready(function(){
                ;
                 var status = $("#status").attr('alt');
 
-                $.get("/contrat/refresh/"+status,{},function(data,status){
-                    $('tbody *').remove();
-                    $('tbody').prepend(data);
-                });
+                location.reload();
                 document.getElementById('edit_dialog').close()
             }
 
@@ -389,8 +381,6 @@ $(document).ready(function(){
 ////
 
 function editContratDialog(id) {
-    document.getElementById('edit_dialog').showModal();
-
 
     $.get("/contrat/update/" + id, {}, function (data, status) {
 
@@ -416,7 +406,7 @@ function editContratDialog(id) {
 
 
 
-
+        $('#clientMaj option').remove();
         $('#clientMaj').append($('<option id="added"  value="' + customer.id + '">' + customer.name + '</option>'));
 
 
@@ -435,10 +425,6 @@ function disableContract(id)
         $("#Contrat"+id).remove();
         var status = $("#status").attr('alt');
 
-        $.get("/contrat/refresh/"+status,{},function(data,status){
-
-            $('tbody *').remove();
-            $('tbody').prepend(data);
-        });
+        location.reload();
     });
 }

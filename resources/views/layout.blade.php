@@ -19,8 +19,12 @@
     {
         border-bottom: 2px solid #3498DB;
         padding-bottom: 4%;
-
-
+    }
+    .btn
+    {
+        border-radius: 3px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 </style>
     @show

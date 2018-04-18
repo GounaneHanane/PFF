@@ -56,7 +56,7 @@ class ContractController extends Controller
 
                 'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
                 'contract_warning.count as count',
-                DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
+                DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))->orderBy('detail_contract.id','desc')
             ->get();
 
         $hasContrat = DB::table('customers')

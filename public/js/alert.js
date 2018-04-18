@@ -1,10 +1,10 @@
  $(document).ready(function() {
 
-   
+
 
      ////
-    //// periode de l'alerte
-    ////
+     //// periode de l'alerte
+     ////
 
     $("#alert").change(function () {
 
@@ -27,12 +27,7 @@
     $("#BtnAlertCancel,#AddRenGamme").click(function()
     {
             document.getElementById('add_dialog_ren').close();
-             $.get("/alert/refresh/", {}, function (data, status) {
-
-            $('tbody *').remove();
-            $('tbody').prepend(data);
-
-        });
+        location.reload();
 
     });
 
@@ -136,12 +131,6 @@
          var defaultSimple = $("#defaultSimpleR").val();
          var defaultAdvanced = $("#defaultAdvancedR").val();
 
-      /*   $('#NewVehicles option').each(function () {
-
-            $('#NewVehicles option').attr('selected','true');
-
-        });*/
-
 
 
 
@@ -165,7 +154,7 @@
 
              success: function (data, status) {
 
-                 document.getElementById('add_dialog_ren').close();
+
                  var NewVehicles=[];
          $('#NewVehicles option').each(function(){
              NewVehicles.push($(this).val());
@@ -190,10 +179,11 @@
 
                         ,
                         success: function (data, status) {
-
+                            document.getElementById('add_dialog_ren').close();
+                            location.reload();
 
                  }});
-              //   }
+
 
 
 
@@ -207,12 +197,12 @@
 
 function renewal(id)
 {
-    document.getElementById('add_dialog_ren').showModal();
     $.get("/alerte/renv/" + id, {}, function (data, status) {
-
+        console.log(data);
       var detail_contract=data["info"];
         var vehicles=data["vehicles"];
         $('#id_detail').val(id);
+
         $('#datedR').val(detail_contract.end_contract);
       $('#nbVehiclesAdvancedR').val(detail_contract.nbAvance);
         $('#nbVehiclesSimpleR').val(detail_contract.nbSimple);

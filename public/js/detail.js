@@ -83,7 +83,7 @@ $(document).ready(function(){
     $("#AddDetailModal").click(function(){
 
 
-        document.getElementById('add_dialog').showModal();
+
         $("#vehicules").val("");
         $("#AddingDate").val();
         $("#types").val("0");
@@ -99,12 +99,7 @@ $(document).ready(function(){
 
     $("#refreshDetail,#editVehicleBtn,#CancelEditModel,#addVehicleBtn2").click(function(){
 
-        var id = $('.body').attr('alt');
-
-        $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
-            $('#tableBody *').remove();
-            $('#tableBody').prepend(data);
-        });
+      //  location.reload();
 
     });
     ////
@@ -136,11 +131,7 @@ $(document).ready(function(){
             success: function (data, status) {
                 var id = $('.body').attr('alt');
 
-                $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
-                    $('#tableBody *').remove();
-                    $('#tableBody').prepend(data);
-                });
-
+                location.reload();
                 document.getElementById('edit_dialog').close();
             }
 
@@ -206,7 +197,7 @@ $(document).ready(function(){
 
 
 
-        document.getElementById('edit_dialog').showModal();
+
 
         $.get("/details/info/" + id, {}, function (data, status) {
 
@@ -276,8 +267,6 @@ $(document).ready(function(){
                         },
                         success: function (data, status) {
                             var id = $('.body').attr('alt');
-
-                            document.getElementById('add_dialog').close();
                             var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
                             console.log(data.dated);
                             for(var j = 0;j<inputs.length;j++)
@@ -292,12 +281,7 @@ $(document).ready(function(){
                                 }
 
 
-                                $.get("/contrat/detail/refresh/"+id, {}, function (data, status) {
-
-                                    $('#tableBody *').remove();
-                                    $('#tableBody').prepend(data);
-
-                                });
+                                location.reload();
 
 
 
@@ -357,10 +341,7 @@ function disableDetail(idDet,idCon)
 
 
         $("#Detail"+idDet).remove();
-        /* $.get("/contrat/detail/refresh/"+idCon, {}, function (data, status) {
+        location.reload();
 
-             $('tbody *').remove();
-             $('tbody').prepend(data);
-         });*/
     });
 }

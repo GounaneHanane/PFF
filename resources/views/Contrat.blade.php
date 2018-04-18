@@ -38,13 +38,17 @@
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="pull-left">Contrats</h3>
-                    <a class="btn btn-primary pull-right" id="refresh"><span class="glyphicon glyphicon-refresh" ></span></a>
+                    <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
+                    <a class="btn btn-primary pull-right menu-btn" id="refresh"><span class="glyphicon glyphicon-refresh " ></span></a>
+                        <a  id="addContractModal" data-toggle="modal" data-target="#addContratModal" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-plus"></span> </a>
+                        <a  id="Rechercher" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-search"></span> </a>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix">
                             <div class="row" id="status" alt="1">
-                                <form>
+                                <form id="search_form" style="display: none;">
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
                                             <label class="control-label">N°CONTRAT</label>
@@ -85,27 +89,21 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="panel-heading clearfix">
-                            <div class="pull-right col-md-2 col-lg-3"><br>
-                                <a  id="addContractModal" class="btn btn-primary"><i class="fa fa-plus-square" aria-hidden="true"></i>NOUVEAU CONTRAT</a>
-                            </div>
-                        </div>
                         <div class="panel-body">
                             <table class="table table-bordered" id="contratTable">
                                 <thead>
                                 <tr style="color: #2a4f7d;">
-                                    <th class="text-center" style="width: 9.09%" >N°CONTRAT</th>
-                                    <th class="text-center" style="width: 9.09%">DATE DE DEBUT</th>
-                                    <th class="text-center" style="width: 9.09%">DATE DE FIN</th>
-                                    <th class="text-center" style="width: 9.09%">NOM</th>
-                                    <th class="text-center" style="width: 9.09%">TYPE DE CLIENT</th>
-                                    <th class="text-center" style="width: 9.09%">CONTACT</th>
-                                    <th class="text-center" style="width: 9.09%">TEL CONTACT</th>
-                                    <th class="text-center" style="width: 9.09%">NOMBRE DE VEHICULE</th>
-                                    <th class="text-center" style="width: 9.09%">NOMBRE DE SIMPLE</th>
-                                    <th class="text-center" style="width: 9.09%">NOMBRE D'AVANCE</th>
-                                    <th class="text-center" style="width: 9.09%">PRICE</th>
-                                    <th class="text-center" style="width: 9.09%">ACTIONS</th>
+                                    <th class="text-center" style="width: 12%" >N°CONTRAT</th>
+                                    <th class="text-center" style="width: 9%">DATE DE DEBUT</th>
+                                    <th class="text-center" style="width: 9%">DATE DE FIN</th>
+                                    <th class="text-center" style="width: 0%">NOM</th>
+                                    <th class="text-center" style="width: 0%">TYPE DE CLIENT</th>
+                                    <th class="text-center" style="width: 13%">TEL CONTACT</th>
+                                    <th class="text-center" style="width: 0%">N VEHICULE</th>
+                                    <th class="text-center" style="width: 0%">N SIMPLE</th>
+                                    <th class="text-center" style="width: 0%">N AVANCE</th>
+                                    <th class="text-center" style="width: 0%">PRIX</th>
+                                    <th class="text-center" style="width:13%">ACTIONS</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -119,31 +117,30 @@
                                 else echo "<tr id='Contrat{{ $c->id_contract  }}'>";
                                     ?>
 
-                                        <td class="text-center" style="width: 9.09%" >{{$c ->detail_matricule}}</td>
+                                        <td class="text-center"  >{{$c ->detail_matricule}}</td>
 
-                                        <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->end_contract}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->name}}</td>
-                                        <td class="text-center" style="width:9.09%">{{ $c->type_customer}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->contact}}</td>
-                                        <td class="text-center" style="width: 9.09%">{{$c->phone_number}}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbVehicles }}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbSimple }}</td>
-                                        <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbAvance }}</td>
-                                        <td class="text-center" style="width:9.09%">{{$c->price}}</td>
-                                        <td class="text-center" style="width: 15%">
+                                        <td class="text-center" >{{$c->start_contract}}</td>
+                                        <td class="text-center">{{$c->end_contract}}</td>
+                                        <td class="text-center" >{{$c->name}}</td>
+                                        <td class="text-center" >{{ $c->type_customer}}</td>
+                                        <td class="text-center" >{{$c->phone_number}}</td>
+                                        <td class="text-center" class="nbvehicle">{{ $c->nbVehicles }}</td>
+                                        <td class="text-center" class="nbvehicle">{{ $c->nbSimple }}</td>
+                                        <td class="text-center"  class="nbvehicle">{{ $c->nbAvance }}</td>
+                                        <td class="text-center" >{{$c->price}}</td>
+                                        <td class="text-center" >
 
                                             <a class="btn btn-danger" onclick="disableContract({{$c->id_detail}})"  >
                                                 <span class="glyphicon glyphicon-trash edit trash " ></span>
                                             </a>
-                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 40px;">
+                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" >
                                                 <span class="glyphicon glyphicon-info-sign "></span>
                                             </a>
-                                            <a class=" btn btn-primary" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})">
+                                            <a class=" btn btn-primary" data-toggle="modal" data-target="#editContratModal" id="edit_abonnement" onclick="editContratDialog({{$c->id_detail}})">
                                                 <span class="glyphicon glyphicon-pencil edit edit_pencil "></span>
                                             </a>
-                                            <a onclick="renewal({{ $c->id_detail }})">
-                                                <span class="btn btn-success glyphicon glyphicon-ok"  style=" float: inherit;width: 40px;"></span>
+                                            <a class="btn btn-success " data-toggle="modal" data-target="#RenContrat" onclick="renewal({{ $c->id_detail }})">
+                                                <span class="glyphicon glyphicon-ok"  ></span>
                                             </a>
                                         </td>
 
@@ -155,39 +152,41 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            <dialog id="add_dialog"  class="abonnement_dialog add_dialog ">
-
-                            <div class="container-fluid body">
-                                <div class="panel">
-                                    <div id="add_title">
-                                        <h4>Ajouter un Contrat</h4>
-                                    </div>
-
-
-
-                                    <div class="panel-body">
-                                        <div class="form" >
-
-                                            <form id="contrat" method="POST" >
+                            <div class="modal fade" id="addContratModal" tabindex="-1" role="dialog" aria-labelledby="addContratModalTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h5 class="modal-title" id="addContratModalTitle">Ajouter un Contrat</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="contrat" method="POST"  class="form-horizontal" >
                                                 <input type="hidden" id="ContratToken"   name="_token" value="{{ csrf_token() }}">
 
                                                 <div>
+                                                    <label class="col-md-4 control-label">date début : </label>
+                                                    <div class="col-md-6">
                                                     <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <select id="client" name="client" data-live-search="true" tabindex="-98" class="form-control selectpicker">
+                                                    <label class="col-md-4 control-label">client : </label>
+                                                    <div class="col-md-6">
+                                                    <select id="client"  name="client" data-live-search="true" tabindex="-98" class="form-control selectpicker">
                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un client</option>
                                                         @foreach($clients as $c)
                                                             <option value="{{ $c->id }}">{{ $c->name }}</option>
                                                         @endforeach
                                                     </select>
-
-
+                                                    </div>
                                                 </div>
+                                                <div class="form-group">
+                                                <label class="col-md-4 control-label"> <span >Nombre de Vehicules :</span> </label>
 
-                                                <span >Nombre de Vehicules :</span>
-                                                <span id="NbVehicles" alt=""></span>
-
+                                                    <label class="col-md-4 control-label"> <span class="col-md-6" id="NbVehicles"></span></label>
+                                        </div><br>
                                             </form>
 
                                             <form id="vehicles" method="POST">
@@ -195,10 +194,10 @@
                                                 <div >
 
                                                     <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
-                                                       <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
+                                                        <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
                                                     </div>
 
-                                             <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                    <div class="form-group" style="    width: 25%;    margin-left: 25%;">
                                                         <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvanced" value="0" min="0" step="1" >
 
 
@@ -218,72 +217,65 @@
                                                 <div  style="margin-bottom: 11%;">
 
                                                     <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
-                                                    <input type="Text" value="simple" id="Simple" disabled class="form-control">
+                                                        <input type="Text" value="simple" id="Simple" disabled class="form-control">
 
-                                                </div>
+                                                    </div>
 
                                                     <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                    <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
+                                                        <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimple"  value="0" placeholder="Nombre des vehicules" >
 
-                                                </div>
+                                                    </div>
                                                     <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
-                                                    <input type="text" id="defaultSimple" class="form-control"  placeholder="Defaut" >
-                                                </div>
+                                                        <input type="text" id="defaultSimple" class="form-control"  placeholder="Defaut" >
+                                                    </div>
                                                     <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
                                                         <input type="text"  class="form-control" id="priceVehiclesSimple"  placeholder="Prix" >
 
                                                     </div>
 
-                                        </div>
+                                                </div>
 
                                                 <center><button class="btn btn-info" type="button" id="AddDetailGamme" >Enregistrer</button></center>
                                             </form>
-                                            <center> <button class="btn btn-info" id="btnCancel" onclick="document.getElementById('add_dialog').close();">Cancel</button></center>
                                         </div>
-
 
                                     </div>
-
-
-
-
                                 </div>
                             </div>
-
-
-                        </dialog>
-
-
-                            <dialog id="edit_dialog"  class="abonnement_dialog add_dialog ">
-
-                                <div class="container-fluid body" >
-                                    <div class="panel">
-
-                                        <div id="edit_title">
-                                            <h4>Modifier un abonnement</h4>
+                            <div class="modal fade" id="editContratModal" tabindex="-1" role="dialog" aria-labelledby="editContratModalTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h5 class="modal-title" id="editContratModalTitle">Modifier un contrat</h5>
                                         </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal" id="contrat" method="POST">
+                                            <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
 
-                                        <div class="panel-body">
-                                            <div class="form" >
-                                                <form id="contrat" method="POST" >
-                                                    <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
+                                            <div>
+                                                <label class="col-md-4 control-label">date début : </label>
+                                                <div class="col-md-6">
+                                                <input type="date" class="form-control" id="datedModify" name="dated">
+                                                </div>
+                                            </div>
 
-                                                    <div>
-                                                        <input type="date" class="form-control" id="datedModify" name="dated">
-                                                    </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">client : </label>
+                                                <div class="col-md-6">
+                                                <select id="clientMaj" name="client" class="form-control" disabled>
 
-                                                    <div class="form-group">
+                                                </select>
+                                                </div>
+                                            </div>
+                                                <label class="col-md-4 control-label"> <span >Nombre de Vehicules :</span> </label>
 
-                                                        <select id="clientMaj" name="client" class="form-control" disabled>
+                                            <label class="col-md-4 control-label"><span id="ModifyNbVehicles" alt=""></span></label>
 
-                                                        </select>
-                                                    </div>
-
-                                                    <span >Nombre de Vehicules :</span>
-                                                    <span id="ModifyNbVehicles" alt=""></span>
-
-                                                </form>
+                                            </form>
                                             <form id="addOrEdit" method="POST">
                                                 <input type="hidden" id="ModifyGammeToken"   name="_token" value="{{ csrf_token() }}">
 
@@ -327,124 +319,108 @@
 
                                                 </div>
                                                 <center><button class="btn btn-info" type="button" id="ModfiyContract">Modifier</button></center>
-                                                </form>
-                                                <center> <button class="btn btn-info" id="CancelContract"onclick="document.getElementById('edit_dialog').close();">Cancel</button></center>
-                                            </div>
-
-
+                                            </form>
                                         </div>
-
-
-
 
                                     </div>
                                 </div>
+                            </div>
 
-
-                            </dialog>
-                            <dialog id="add_dialog_ren"  class="abonnement_dialog add_dialog ">
-
-                                <div class="container-fluid body">
-                                    <div class="panel">
-                                        <div id="add_title">
-                                            <h4>Ajouter un Contrat</h4>
+                            <div class="modal fade" id="RenContrat" tabindex="-1" role="dialog" aria-labelledby="RenContratTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h5 class="modal-title" id="RenContratTitle">Rouneveler un contrat</h5>
                                         </div>
-
-
-
-                                        <div class="panel-body">
-                                            <div class="form" >
-
-                                                <form id="contrat" method="POST">
-                                                    <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
-                                                    <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
-                                                    <div>
-                                                        <input type="date" class="form-control" id="datedR" name="datedR" value="{{date('Y-m-d')}}">
+                                        <div class="modal-body">
+                                            <form id="contrat" class="form-horizontal" method="POST">
+                                                <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
+                                                <div>
+                                                    <label class="col-md-4 control-label">date début : </label>
+                                                    <div class="col-md-6">
+                                                    <input type="date" class="form-control" id="datedR" name="datedR" value="{{date('Y-m-d')}}">
                                                     </div>
-                                                    <div class="form-group" style="    width: 41%;margin-top: 3%">
-                                                        <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
-                                                        </select>
                                                     </div>
-                                                    <div class="form-group" style="     margin-left: 43%; margin-top: -37%;" >
-                                                        <button type="button" class="form-control" id="AllOut" style="width: 17%"><<</button>
-                                                        <button type="button" class="form-control" id="OneOut" style="width:17%"><</button>
-                                                        <button type="button" class="form-control" id="OneIn" style="width: 17%">></button>
-                                                        <button type="button" class="form-control" href="#" id="AllIn" style="width: 17%">>></button>
+                                                <div class="form-group col-md-4" style="    width: 41%;margin-top: 3%">
+                                                    <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-4" style="     margin-left: 43%; margin-top: -31%;" >
+                                                    <button type="button" class="form-control" id="AllOut" style="width: 24%"><<</button>
+                                                    <button type="button" class="form-control" id="OneOut" style="width:24%"><</button>
+                                                    <button type="button" class="form-control" id="OneIn" style="width: 24%">></button>
+                                                    <button type="button" class="form-control" href="#" id="AllIn" style="width: 24%">>></button>
+                                                </div>
+
+                                                <div class="form-group col-md-4" style="    width: 37%;margin-left: 57%;margin-top: -35%;">
+                                                    <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control">
+                                                    </select>
+                                                </div>
+
+                                                <label class="col-md-4 control-label"><span >Nombre de Vehicules :</span></label>
+                                                <label class="col-md-4 control-label"><span id="NbVehicles" alt="" ></span></label>
+
+                                            </form>
+
+                                            <form id="vehicles" method="POST">
+
+                                                <div >
+
+                                                    <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
+                                                        <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
                                                     </div>
 
-                                                    <div class="form-group" style="    width: 37%;margin-left: 57%;margin-top: -33%;">
-                                                        <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control">
-                                                        </select>
-                                                    </div>
+                                                    <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                        <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvancedR" value="0" min="0" step="1" >
 
-                                                    <span >Nombre de Vehicules :</span>
-                                                    <span id="NbVehicles" alt="" ></span>
-
-                                                </form>
-
-                                                <form id="vehicles" method="POST">
-
-                                                    <div >
-
-                                                        <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
-                                                            <input type="Text" value="Avancé"  id="Advanced"disabled class="form-control">
-                                                        </div>
-
-                                                        <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                            <input type="number"  class="form-control"  placeholder="Nombre des vehicules" id="nbVehiclesAdvancedR" value="0" min="0" step="1" >
-
-
-                                                        </div>
-
-                                                        <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
-
-                                                            <input type="text" id="defaultAdvancedR"  name="defaultAdvancedR" class="form-control"  placeholder="Defaut" >
-
-                                                        </div>
-                                                        <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                            <input type="text"  class="form-control" id="priceVehiclesAdvancedR" name="priceVehiclesAdvancedR"  placeholder="Prix" >
-
-                                                        </div>
-
-                                                    </div>
-                                                    <div  style="margin-bottom: 11%;">
-
-                                                        <div class="form-group" style="    width: 25%;    margin-bottom: -7%;">
-                                                            <input type="Text" value="simple" id="Simple" disabled class="form-control">
-
-                                                        </div>
-
-                                                        <div class="form-group" style="    width: 25%;    margin-left: 25%;">
-                                                            <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimpleR"  value="0" placeholder="Nombre des vehicules" >
-
-                                                        </div>
-                                                        <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
-
-                                                            <input type="text" id="defaultSimpleR" class="form-control"  placeholder="Defaut" >
-                                                        </div>
-                                                        <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
-                                                            <input type="text"  class="form-control" id="priceVehiclesSimpleR"  placeholder="Prix" >
-
-                                                        </div>
 
                                                     </div>
 
-                                                    <center><button class="btn btn-info" type="button" id="AddRenGammeCC" >Enregistrer</button></center>
-                                                </form>
-                                                <center> <button class="btn btn-info" id="BtnAlertCancelC" onclick=" document.getElementById('add_dialog_ren').close();">Cancel</button></center>
-                                            </div>
+                                                    <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
 
+                                                        <input type="text" id="defaultAdvancedR"  name="defaultAdvancedR" class="form-control"  placeholder="Defaut" >
 
+                                                    </div>
+                                                    <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                                        <input type="text"  class="form-control" id="priceVehiclesAdvancedR" name="priceVehiclesAdvancedR"  placeholder="Prix" >
+
+                                                    </div>
+
+                                                </div>
+                                                <div>
+
+                                                    <div class="form-group" style="    width: 25%;    margin-bottom: -6%;">
+                                                        <input type="Text" value="simple" id="Simple" disabled class="form-control">
+
+                                                    </div>
+
+                                                    <div class="form-group" style="    width: 25%;    margin-left: 25%;">
+                                                        <input type="number" min="0" step="1"  class="form-control" id="nbVehiclesSimpleR"  value="0" placeholder="Nombre des vehicules" >
+
+                                                    </div>
+                                                    <div class="form-group" style="    width: 25%;margin-left: 49%;margin-top: -49px;">
+
+                                                        <input type="text" id="defaultSimpleR" class="form-control"  placeholder="Defaut" >
+                                                    </div>
+                                                    <div class="form-group" style="    width: 20%; margin-left: 73%;   margin-top: -49px">
+                                                        <input type="text"  class="form-control" id="priceVehiclesSimpleR"  placeholder="Prix" >
+
+                                                    </div>
+
+                                                </div>
+
+                                                <center><button class="btn btn-info" type="button" id="AddRenGammeCC" >Enregistrer</button></center>
+                                            </form>
                                         </div>
-
-
-
 
                                     </div>
                                 </div>
+                            </div>
 
-
-                            </dialog>
                         </div>
                     </div>
                 </div>
