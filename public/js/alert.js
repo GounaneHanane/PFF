@@ -29,7 +29,7 @@
      //// Fermer le model
      ////
 
-    $("#BtnAlertCancel").click(function()
+    $("#BtnAlertCancel,#AddRenGamme").click(function()
     {
             document.getElementById('add_dialog_ren').close();
              $.get("/alert/refresh/", {}, function (data, status) {
@@ -141,7 +141,6 @@
          var defaultSimple = $("#defaultSimpleR").val();
          var defaultAdvanced = $("#defaultAdvancedR").val();
 
-
       /*   $('#NewVehicles option').each(function () {
 
             $('#NewVehicles option').attr('selected','true');
@@ -196,12 +195,6 @@
 
                         ,
                         success: function (data, status) {
-                                                $.get("/alert/refresh/", {}, function (data, status) {
-
-                            $('tbody *').remove();
-                            $('tbody').prepend(data);
-
-                        });
 
 
                  }});

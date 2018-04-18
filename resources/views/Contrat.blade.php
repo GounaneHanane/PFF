@@ -429,7 +429,7 @@
 
                                                     </div>
 
-                                                    <center><button class="btn btn-info" type="button" id="AddRenGammeC" >Enregistrer</button></center>
+                                                    <center><button class="btn btn-info" type="button" id="AddRenGammeCC" >Enregistrer</button></center>
                                                 </form>
                                                 <center> <button class="btn btn-info" id="BtnAlertCancelC" onclick=" document.getElementById('add_dialog_ren').close();">Cancel</button></center>
                                             </div>

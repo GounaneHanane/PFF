@@ -259,7 +259,10 @@ class ContractController extends Controller
                 DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
             ->get();
 
+
         return view('ContractLines', ['contracts' => $c] );
+
+       // return response($c[1]->nbVehicles);
     }
 
     public function CountVehicles($idCustomer)
@@ -388,7 +391,7 @@ class ContractController extends Controller
         $id=$request->input('id_detail');
         $contract_id=DB::table('detail_contract')->where('id','=',$id)->select('id_contract')->pluck('id_contract')->first();
         $new_id=DB::table('detail_contract')->where('id_contract','=',$contract_id)->where('status','=','1')->select('id')->pluck('id')->first();
-        $date = $request->input("dated");
+        $date = $request->input("datedR");
         $contractDate = $this->dateContract($date);
         $start_datee = $contractDate[0];
         $vehicles=$request->input('NewVehicles');

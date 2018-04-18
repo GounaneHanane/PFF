@@ -75,16 +75,99 @@ $(document).ready(function(){
     ////
     ////Refresh sur tous les boutons
     ////
-    $('#refresh,#AddDetail,#AddRenGammeC,#BtnAlertCancelC,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
+    $('#refresh,#AddDetail,#BtnAlertCancelC,#AddDetailGamme,#btnCancel,#CancelContract,#ModfiyContract').click(function(){
 
 
            var status = $("#status").attr('alt');
 
         $.get("/contrat/refresh/"+status,{},function(data,status){
+
             $('tbody *').remove();
             $('tbody').prepend(data);
         });
     });
+
+
+    $("#AddRenGammeCC").click(function(){
+
+        var id_detail=$('#id_detail').val();
+        var nbVehiclesSimple = $('#nbVehiclesSimpleR').val();
+        var nbVehiclesAdvanced = $('#nbVehiclesAdvancedR').val();
+        var date = $('#datedR').val();
+        var priceVehiclesSimple =  $('#priceVehiclesSimpleR').val();
+        var priceVehiclesAdvanced =  $('#priceVehiclesAdvancedR').val();
+        var defaultSimple = $("#defaultSimpleR").val();
+        var defaultAdvanced = $("#defaultAdvancedR").val();
+
+        /*   $('#NewVehicles option').each(function () {
+
+              $('#NewVehicles option').attr('selected','true');
+
+          });*/
+
+
+
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '/renewal/',
+            type: 'POST',
+            data: {
+                id_detail: id_detail,
+                nbVehiclesSimpleR: nbVehiclesSimple,
+                nbVehiclesAdvancedR : nbVehiclesAdvanced,
+                defaultSimpleR : defaultSimple,
+                defaultAdvancedR : defaultAdvanced,
+                priceVehiclesSimpleR : priceVehiclesSimple,
+                priceVehiclesAdvancedR : priceVehiclesAdvanced,
+                datedR :date,
+                _token: $('#GammeToken').attr('value')
+            },
+
+            success: function (data, status) {
+
+                document.getElementById('add_dialog_ren').close();
+                var NewVehicles=[];
+                $('#NewVehicles option').each(function(){
+                    NewVehicles.push($(this).val());
+
+                });
+
+                var id_detail=$('#id_detail').val();
+
+
+
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '/renewal/vehicles/',
+                    type: 'POST',
+                    data: {
+                        NewVehicles: NewVehicles,
+                        id_detail:id_detail,
+                        _token: $('#GammeToken').attr('value')}
+
+                    ,
+                    success: function (data, status) {
+
+                        var status = $("#status").attr('alt');
+
+                        $.get("/contrat/refresh/"+status,{},function(data,status){
+                            $('tbody *').remove();
+                            $('tbody').prepend(data);
+                        });
+                    }});
+                //   }
+
+
+
+            }});
+    });
+
     ////
     //// Menu
     ////
@@ -278,11 +361,14 @@ $(document).ready(function(){
             type: 'POST',
 
             success: function (data, status) {
-                document.getElementById('edit_dialog').close();
-                $.get("/contrat/refresh/",{},function(data,status){
+               ;
+                var status = $("#status").attr('alt');
+
+                $.get("/contrat/refresh/"+status,{},function(data,status){
                     $('tbody *').remove();
                     $('tbody').prepend(data);
                 });
+                document.getElementById('edit_dialog').close()
             }
 
         });
@@ -347,5 +433,12 @@ function disableContract(id)
 
 
         $("#Contrat"+id).remove();
+        var status = $("#status").attr('alt');
+
+        $.get("/contrat/refresh/"+status,{},function(data,status){
+
+            $('tbody *').remove();
+            $('tbody').prepend(data);
+        });
     });
 }

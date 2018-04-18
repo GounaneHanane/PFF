@@ -1,13 +1,18 @@
 @foreach($contracts as $c)
 
-    <?php if($c->nbVehicles == 0)
+    @if($c->nbVehicles == 0)
 
-        echo "<tr style='background-color: #f3d5aa' id='Contrat{{ $c->id_contract  }}'>";
-    else if($c->nbVehicles!=$c->count)
-        echo "<tr style='background-color: #f6f4ff' id='Contrat{{ $c->id_contract  }}'>";
-    else echo "<tr id='Contrat{{ $c->id_contract  }}'>";
-    ?>
-    <tr id="Contrat{{ $c->id_contract  }}">
+        <tr style='background-color: #f3d5aa' id='Contrat{{ $c->id_contract  }}'>
+
+
+
+    @elseif($c->nbVehicles!=$c->count)
+        <tr style='background-color: #f6f4ff' id='Contrat{{ $c->id_contract  }}'>
+    @else
+        <tr id='Contrat{{ $c->id_contract  }}'>
+
+    @endif
+
     <td class="text-center" style="width: 9.09%" >{{$c ->detail_matricule}}</td>
 
     <td class="text-center" style="width: 9.09%">{{$c->start_contract}}</td>
@@ -20,6 +25,8 @@
     <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbSimple }}</td>
     <td class="text-center" style="width: 9.09%" class="nbvehicle">{{ $c->nbAvance }}</td>
     <td class="text-center" style="width:9.09%">{{$c->price}}</td>
+
+
 
     @if($c->status == 1)
             <td class="text-center" style="width: 15%">

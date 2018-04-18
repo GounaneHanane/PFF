@@ -58,11 +58,8 @@ class RenouvelementController extends Controller
        $id_contract= DB::table('detail_contract')->where('detail_contract.id','=',$id)->select('detail_contract.id_contract')->pluck('id_contract')->first();
       $start_date= DB::table('detail_contract')->where('id', '<=' ,DB::raw('All (select id from detail_contract where id_contract = '.$id_contract.")"))
            ->select('start_contract')->pluck('start_contract')->first();
-       $last_id = DB::table('detail_contract')->orderBy('id','desc')->select('detail_contract.id')->pluck('id')->first();
-       if($last_id == null)
-           $last_id = 0;
 
-       $last_id++;
+
         $count=DB::table('detail_contract')->where('id_contract','=',$id_contract)
            ->count();
 
@@ -72,13 +69,13 @@ class RenouvelementController extends Controller
 
        $mm = date("m",strtotime($start_date));
 
-       $gid =  str_pad($last_id, 4, '0', STR_PAD_LEFT);
+       $gid =  str_pad($id_contract, 4, '0', STR_PAD_LEFT);
      //   $count=str_pad($count,2,0,STR_PAD_LEFT);
 
 
        $total = $request->input('defaultAdvancedR')* $request->input('nbVehiclesAdvancedR') +$request->input('nbVehiclesSimpleR')*$request->input('defaultSimpleR') ;
 
-       $date = $request->input("dated");
+       $date = $request->input("datedR");
 
        $contractDate = $this->dateContract($date);
 

@@ -282,7 +282,6 @@ $(document).ready(function(){
                         success: function (data, status) {
                             var id = $('.body').attr('alt');
 
-
                             document.getElementById('add_dialog').close();
                             var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
                             console.log(data.dated);
