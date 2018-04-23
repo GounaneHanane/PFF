@@ -129,9 +129,11 @@ function Footer()
     $this->Cell(60,1,'Pour OPENTECH , nom et signature',0,1,'R');
 
     $whois = "Pour ".$this->_info->name." , nom et signature";
-    $this->choice(1,1);
+    $count = strlen($this->_info->name);
+    $this->Cell($count);
     $this->Cell(150,1,$whois,0,1,'R');
 
+    
     $this->Ln(2);
 
     $buffer = "";
@@ -157,7 +159,7 @@ function Footer()
 
        // Titre
    
-           $this->MultiCell(180,3,
+           $this->MultiCell(190,3,
            $para
            ,0,'C');
 
