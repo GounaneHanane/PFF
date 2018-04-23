@@ -22,7 +22,7 @@ Route::post('/contract/Modify','ContractController@UpdateContract');
 Route::get('/contrat/countVehicles/{idVehicle}','ContractController@CountVehicles');
 Route::get('/contrat/delete/{id}','ContractController@DisableContract');
 Route::get('/contrat/update/{id}', 'ContractController@update');
-Route::get("/contrat/price/{idClient}/",'OMSContratController@getPrice');
+Route::get("/contrat/price/{idClient}/",'ContractController@getPrice');
 Route::get('/contrat/refresh/{status}','ContractController@refresh'); // Renewal
 Route::get('/contrat/search/', 'ContractController@searchContrat');// Renewal
 Route::post('/renewal/vehicles','ContractController@vehicleRenewal'); // alert
@@ -53,3 +53,7 @@ Route::post('/contract/addVehicule/','DetailController@addVehicule');
 Route::post("/contrat//detail/price/calculEdit","DetailController@getPriceEdit");
 
 Route::post('/contract/detail/Modify','DetailController@updateVehicule');
+
+
+Route::get('/pdf/{id}','GenerateController@test');
+Route::get('/pdf/contract/{matricule}','GenerateCController@contract');
