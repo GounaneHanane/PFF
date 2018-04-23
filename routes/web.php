@@ -53,3 +53,7 @@ Route::post('/contract/addVehicule/','DetailController@addVehicule');
 Route::post("/contrat//detail/price/calculEdit","DetailController@getPriceEdit");
 
 Route::post('/contract/detail/Modify','DetailController@updateVehicule');
+
+
+Route::get('/pdf/{id}','GenerateController@test');
+Route::get('/pdf/contract/{matricule}','GenerateCController@contract');
