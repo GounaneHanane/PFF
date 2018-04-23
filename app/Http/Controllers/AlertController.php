@@ -55,7 +55,7 @@ class AlertController extends Controller
         $info=DB::table('detail_contract')->where('detail_contract.id','=',$id_detail)
             ->join('contracts','detail_contract.id_contract','contracts.id')
             ->join('customers','customers.id','contracts.id_customer')
-            ->select('detail_contract.*','customers.*')->first();
+            ->select('detail_contract.*','contracts.matricule as ContractMatricule','customers.*')->first();
         $SimplePrice=DB::table('detail_contract')->where('detail_contract.id','=',$id_detail)->where('type_customers_subscribes.id_type_subscribe','=','1')
             ->join('contracts','detail_contract.id_contract','contracts.id')
             ->join('customers','customers.id','contracts.id_customer')

@@ -34,7 +34,7 @@
                     <h3 class="pull-left">Renouvelement</h3>
                     <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
                         <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
-                        <a  id="Rechercher" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-search"></span> </a>
+                        <a  id="Rechercher" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-search"></span> </a>
                     </div>
                 </div>
                 <div class="col-md-12">

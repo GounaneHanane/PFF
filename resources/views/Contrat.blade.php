@@ -13,7 +13,10 @@
 
     <script  src="/js/select.js"></script>
     <script  src="/js/alert.js"></script>
+
     <link rel="stylesheet" href="/css/alerte.css"/>
+
+
 
     <style>
         #search_input
@@ -40,8 +43,8 @@
                     <h3 class="pull-left">Contrats</h3>
                     <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
                     <a class="btn btn-primary pull-right menu-btn" id="refresh"><span class="glyphicon glyphicon-refresh " ></span></a>
-                        <a  id="addContractModal" data-toggle="modal" data-target="#addContratModal" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-plus"></span> </a>
-                        <a  id="Rechercher" class="btn btn-primary menu-btn "><i class="fa fa-plus-square" aria-hidden="true"></i><span class="	glyphicon glyphicon-search"></span> </a>
+                        <a  id="addContractModal" data-toggle="modal" data-target="#addContratModal" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-plus"></span> </a>
+                        <a  id="Rechercher" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-search"></span> </a>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -51,11 +54,9 @@
                                 <form id="search_form" style="display: none;">
                                     <div class="col-md-12">
                                         <div class="form-group col-md-3">
-                                            <label class="control-label">N°CONTRAT</label>
                                             <input id="mat" type="text" class="form-control" name="matricule_searsh" placeholder="N°Contrat" value="">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label class="control-label">CLIENT</label>
                                             <select id="customer" name="costumer_search" data-live-search="true" class="selectpicker" style="">
                                                 <option class="bs-title-option" value="">Veuillez selectionner un client</option>
                                                     @foreach($Customers as $customer)
@@ -63,16 +64,34 @@
                                                         @endforeach
                                             </select>
                                         </div>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class='col-sm-6'>
+                                                    <div class='input-group date' id='datetimepicker'>
+                                                        <input type='text' class="form-control" />
+                                                        <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $(function () {
+                                                        $('#datetimepicker').datetimepicker();
+
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
                                         <div  class="form-group col-md-3">
-                                            <label class="control-label">DATE DE DEBUT</label>
-                                            <input id="debut_contrat" type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
+                                            <input id="debut_contrat" type="text" class="form-control datetimepicker" name="matricule_searsh" placeholder="" value="">
+                                            <script>
+
+                                            </script>
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label class="control-label">DATE DE FIN</label>
                                             <input id="fin_contrat" type="date" class="form-control" name="matricule_searsh" placeholder="" value="">
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <label class="control-label">TYPE DE CLIENT</label>
                                             <select id="typeClient" name="costumer_search" class="form-control chosen-select" style="">
                                                 <option value="0">Veuillez selectionner un type</option>
                                                 @foreach($clientTypes as $clientType)
@@ -103,7 +122,7 @@
                                     <th class="text-center" style="width: 0%">N SIMPLE</th>
                                     <th class="text-center" style="width: 0%">N AVANCE</th>
                                     <th class="text-center" style="width: 0%">PRIX</th>
-                                    <th class="text-center" style="width:13%">ACTIONS</th>
+                                    <th class="text-center" style="width:16%">ACTIONS</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -142,6 +161,9 @@
                                             <a class="btn btn-success " data-toggle="modal" data-target="#RenContrat" onclick="renewal({{ $c->id_detail }})">
                                                 <span class="glyphicon glyphicon-ok"  ></span>
                                             </a>
+                                            <a onclick="window.open('/pdf/contract/{matricule}')" class="btn btn-danger" style=" ">
+                                                <span class="fa fa-file-pdf-o"></span>
+                                            </a>
                                         </td>
 
 
@@ -166,13 +188,13 @@
                                                 <input type="hidden" id="ContratToken"   name="_token" value="{{ csrf_token() }}">
 
                                                 <div>
-                                                    <label class="col-md-4 control-label">date début : </label>
+                                                    <label class="col-md-4 control-label">Date début : </label>
                                                     <div class="col-md-6">
                                                     <input type="date" class="form-control" id="dated" name="dated" value="{{date('Y-m-d')}}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-4 control-label">client : </label>
+                                                    <label class="col-md-4 control-label">Client : </label>
                                                     <div class="col-md-6">
                                                     <select id="client"  name="client" data-live-search="true" tabindex="-98" class="form-control selectpicker">
                                                         <option  disabled selected id="defaultCli" value="0">Veuillez selectionner un client</option>
@@ -257,14 +279,14 @@
                                             <input type="hidden" id="ContratToken"  name="_token" value="{{ csrf_token() }}">
 
                                             <div>
-                                                <label class="col-md-4 control-label">date début : </label>
+                                                <label class="col-md-4 control-label">Date début : </label>
                                                 <div class="col-md-6">
                                                 <input type="date" class="form-control" id="datedModify" name="dated">
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-4 control-label">client : </label>
+                                                <label class="col-md-4 control-label">Client : </label>
                                                 <div class="col-md-6">
                                                 <select id="clientMaj" name="client" class="form-control" disabled>
 
@@ -339,13 +361,21 @@
                                             <form id="contrat" class="form-horizontal" method="POST">
                                                 <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
                                                 <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">Matricule : </label> <div id="lblMatricule"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label">Nom : </label> <div id="lblNom"></div>
+                                                </div>
+
                                                 <div>
-                                                    <label class="col-md-4 control-label">date début : </label>
+                                                    <label class="col-md-4 control-label">Date début : </label>
                                                     <div class="col-md-6">
                                                     <input type="date" class="form-control" id="datedR" name="datedR" value="{{date('Y-m-d')}}">
                                                     </div>
                                                     </div>
                                                 <div class="form-group col-md-4" style="    width: 41%;margin-top: 3%">
+                                                    <label>Ancien véhicules</label><br>
                                                     <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
                                                     </select>
                                                 </div>
@@ -356,7 +386,8 @@
                                                     <button type="button" class="form-control" href="#" id="AllIn" style="width: 24%">>></button>
                                                 </div>
 
-                                                <div class="form-group col-md-4" style="    width: 37%;margin-left: 57%;margin-top: -35%;">
+                                                <div class="form-group col-md-4" style="    width: 37%;margin-left: 57%;margin-top: -39%;">
+                                                    <label>Nouveau véhicules</label>
                                                     <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control">
                                                     </select>
                                                 </div>

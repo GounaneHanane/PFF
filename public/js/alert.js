@@ -202,7 +202,8 @@ function renewal(id)
       var detail_contract=data["info"];
         var vehicles=data["vehicles"];
         $('#id_detail').val(id);
-
+        $('#lblMatricule').text(detail_contract.ContractMatricule);
+        $('#lblNom').text(detail_contract.name);
         $('#datedR').val(detail_contract.end_contract);
       $('#nbVehiclesAdvancedR').val(detail_contract.nbAvance);
         $('#nbVehiclesSimpleR').val(detail_contract.nbSimple);

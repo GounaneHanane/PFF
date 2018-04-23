@@ -93,13 +93,21 @@
                     <form id="contrat" class="form-horizontal" method="POST">
                         <input type="hidden" id="GammeToken"   name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" class="form-control" id="id_detail" name="id_detail" >
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Matricule : </label> <div id="lblMatricule"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Nom : </label> <div id="lblNom"></div>
+                        </div>
+
                         <div>
-                            <label class="col-md-4 control-label">date début : </label>
+                            <label class="col-md-4 control-label">Date début : </label>
                             <div class="col-md-6">
                                 <input type="date" class="form-control" id="datedR" name="datedR" value="{{date('Y-m-d')}}">
                             </div>
                         </div>
                         <div class="form-group col-md-4" style="    width: 41%;margin-top: 3%">
+                            <label>Ancien véhicules</label><br>
                             <select multiple size="10" id="OldVehicles" name="OldVehicles" class="form-control">
                             </select>
                         </div>
@@ -110,7 +118,8 @@
                             <button type="button" class="form-control" href="#" id="AllIn" style="width: 24%">>></button>
                         </div>
 
-                        <div class="form-group col-md-4" style="    width: 37%;margin-left: 57%;margin-top: -35%;">
+                        <div class="form-group col-md-4" style="    width: 37%;margin-left: 57%;margin-top: -39%;">
+                            <label>Nouveau véhicules</label>
                             <select multiple size="10" id="NewVehicles" name="NewVehicles" data-live-search="true" tabindex="-98" class="form-control">
                             </select>
                         </div>

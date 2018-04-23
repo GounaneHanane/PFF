@@ -368,7 +368,9 @@ $(document).ready(function(){
     });
 
 
-
+  //  $(function () {
+    //    $('#debut_contrat').datetimepicker();
+    //});
 
 
 
