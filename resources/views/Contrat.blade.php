@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Abonnement')
+@section('title', 'Contrat')
 
 @section('import')
     @parent
@@ -42,7 +42,7 @@
                 <div class="col-md-12">
                     <h3 class="pull-left">Contrats</h3>
                     <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
-                    <a class="btn btn-primary pull-right menu-btn" id="refresh"><span class="glyphicon glyphicon-refresh " ></span></a>
+                    <a class="btn btn-primary pull-right menu-btn" id="refresh" onclick="location.reload();" ><span class="glyphicon glyphicon-refresh " ></span></a>
                         <a  id="addContractModal" data-toggle="modal" data-target="#addContratModal" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-plus"></span> </a>
                         <a  id="Rechercher" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-search"></span> </a>
                     </div>
@@ -64,26 +64,9 @@
                                                         @endforeach
                                             </select>
                                         </div>
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class='col-sm-6'>
-                                                    <div class='input-group date' id='datetimepicker'>
-                                                        <input type='text' class="form-control" />
-                                                        <span class="input-group-addon">
-                                                        <span class="glyphicon glyphicon-calendar"></span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <script type="text/javascript">
-                                                    $(function () {
-                                                        $('#datetimepicker').datetimepicker();
 
-                                                    });
-                                                </script>
-                                            </div>
-                                        </div>
                                         <div  class="form-group col-md-3">
-                                            <input id="debut_contrat" type="text" class="form-control datetimepicker" name="matricule_searsh" placeholder="" value="">
+                                            <input id="debut_contrat" type="date" class="form-control datetimepicker" name="matricule_searsh" placeholder="" value="">
                                             <script>
 
                                             </script>

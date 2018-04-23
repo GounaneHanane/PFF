@@ -329,6 +329,122 @@ $(document).ready(function(){
         else
             alert('Merci de renseigner tous les champs !! ');
     }
+    ////
+    ////Modifier un vehicule
+    ////
+function AddVeihcles(idDetail) {
+    if($("#vehicules").val()!= '' && $("#types").val()!='' && $("#priceVehicles").val()!='' && $('#AddingDate').val()!='')
+    {
+        var idType=$('#types').val();
+
+        $.get("/contrat/detail/verifyType/"+idDetail+"/"+idType,{},function (data,status) {
+            if(data==0)
+            {
+                alert("Merci de changer le type");
+            }
+            else {
+
+
+                var imei = $("#vehicules").val();
+                var typeSubscribe=$("#types").val();
+                var price=$("#priceVehicles").val();
+                var date=$('#AddingDate').val();
+                var  inputs = [ 'vehicles','types','priceVehicles','addingDate'];
+                for(var j = 0;j<inputs.length;j++)
+                {
+
+
+                    if ($('#Err' + inputs[j]).length) {
+
+
+                        $('#Err' + inputs[j]).remove();
+
+                    }
+
+
+
+
+
+                }
+
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: 'http://127.0.0.1:8000/contract/addVehicule/',
+                    type: 'POST',
+                    data: {
+                        vehicules: imei,
+                        types: typeSubscribe,
+                        priceVehicles: price,
+                        AddingDate:date,
+                        _token : $('#VehicleToken').attr('value')
+                    },
+                    success: function (data, status) {
+                        var id = $('.body').attr('alt');
+                        var  inputs = [ 'vehicles','types','priceVehicles','addingDate' ];
+                        console.log(data.dated);
+                        for(var j = 0;j<inputs.length;j++)
+                        {
+
+
+                            if ($('#Err' + inputs[j]).length) {
+
+
+                                $('#Err' + inputs[j]).remove();
+
+                            }
+
+
+                            location.reload();
+
+
+
+
+                        }
+
+
+
+                    },
+                    error: function (jqXhr) {
+                        if (jqXhr.status === 422) {
+                            var errors = jqXhr.responseJSON;
+
+                            console.log(errors);
+
+                            var l = 0;
+                            $.each(errors.message, function (key, value) {
+                                // errorsHtml += '<li>' + value[0] + '</li>'; //showing only the first error.
+
+                                if ($('#Err' + key).length) {
+                                    //$('#Err' + key).html(value);
+
+                                    $('#Err' + key).text(value);
+                                }
+                                else {
+                                    $("#" + key).parent().append("<small id='Err" + key + "' class='text-danger'> " + value + "</small>");
+                                    l++;
+
+                                }
+                            });
+
+
+                            // $( '#form-errors' ).html( errorsHtml );
+
+                        }
+                    }
+
+                })
+
+
+
+            }
+        })
+    }
+    else
+        alert('Merci de renseigner tous les champs !! ');
+}
 
     ////
     //// Supprimer un vehicule
@@ -337,11 +453,16 @@ $(document).ready(function(){
 function disableDetail(idDet,idCon)
 {
 
-    $.get("/detail/delete/"+idDet,{},function(data, status){
+    var result=confirm('Voulez-vous vraiment supprimer ce vehicule ?');
+    if(result==true)
+    {
+        $.get("/detail/delete/"+idDet,{},function(data, status){
 
 
-        $("#Detail"+idDet).remove();
-        location.reload();
+            $("#Detail"+idDet).remove();
+            location.reload();
 
-    });
+        });
+    }
+
 }

@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Abonnement')
+@section('title', 'Detail')
 
 @section('import')
     @parent
@@ -39,7 +39,7 @@
                 <div class="col-md-12">
                     <h3 class="pull-left">Vehicules</h3>
                     <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
-                        <a  class="btn btn-primary pull-right" id="refreshDetail"><span class="glyphicon glyphicon-refresh" ></span></a>
+                        <a  class="btn btn-primary pull-right" onclick="location.reload();" id="refreshDetail"><span class="glyphicon glyphicon-refresh" ></span></a>
                         @if( $contract->status  == 1)
                             <a id="AddDetailModal" type="button" data-toggle="modal" data-target="#addVehicleModal" class="btn btn-primary"><span class="	glyphicon glyphicon-plus"></span></a>
                         @endif

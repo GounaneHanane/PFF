@@ -51,7 +51,6 @@ $(document).ready(function(){
             });
 
 
-        clear();
     });
     ////
     ////Afficher le model d'ajouter
@@ -421,12 +420,16 @@ function editContratDialog(id) {
 ////
 function disableContract(id)
 {
-    $.get("/contrat/delete/"+id,{},function(data, status){
+    var result=confirm('Voulez-vous vraiment supprimer ce contrat');
+    if(result==true)
+    {
+        $.get("/contrat/delete/"+id,{},function(data, status){
 
 
-        $("#Contrat"+id).remove();
-        var status = $("#status").attr('alt');
+            $("#Contrat"+id).remove();
+            var status = $("#status").attr('alt');
 
-        location.reload();
-    });
+            location.reload();
+        });
+    }
 }

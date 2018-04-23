@@ -33,12 +33,18 @@
         <a class="btn btn-success " data-toggle="modal" data-target="#RenContrat" onclick="renewal({{ $c->id_detail }})">
             <span class="glyphicon glyphicon-ok"  ></span>
         </a>
+            <a onclick="window.open('/pdf/contract/{{$c ->detail_matricule}}')" class="btn btn-danger" style=" ">
+                <span class="fa fa-file-pdf-o"></span>
+            </a>
     </td>
     @else
-        <td class="text-center" style="width:12.5%">
-            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')" style="    width: 51%;
-"  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
+
+            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$c->id_detail}}','_self')"> <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
+            <a onclick="window.open('/pdf/contract/{{$c ->detail_matricule}}')" class="btn btn-danger" style=" ">
+                <span class="fa fa-file-pdf-o"></span>
+            </a>
         </td>
+
 
         @endif
 

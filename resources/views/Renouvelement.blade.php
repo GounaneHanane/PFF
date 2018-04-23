@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Abonnement')
+@section('title', 'Renouvelement')
 
 @section('import')
     @parent
@@ -115,9 +115,10 @@
                                         <td class="text-center"  class="nbvehicle">{{ $a->nbAvance }}</td>
                                         <td class="text-center" >{{$a->price}}</td>
                                         <td class="text-center" >
-                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$a->id_detail}}','_self')" style="    width: 51%;
-"  > <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
-                                        </td>
+                                            <a class="btn btn-info" onclick="window.open('/contrat/showdetails/{{$a->id}}','_self')"> <span class="glyphicon glyphicon-info-sign edit trash " ></span></a>
+                                            <a onclick="window.open('/pdf/contract/{{$a ->matricule}}')" class="btn btn-danger" style=" ">
+                                                <span class="fa fa-file-pdf-o"></span>
+                                            </a>                                        </td>
 
                                     </tr>
                                 @endforeach

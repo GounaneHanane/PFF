@@ -149,7 +149,7 @@ class DetailController extends Controller
 
                ->where($critiere)
 
-               ->select('info_detail_contract.*','detail_contract.id as id_contract','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
+               ->select('info_detail_contract.*','detail_contract.*','detail_contract.id as id_contract','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
 
                ->get();
 
