@@ -347,7 +347,6 @@ class ComposerStaticInit1c679eff2a78482e76af60dc7e170a9c
         'App\\Http\\Controllers\\ContratController' => __DIR__ . '/../..' . '/app/Http/Controllers/ContratController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DetailController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetailController.php',
-        'App\\Http\\Controllers\\GenerateController' => __DIR__ . '/../..' . '/app/Http/Controllers/GenerateController.php',
         'App\\Http\\Controllers\\OMSAlertsController' => __DIR__ . '/../..' . '/app/Http/Controllers/OMSAlertsController.php',
         'App\\Http\\Controllers\\OMSContratController' => __DIR__ . '/../..' . '/app/Http/Controllers/OMSCustomerController.php',
         'App\\Http\\Controllers\\OMSUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/OMSUserController.php',

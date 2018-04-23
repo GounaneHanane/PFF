@@ -161,7 +161,7 @@
                                             <a class="btn btn-success " data-toggle="modal" data-target="#RenContrat" onclick="renewal({{ $c->id_detail }})">
                                                 <span class="glyphicon glyphicon-ok"  ></span>
                                             </a>
-                                            <a onclick="window.open('/pdf/contract/{matricule}')" class="btn btn-danger" style=" ">
+                                            <a onclick="window.open('/pdf/contract/{{$c ->detail_matricule}}')" class="btn btn-danger" style=" ">
                                                 <span class="fa fa-file-pdf-o"></span>
                                             </a>
                                         </td>

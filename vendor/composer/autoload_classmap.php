@@ -14,7 +14,6 @@ return array(
     'App\\Http\\Controllers\\ContratController' => $baseDir . '/app/Http/Controllers/ContratController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DetailController' => $baseDir . '/app/Http/Controllers/DetailController.php',
-    'App\\Http\\Controllers\\GenerateController' => $baseDir . '/app/Http/Controllers/GenerateController.php',
     'App\\Http\\Controllers\\OMSAlertsController' => $baseDir . '/app/Http/Controllers/OMSAlertsController.php',
     'App\\Http\\Controllers\\OMSContratController' => $baseDir . '/app/Http/Controllers/OMSCustomerController.php',
     'App\\Http\\Controllers\\OMSUserController' => $baseDir . '/app/Http/Controllers/OMSUserController.php',

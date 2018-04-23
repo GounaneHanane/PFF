@@ -43,7 +43,7 @@
                         @if( $contract->status  == 1)
                             <a id="AddDetailModal" type="button" data-toggle="modal" data-target="#addVehicleModal" class="btn btn-primary"><span class="	glyphicon glyphicon-plus"></span></a>
                         @endif
-                        <a  class="btn btn-primary" style=" ">
+                        <a  class="btn btn-primary" onclick="window.open('/pdf/{{$contract->matricule}}')">
                             <span class="fa fa-file-pdf-o"></span>
                         </a>
                         <a  id="Rechercher" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-search"></span> </a>

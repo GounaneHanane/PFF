@@ -10,7 +10,7 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "reliese/laravel": "^0.0.13",
-        "setasign/fpdf": "^1.8"
+        "setasign/fpdf": "1.8.1"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
