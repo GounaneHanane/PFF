@@ -33,7 +33,7 @@
                 <div class="col-md-12">
                     <h3 class="pull-left">Renouvelement</h3>
                     <div class="pull-right col-md-6 col-sm-6 col-xs-12 col-lg-6" style="text-align: right;">
-                        <a class="btn btn-primary pull-right"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
+                        <a class="btn btn-primary pull-right" onclick="location.reload();"><span class="glyphicon glyphicon-refresh" id="refresh"></span></a>
                         <a  id="Rechercher" class="btn btn-primary menu-btn "><span class="	glyphicon glyphicon-search"></span> </a>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body table-responsive">
                             <table class="table table-bordered">
                                 <thead>
                                 <tr style="color: #2a4f7d;">

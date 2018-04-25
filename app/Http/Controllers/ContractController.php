@@ -61,13 +61,13 @@ class ContractController extends Controller
 
         $hasContrat = DB::table('customers')
             ->whereIn('customers.id',function($q){
-                $q->select('contracts.id_customer')->from('contracts');
+                $q->select('contracts.id_customer')->where('isActive','=','1')->from('contracts');
             })
             ->select('customers.id', 'customers.name')->get();
 
         $hasnotContrat = DB::table('customers')
             ->whereNotIn('customers.id',function($q){
-                $q->select('contracts.id_customer')->from('contracts');
+                $q->select('contracts.id_customer')->where('isActive','=','1')->from('contracts');
             })
             ->select('customers.id', 'customers.name')->get();
 
@@ -144,12 +144,10 @@ class ContractController extends Controller
 
 
 
-        $nbAnnee = str_pad(
-            DB::table('detail_contract')->where('detail_contract.id_contract','=',$id)->get()->count(),
-                 2,
-        '0' , STR_PAD_LEFT);
+        $nbAnnee = DB::table('detail_contract')->where('detail_contract.id_contract','=',$id)->get()->count();
 
         $matricule_detail = "CR".$yy.$mm."-".$nbAnnee."-".$gid;
+        $matricule_contract="CR".$yy.$mm."-".$gid;
         $total = $priceAvance + $priceSimple;
 
 
@@ -158,12 +156,12 @@ class ContractController extends Controller
             ->where('detail_contract.status','=','1')
             ->update(['nbSimple'=>$nbSimple , 'nbAvance'=>$nbAvance , 'price'=>$total
                 ,'defaultSimple'=>$defaultSimple , 'defaultAvance'=>$defaultAvance
-                ,'start_contract'=>$start_date , 'end_contract'=>$end_date , 'matricule'=>$matricule_detail
+                ,'start_contract'=>$start_date ,'urlPdf'=>'/pdf/contract/'.$matricule_detail, 'end_contract'=>$end_date , 'matricule'=>$matricule_detail
             ])
 
         ;
 
-
+        DB::table('contracts')->where('contracts.id','=',$id)->update(['matricule'=>$matricule_contract]);
         return response()->json(['dA'=>$start_date,'dS'=>$end_date , 'date'=>$date
             , 'nbAnnee' => $nbAnnee ,'id' => $id
             ,'matricule'=>$matricule_detail]);
@@ -229,7 +227,7 @@ class ContractController extends Controller
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
                 'matricule' =>  $matricule_detail,
-                'urlPdf' => '/pdf/'.$matricule_detail,
+                'urlPdf' => '/pdf/contract/'.$matricule_detail,
                 'nbAvance' => $nbAvance,
                 'nbSimple' => $nbSimple,
                 'defaultAvance' => $defaultAvance,
@@ -245,25 +243,6 @@ class ContractController extends Controller
         return response(strlen($id));
     }
 
-    public function refresh($status)
-    {
-        $c = DB::table('detail_contract')
-            ->where('detail_contract.isActive', '=', '1')
-            ->where('detail_contract.status','=',$status)
-            ->join('contracts','contracts.id','detail_contract.id_contract')
-            ->join('customers', 'customers.id', '=', 'contracts.id_customer')
-            ->join('types_customers', 'types_customers.id', '=', 'customers.id_type_customer')
-            ->join('contract_warning','contract_warning.id','=','detail_contract.id')
-            ->select('contracts.*', 'customers.*','count', 'contracts.id as id_contract', 'types_customers.type as type_customer',
-                'detail_contract.*', 'detail_contract.id as id_detail', 'detail_contract.matricule as detail_matricule',
-                DB::raw('( ifnull(detail_contract.nbAvance,0) + ifnull(detail_contract.nbSimple,0)) as nbVehicles'))
-            ->get();
-
-
-        return view('ContractLines', ['contracts' => $c] );
-
-       // return response($c[1]->nbVehicles);
-    }
 
     public function CountVehicles($idCustomer)
     {
@@ -367,26 +346,7 @@ class ContractController extends Controller
             ->update(['contracts.isActive' => 0 , 'detail_contract.isActive' => 0]);
 
     }
-    public function refreshDetail($idContract)
-    {
-        $details = DB::table('info_detail_contract')->where('info_detail_contract.id_detail','=',$idContract)
-            ->where('info_detail_contract.isActive','=','1')
-            ->join('vehicles','vehicles.id','info_detail_contract.id_vehicle')
-            ->join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')
-            ->join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')
-            ->select('info_detail_contract.*','vehicles.*','types_subscribes.type','info_detail_contract.id as id_detail')
-            ->get();
 
-
-                 $contract = DB::table('detail_contract')->
-             select(DB::raw("(detail_contract.nbavance + detail_contract.nbSimple) as nbVehicles"),"detail_contract.*","detail_contract.id_contract as idContract")
-                 ->where('detail_contract.id','=',$idContract)
-
-                 ->first();
-            
-
-        return view('DetailsLines',[ 'details'=>$details , "contract"=>$contract ]);
-    }
     public function vehicleRenewal(Request $request)
     {
         $id=$request->input('id_detail');
@@ -414,7 +374,7 @@ class ContractController extends Controller
             $info_detail_contract->offer = 0;
             $info_detail_contract->AddingDate=$start_datee;
             $info_detail_contract->save();
-
+            DB::table('info_detail_contract')->where('id_vehcile','=',$idVehicle)->update(['isActive'=>0]);
             array_push($idDs, $idTypeCustomerSubscribe);
 
 

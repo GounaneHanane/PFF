@@ -87,7 +87,7 @@ class RenouvelementController extends Controller
        $detail_contrat->id_contract=$id_contract;
        $detail_contrat->start_contract=$start_datee;
        $detail_contrat->end_contract=$end_date;
-       $detail_contrat->urlPdf='/pdf/'.$matricule_detail;
+       $detail_contrat->urlPdf='/pdf/contract/'.$matricule_detail;
        $detail_contrat->matricule=$matricule_detail;
        $detail_contrat->nbAvance=$request->input('nbVehiclesAdvancedR');
        $detail_contrat->nbSimple=$request->input('nbVehiclesSimpleR');

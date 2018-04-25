@@ -65,13 +65,16 @@ class DetailController extends Controller
         join('type_customers_subscribes','type_customers_subscribes.id','info_detail_contract.id_type_customer_subscribe')->
         join('types_subscribes','types_subscribes.id','type_customers_subscribes.id_type_subscribe')->
 
-        select('vehicles.*','vehicles.id as idVehicle','id_detail','types_subscribes.id as idtypeSub','types_subscribes.type as typeSub','info_detail_contract.*','detail_contract.status as status')->get();
+        select('vehicles.*','vehicles.id as idVehicle','id_detail','types_subscribes.id as idtypeSub','types_subscribes.type as typeSub','info_detail_contract.*','detail_contract.status as status')->orderBy('info_detail_contract.id','desc')->get();
 
       ;
       $type=DB::table('types_subscribes')->
     select('types_subscribes.*')->get();
 
-        $vehicle=DB::table('vehicles')->where([['vehicles.isActive','=','1'],['detail_contract.id','=',$idContrat]])->
+        $vehicle=DB::table('vehicles')->where([['vehicles.isActive','=','1'],['detail_contract.id','=',$idContrat]])
+            ->whereNotIn('vehicles.id',function($q){
+                $q->select('info_detail_contract.id_vehicle')->from('info_detail_contract')->where('isActive','=','1');
+            })->
         join('customers','customers.id','vehicles.customer_id')->
         join('contracts','customers.id','contracts.id_customer')->
         join('detail_contract','detail_contract.id_contract','contracts.id')->

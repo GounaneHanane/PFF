@@ -9,7 +9,7 @@
         <td class="text-center" style="width:12.5%">{{$a->park}}</td>
 
         <td class="text-center" style="width:12.5%">
-            <a class="btn btn-success " data-toggle="modal" data-target="#RenContrat" onclick="renewal({{ $a->id }})">
+            <a class="btn btn-success " data-toggle="modal" data-target="#RenContrat" onclick="renewal({{ $a->id_detail }})">
                 <span class="glyphicon glyphicon-ok"  ></span>
             </a>
             <a onclick="disableContract({{$a->id}})">

@@ -135,7 +135,8 @@ $(document).ready(function(){
 
                 var id_detail=$('#id_detail').val();
 
-
+               // document.getElementById('add_dialog_ren').close();
+                location.reload();
 
 
                 $.ajax({
@@ -151,8 +152,7 @@ $(document).ready(function(){
 
                     ,
                     success: function (data, status) {
-                        document.getElementById('add_dialog_ren').close();
-                        location.reload();
+
 
                     }});
                 //   }

@@ -105,7 +105,7 @@
                                     <th class="text-center" style="width: 0%">N SIMPLE</th>
                                     <th class="text-center" style="width: 0%">N AVANCE</th>
                                     <th class="text-center" style="width: 0%">PRIX</th>
-                                    <th class="text-center" style="width:16%">ACTIONS</th>
+                                    <th class="text-center" style="width:17%">ACTIONS</th>
                                 </tr>
                                 </thead>
                                 <tbody>

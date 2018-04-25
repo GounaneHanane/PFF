@@ -17,13 +17,11 @@
 
 Route::post('/contrat/addcontrat','ContractController@addContrat');
 Route::get('/contrat/', 'ContractController@contrat');
-Route::post('/contrat/addcontrat','ContractController@addContrat');
 Route::post('/contract/Modify','ContractController@UpdateContract');
 Route::get('/contrat/countVehicles/{idVehicle}','ContractController@CountVehicles');
 Route::get('/contrat/delete/{id}','ContractController@DisableContract');
 Route::get('/contrat/update/{id}', 'ContractController@update');
-Route::get("/contrat/price/{idClient}/",'ContractController@getPrice');
-Route::get('/contrat/refresh/{status}','ContractController@refresh'); // Renewal
+Route::get("/contrat/price/{idClient}/",'ContractController@getPrice'); // Renewal
 Route::get('/contrat/search/', 'ContractController@searchContrat');// Renewal
 Route::post('/renewal/vehicles','ContractController@vehicleRenewal'); // alert
 
@@ -36,13 +34,12 @@ Route::post('/renewal/','RenouvelementController@renewalVehicles');
 
 // alert
 Route::get('/home','AlertController@alert');
-Route::get("/alert/refresh",'AlertController@refresh');
 Route::get('/alerte/renv/{id_detail}','AlertController@Alert_Detail_Contrat');
+Route::get('/alert/{amount}','AlertController@alertByTime');
 
 
 
 // Details
-Route::get("/contrat/detail/refresh/{idContract}","DetailController@refreshDetail");
 Route::get("/contrat/showdetails/{idDetail}",'DetailController@showInfo');
 Route::get("/detail/search/","DetailController@searchDetail");
 Route::get('/contrat/detail/verifyType/{idDetail}/{idType}','DetailController@verifyType');
